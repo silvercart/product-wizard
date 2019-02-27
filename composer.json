@@ -1,0 +1,21 @@
+{
+    "name": "silvercart/product-wizard",
+    "type": "silverstripe-module",
+    "description": "Product wizard module for the SilverCart ecommerce module for SilverStripe",
+    "homepage": "http://www.silvercart.org",
+    "license": "LGPL-3.0-or-later",
+    "keywords": ["silverstripe", "silvercart", "ecommerce", "shop", "webshop", "online shop", "product", "wizard", "product wizard", "configurator", "product configurator"],
+    "authors": [
+        {
+            "name": "SilverCart",
+            "homepage": "http://www.silvercart.org"
+        },
+        {
+            "name": "pixeltricks",
+            "homepage": "http://www.pixeltricks.de"
+        }
+    ],
+    "require": {
+        "silvercart/silvercart": "~3.7"
+    }
+}

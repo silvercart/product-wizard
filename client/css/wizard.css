@@ -1,0 +1,56 @@
+.choosable-option {
+    cursor: pointer;
+}
+.choosable-option .fa-info-circle {
+    cursor: help;
+}
+.choosable-option .fa-check,
+.product-box .fa-check {
+    display: none;
+}
+.choosable-option.picked .fa-check,
+.product-box.picked .fa-check {
+    display: block;
+}
+.panel-default.choosable-option>.panel-heading {
+    border-bottom-width: 0px;
+}
+.panel-default.choosable-option:hover {
+    border-color: rgba(27,117,186,.45);
+    box-shadow: 0 1px 1px rgba(27,117,186,.05);
+}
+.panel-default.choosable-option:hover>.panel-heading {
+    color: #333;
+    background-color: rgba(27,117,186,.35);
+    border-color: rgba(27,117,186,.45);
+}
+.panel-default.choosable-option.picked {
+    color: #fff;
+    border-color: rgba(27,117,186,1);
+    box-shadow: 0 1px 1px rgba(27,117,186,.25);
+}
+.panel-default.choosable-option.picked>.panel-heading {
+    color: #fff;
+    background-color: rgba(27,117,186,.95);
+    border-color: rgba(27,117,186,1);
+}
+#product-wizard-step .info-box {
+    height: calc(100% - 86px);
+}
+.product-box {
+    margin: -5px -5px 10px -5px;
+    padding: 5px;
+    height: calc(100% - 10px);
+    position: relative;
+    top: 5px;
+}
+.product-box.picked {
+    color: #fff;
+    border-color: rgba(27,117,186,1);
+    box-shadow: 0 1px 1px rgba(27,117,186,.25);
+    background-color: rgba(27,117,186,.75);
+    border-radius: 4px;
+}
+.product-box.picked input {
+    color: #000;
+}
