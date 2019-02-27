@@ -342,20 +342,22 @@ class SilvercartProductWizardStepOption extends DataObject
      * 
      * @see self::$option_delimiter
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 18.02.2019
+     * @since 27.02.2019
      */
     public function getOptionList() : ArrayList
     {
         if (is_null($this->optionList)) {
             $options    = explode($this->config()->option_delimiter, $this->Options);
             $optionList = [];
+            $plainValue = $this->getValue();
+            $intValue   = (int) $plainValue;
             foreach ($options as $key => $option) {
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
                     'StepOptionSet' => $this->StepOptionSet(),
                     'StepOption'    => $this,
                     'Value'         => $key,
-                    'Checked'       => (int) $this->getValue() === $key ? 'checked' : '',
+                    'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
                     'Title'         => $option,
                 ]);
             }
