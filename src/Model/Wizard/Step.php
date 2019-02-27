@@ -38,10 +38,12 @@ class SilvercartProductWizardStep extends DataObject
      * @var array
      */
     private static $db = [
-        'Title'       => 'Varchar(256)',
-        'Content'     => 'HTMLText',
-        'ButtonTitle' => 'Varchar',
-        'Sort'        => 'Int',
+        'Title'          => 'Varchar(256)',
+        'Content'        => 'HTMLText',
+        'InfoBoxTitle'   => 'Varchar(256)',
+        'InfoBoxContent' => 'HTMLText',
+        'ButtonTitle'    => 'Varchar',
+        'Sort'           => 'Int',
     ];
     /**
      * Has one relations.
@@ -120,6 +122,14 @@ class SilvercartProductWizardStep extends DataObject
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
             $fields->dataFieldByName('ButtonTitle')
                     ->setDescription($this->fieldLabel('ButtonTitleDesc'));
+            $fields->dataFieldByName('Content')
+                    ->setDescription($this->fieldLabel('ContentDesc'))
+                    ->setRows(3);
+            $fields->dataFieldByName('InfoBoxTitle')
+                    ->setDescription($this->fieldLabel('InfoBoxTitleDesc'));
+            $fields->dataFieldByName('InfoBoxContent')
+                    ->setDescription($this->fieldLabel('InfoBoxContentDesc'))
+                    ->setRows(3);
             $fields->removeByName('Sort');
             if ($this->exists()) {
                 $stepOptionsField    = $fields->dataFieldByName('StepOptions');

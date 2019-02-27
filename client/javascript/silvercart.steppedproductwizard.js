@@ -77,6 +77,12 @@ silvercart.SteppedProductWizard = (function () {
                 $(selector.infoBoxHeading).html($(this).data('info-heading'));
                 $(selector.infoBoxContent).html($(this).data('info-content'));
                 return false;
+            },
+            showOriginalOptionInformation: function() {
+                if ($(selector.infoBoxHeading).data('original').length > 0) {
+                    $(selector.infoBoxHeading).html($(selector.infoBoxHeading).data('original'));
+                    $(selector.infoBoxContent).html($(selector.infoBoxContent).data('original'));
+                }
             }
         },
         public = {
@@ -84,7 +90,8 @@ silvercart.SteppedProductWizard = (function () {
             {
                 if ($(selector.productWizardOptions).length > 0) {
                     $(selector.choosableOption).on('click', private.chooseOption);
-                    $(selector.infoOnHover).on('mouseenter', private.showOptionInformation);
+                    $(selector.infoOnHover).on('mouseover', private.showOptionInformation);
+                    $(selector.infoOnHover).on('mouseout', private.showOriginalOptionInformation);
                     $(selector.stepForm).on('submit', private.doStepOptionValidation);
                 }
                 private.initRadioButtons();

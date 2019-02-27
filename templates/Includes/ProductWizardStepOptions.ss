@@ -12,8 +12,8 @@
     </div>
     <div class="col-xs-12 col-sm-4 col-md-6">
         <div class="info-box mt-15 mb-20">
-            <h2 class="info-box-heading"></h2>
-            <p class="info-box-content text-lg"></p>
+            <h2 class="info-box-heading" data-original="{$InfoBoxTitle.ATT}">{$InfoBoxTitle}</h2>
+            <div class="info-box-content text-lg" data-original="{$InfoBoxContent.ATT}">{$InfoBoxContent}</div>
         </div>
         <div class="clearfix">
         <% if $BackLink %>
