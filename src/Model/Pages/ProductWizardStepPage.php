@@ -326,6 +326,22 @@ class SilvercartProductWizardStepPage extends Page
     }
     
     /**
+     * Resets the submitted step data.
+     * 
+     * @return \SilvercartProductWizardStepPage
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 27.02.2019
+     */
+    public function resetPostVars() : SilvercartProductWizardStepPage
+    {
+        foreach ($this->Steps() as $step) {
+            $this->setPostVarsFor([], $step);
+        }
+        return $this;
+    }
+    
+    /**
      * Returns the back link.
      * 
      * @return string

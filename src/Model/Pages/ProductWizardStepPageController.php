@@ -104,6 +104,7 @@ class SilvercartProductWizardStepPage_Controller extends PageController
                 }
             }
         }
+        $this->data()->resetPostVars();
         $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
         return $this->render();
     }
