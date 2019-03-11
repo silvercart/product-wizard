@@ -5,7 +5,7 @@
     <div class="panel-body py-5">
         <div class="row d-flex">
         <% loop $Products %>
-            <div class="col-xs-6">
+            <div class="col-xs-6 col-sm-3 col-md-6">
                 <div class="product-box {$Up.getProductIsSelectedClass($ID)}">
                     <input type="hidden" name="StepOptions[{$Up.ID}][{$ID}][Select]" value="{$Up.getProductSelectValue($ID)}" />
                 <% if $LongDescription %>
@@ -15,7 +15,7 @@
                 <% end_if %>
                     <div class="spinner-field spinner-field-xs clearfix my-5 text-nowrap">
                         <input type="text" name="StepOptions[{$Up.ID}][{$ID}][Quantity]" value="{$Up.getProductQuantityValue($ID)}" />
-                        <a href="javascript:;" class="btn btn-xs btn-primary select-product" data-option-id="{$Up.ID}" data-product-id="{$ID}"><%t ProductWizard.Choose 'Choose' %></a>
+                        <a href="javascript:;" class="btn btn-xs btn-primary select-product" data-option-id="{$Up.ID}" data-product-id="{$ID}"><span class="d-inline d-md-none d-lg-inline"><%t ProductWizard.Choose 'Choose' %></span><span class="d-none d-md-inline d-lg-none fa fa-check"></span></a>
                     </div>
                 <% if $LongDescription %>
                     <a href="javascript:;" data-toggle="modal" data-target="#modal-{$ID}">{$Title}</a>

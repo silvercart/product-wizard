@@ -10,6 +10,9 @@
     line-height: 20px;
     margin-top: 0px;
 }
+.ProductWizardStepOptionSet .tooltip {
+    min-width: 200px;
+}
 .choosable-option {
     cursor: pointer;
 }
@@ -63,7 +66,7 @@
     background-color: rgba(27,117,186,.75);
     border-radius: 4px;
 }
-.product-box.picked a {
+.product-box.picked a:not([class^="spinner-"]) {
     color: #fff;
 }
 .product-box.picked input {

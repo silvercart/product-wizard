@@ -6,6 +6,7 @@ silvercart.SteppedProductWizard = (function () {
             maxOptionSetHeight: 650,
             maxOffsetTop: 0,
             minOffsetTop: 600,
+            minWindowWidth: 992,
             optionSetSelector: false,
             optionSetBoxSelector: false
         },
@@ -73,9 +74,11 @@ silvercart.SteppedProductWizard = (function () {
                 if (selectField.val() === '0') {
                     selectField.val('1');
                     selectField.closest('.product-box').addClass('picked');
+                    $('input[type="text"]', selectField.closest('.product-box')).attr('required', 'required');
                 } else {
                     selectField.val('0');
                     selectField.closest('.product-box').removeClass('picked');
+                    $('input[type="text"]', selectField.closest('.product-box')).removeAttr('required');
                 }
             },
             showNotSelectedRadioButtons: function() {
@@ -98,7 +101,39 @@ silvercart.SteppedProductWizard = (function () {
                     $(selector.infoBoxContent).html($(selector.infoBoxContent).data('original'));
                 }
             },
+            validateFields: function() {
+                var valid = true;
+                $('input', property.optionSetSelector).each(function() {
+                    if (typeof $(this).attr('required') !== 'undefined') {
+                        if ($(this).val() === '') {
+                            valid = false;
+                            $(this).bstooltip({title: ss.i18n._t('Form.FIELD_MAY_NOT_BE_EMPTY', 'This field may not be empty.')});
+                            $(this).bstooltip('show');
+                        }
+                    }
+                });
+                return valid;
+            },
+            resetValidationTooltip: function(input) {
+                if (typeof input === 'undefined') {
+                    input = $(this);
+                }
+                console.log(input.val());
+                if (input.val() !== '') {
+                    input.bstooltip('destroy');
+                }
+            },
+            resetValidationTooltipByInput: function() {
+                private.resetValidationTooltip($(this));
+            },
+            resetValidationTooltipBySpinner: function() {
+                console.log($(this).closest('input'));
+                private.resetValidationTooltip($(this).closest('input'));
+            },
             showOptionSet: function() {
+                if (!private.validateFields()) {
+                    return;
+                }
                 var optionSet = $($(this).data('target'));
                 if (optionSet.length > 0) {
                     $(selector.stepOptionSets).addClass('d-none');
@@ -124,6 +159,9 @@ silvercart.SteppedProductWizard = (function () {
                 }
             },
             initResponsiveOptionSets: function () {
+                if ($(window).width() < property.minWindowWidth) {
+                    return;
+                }
                 var optionSetHeight = $(window).height();
                 if (optionSetHeight < property.minOffsetTop) {
                     property.maxOffsetTop = property.minOffsetTop;
@@ -251,6 +289,7 @@ silvercart.SteppedProductWizard = (function () {
                 $('a', selector.stepOptionSetNavigation).on('click', private.showOptionSet);
                 $('a.showOptionSet', selector.stepForm).on('click', private.showOptionSet);
                 $('a.backOptionSet', selector.stepForm).on('click', private.showOptionSet);
+                $('input', selector.stepForm).on('keyup', private.resetValidationTooltipByInput);
             }
         };
     return public;

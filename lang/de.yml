@@ -1,9 +1,11 @@
 de:
     ProductWizard:
         Choose: "Auswählen"
+        ChooseShort: "Ausw."
         Close: "Schließen"
         GoToCart: "Zum Warenkorb"
         GoToWizard: "Zum Konfigurator"
+        Overview: "Übersicht"
         RedirectionInProgress: "Sie werden in wenigen Sekunden zum Warenkorb weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button."
         RedirectionInProgress2: "Sie werden in wenigen Sekunden zum Konfigurator weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button."
     SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
