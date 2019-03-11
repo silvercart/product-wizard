@@ -3,10 +3,10 @@
 //namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
-use SilvercartProductWizardDisplayCondition as DisplayCondition;
 use SilvercartProductWizardStep as Step;
 use SilvercartProduct as Product;
 use SilvercartShoppingCart as ShoppingCart;
+use ArrayList as ArrayList;
 use DataList as DataList;
 use DataObject as DataObject;
 use HTMLText as DBHTMLText;
@@ -353,7 +353,13 @@ class SilvercartProductWizardStepOption extends DataObject
             $optionList = [];
             $plainValue = $this->getValue();
             $intValue   = (int) $plainValue;
+            $products   = $this->getProductRelation()->getProducts();
             foreach ($options as $key => $option) {
+                if (array_key_exists($key, $products)) {
+                    $product  = $products[$key];
+                } else {
+                    $product = null;
+                }
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
                     'StepOptionSet' => $this->StepOptionSet(),
@@ -361,6 +367,7 @@ class SilvercartProductWizardStepOption extends DataObject
                     'Value'         => $key,
                     'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
                     'Title'         => $option,
+                    'Product'       => $product,
                 ]);
             }
             $this->optionList = ArrayList::create($optionList);

@@ -4,6 +4,7 @@ namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilvercartProduct as Product;
 use SilvercartProductWizardStepOption as StepOption;
+use ArrayList as ArrayList;
 
 /**
  * Represents the dynamic relation of a step option (especially radio) and one or

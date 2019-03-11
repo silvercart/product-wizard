@@ -8,8 +8,18 @@
             <label>
                 <input type="radio" name="StepOptions[{$StepOption.ID}]" value="{$Value}" {$Checked} required="required">
                 {$Title}
+            <% if $Product %>
+                <% with $Product %>
+                <a href="javascript:;" data-toggle="modal" data-target="#modal-{$ID}"><span class="fa fa-info-circle"></span></a>
+                <% end_with %>
+            <% end_if %>
             </label>
         </div>
+        <% if $Product %>
+            <% with $Product %>
+                <% include ProductWizardProductDetailModal %>
+            <% end_with %>
+        <% end_if %>
     <% end_loop %>
     </div>
 <% if $Text %>
