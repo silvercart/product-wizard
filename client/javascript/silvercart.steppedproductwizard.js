@@ -28,7 +28,8 @@ silvercart.SteppedProductWizard = (function () {
             stepOptionSets: ".ProductWizardStepOptionSet",
             stepOptionSetBox: ".ProductWizardStepOptionSetBox",
             stepPanel: "#product-wizard-step .panel",
-            selectProductButton: "#product-wizard-step .select-product"
+            selectProductButton: "#product-wizard-step .select-product",
+            showOriginalOptionInformation: "#product-wizard-step-show-original-option-information"
         },
         private = {
             chooseOption: function() {
@@ -89,6 +90,11 @@ silvercart.SteppedProductWizard = (function () {
                 });
             },
             showOptionInformation: function() {
+                if ($(selector.showOriginalOptionInformation).length === 0) {
+                    var buttonCloseID = selector.showOriginalOptionInformation.replace('#', ''),
+                        buttonClose = '<a href="javascript:;" class="text-lg p-absolute t-20 r-0" id="' + buttonCloseID + '"><span class="fa fa-times-circle"></span></a>';
+                    $(selector.infoBox).append(buttonClose);
+                }
                 $(selector.infoBoxHeading).removeClass('text-danger');
                 $(selector.infoBoxContent).removeClass('text-danger');
                 $(selector.infoBoxHeading).html($(this).data('info-heading'));
@@ -97,6 +103,7 @@ silvercart.SteppedProductWizard = (function () {
             },
             showOriginalOptionInformation: function() {
                 if ($(selector.infoBoxHeading).data('original').length > 0) {
+                    $(selector.showOriginalOptionInformation).remove();
                     $(selector.infoBoxHeading).html($(selector.infoBoxHeading).data('original'));
                     $(selector.infoBoxContent).html($(selector.infoBoxContent).data('original'));
                 }
@@ -280,7 +287,7 @@ silvercart.SteppedProductWizard = (function () {
                 if ($(selector.productWizardOptions).length > 0) {
                     $(selector.choosableOption).on('click', private.chooseOption);
                     $(selector.infoOnHover).on('mouseover', private.showOptionInformation);
-                    $(selector.infoOnHover).on('mouseout', private.showOriginalOptionInformation);
+                    $(document).on('click', selector.showOriginalOptionInformation, private.showOriginalOptionInformation);
                     $(selector.stepForm).on('submit', private.doStepOptionValidation);
                 }
                 private.initRadioButtons();
