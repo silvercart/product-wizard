@@ -77,6 +77,7 @@ class SilvercartProductWizardStepOption extends DataObject
         'DisplayConditionType'      => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation' => 'Enum(",And,Or","")',
         'ProductRelationData'       => 'Text',
+        'ProductViewIsReadonly'     => 'Boolean(0)',
         'Sort'                      => 'Int',
     ];
     /**
@@ -165,6 +166,7 @@ class SilvercartProductWizardStepOption extends DataObject
             }
             if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
                 $fields->removeByName('Products');
+                $fields->removeByName('ProductViewIsReadonly');
             }
             if ($this->OptionType !== self::OPTION_TYPE_BUTTON) {
                 $fields->removeByName('ButtonTitle');

@@ -263,6 +263,9 @@ silvercart.SteppedProductWizard = (function () {
                         $('.panel-body .row', newPanel).append($(this));
                     }
                 });
+                if ($('.panel-body .row >div', panel).length === 0) {
+                    panel.remove();
+                }
                 if (newPanel !== false) {
                     var columnIndex = $('>div', property.optionSetSelector).length,
                         boxID       = $(property.optionSetSelector).attr('id') + 'Box' + columnIndex;

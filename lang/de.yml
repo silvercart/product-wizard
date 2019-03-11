@@ -80,6 +80,7 @@ de:
         ProductDynQuantityStepOptionIDDesc: "Die Benutzereingabe dieser Option wird als Menge für den Warenkorb verwendet. Erfolgt keine Eingabe oder wird die Option übersprungen, wird die Mindestanzahl verwendet."
         ProductMinQuantity: "Mindestmenge"
         ProductMinQuantityDesc: "Mindestmenge, die in den Warenkorb gelegt werden soll."
+        ProductViewIsReadonly: "Keine Benutzereingabe erlauben"
         Sort: "Sortierreihenfolge"
         Step: "Schritt"
         Text: "Text"
