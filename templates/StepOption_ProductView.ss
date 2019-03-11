@@ -1,4 +1,4 @@
-<div class="panel panel-default w-100 my-10 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
+<div class="panel panel-default panel-products w-100 my-10 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
     <div class="panel-heading h-100 text-center d-none">
         <h3 class="panel-title">{$Title}</h3>
     </div>
@@ -13,7 +13,7 @@
                 <% else %>
                     <img class="img-responsive" src="{$ListImage.Pad(214,145).URL}" alt="{$Title}" />
                 <% end_if %>
-                    <div class="spinner-field spinner-field-xs clearfix my-5">
+                    <div class="spinner-field spinner-field-xs clearfix my-5 text-nowrap">
                         <input type="text" name="StepOptions[{$Up.ID}][{$ID}][Quantity]" value="{$Up.getProductQuantityValue($ID)}" />
                         <a href="javascript:;" class="btn btn-xs btn-primary select-product" data-option-id="{$Up.ID}" data-product-id="{$ID}"><%t ProductWizard.Choose 'Choose' %></a>
                     </div>

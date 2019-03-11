@@ -34,8 +34,6 @@ de:
         SINGULARNAME: "Konfigurator-Schritt"
         ButtonTitle: "Button-Text"
         ButtonTitleDesc: "Wenn Sie dieses Feld leer lassen, wird \"Weiter\" verwendet."
-        Content: "Inhalt"
-        ContentDesc: "Wird über den Konfigurator-Optionen angezeigt."
         Continue: "Weiter"
         InfoBoxTitle: "Titel der Info-Box"
         InfoBoxTitleDesc: "Titel, der beim Betreten des Schritts in der Info-Box angezeigt wird."

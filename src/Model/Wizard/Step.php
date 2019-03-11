@@ -39,7 +39,6 @@ class SilvercartProductWizardStep extends DataObject
      */
     private static $db = [
         'Title'          => 'Varchar(256)',
-        'Content'        => 'HTMLText',
         'InfoBoxTitle'   => 'Varchar(256)',
         'InfoBoxContent' => 'HTMLText',
         'ButtonTitle'    => 'Varchar',
@@ -122,9 +121,6 @@ class SilvercartProductWizardStep extends DataObject
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
             $fields->dataFieldByName('ButtonTitle')
                     ->setDescription($this->fieldLabel('ButtonTitleDesc'));
-            $fields->dataFieldByName('Content')
-                    ->setDescription($this->fieldLabel('ContentDesc'))
-                    ->setRows(3);
             $fields->dataFieldByName('InfoBoxTitle')
                     ->setDescription($this->fieldLabel('InfoBoxTitleDesc'));
             $fields->dataFieldByName('InfoBoxContent')
