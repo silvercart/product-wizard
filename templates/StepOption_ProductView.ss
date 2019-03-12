@@ -42,7 +42,11 @@
                     </div>
                 </div>
             <% if $LongDescription %>
-                {$setCurrentOptionID($Up.ID)}
+                <% if $Up.ProductViewIsReadonly %>
+                    {$setCurrentOptionID}
+                <% else %>
+                    {$setCurrentOptionID($Up.ID)}
+                <% end_if %>
                 <% include ProductWizardProductDetailModal %>
             <% end_if %>
             </div>

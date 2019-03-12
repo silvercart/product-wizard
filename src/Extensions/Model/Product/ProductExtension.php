@@ -39,7 +39,7 @@ class ProductExtension extends DataExtension
      * 
      * @return void
      */
-    public function setCurrentOptionID(int $optionID) : void
+    public function setCurrentOptionID(int $optionID = null) : void
     {
         $this->currentOptionID = $optionID;
     }
