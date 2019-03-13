@@ -1,12 +1,12 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Wizard;
+namespace SilverCart\ProductWizard\Model\Wizard;
 
-use SilvercartProductWizardDisplayCondition as DisplayCondition;
-use SilvercartProductWizardStep as Step;
-use SilvercartProductWizardStepOption as StepOption;
-use DataObject as DataObject;
-use HTMLText as DBHTMLText;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\ORM\FieldType\DBInt;
 
 /**
  * An option set to combine different options into one step section.
@@ -18,10 +18,10 @@ use HTMLText as DBHTMLText;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardStepOptionSet extends DataObject
+class StepOptionSet extends DataObject
 {
-    use SilverCart\ORM\ExtensibleDataObject;
-    use SilverCart\ProductWizard\Model\Wizard\DisplayConditional;
+    use \SilverCart\ORM\ExtensibleDataObject;
+    use DisplayConditional;
     
     /**
      * DB table name.
@@ -38,7 +38,7 @@ class SilvercartProductWizardStepOptionSet extends DataObject
         'Title'                     => 'Varchar(256)',
         'DisplayConditionType'      => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation' => 'Enum(",And,Or","")',
-        'Sort'                      => 'Int',
+        'Sort'                      => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -46,7 +46,7 @@ class SilvercartProductWizardStepOptionSet extends DataObject
      * @var array
      */
     private static $has_one = [
-        'Step' => 'SilvercartProductWizardStep',
+        'Step' => Step::class,
     ];
     /**
      * Has many relations.
@@ -54,8 +54,8 @@ class SilvercartProductWizardStepOptionSet extends DataObject
      * @var array
      */
     private static $has_many = [
-        'StepOptions'       => 'SilvercartProductWizardStepOption',
-        'DisplayConditions' => 'SilvercartProductWizardDisplayCondition',
+        'StepOptions'       => StepOption::class,
+        'DisplayConditions' => DisplayCondition::class,
     ];
     /**
      * Casted attributes.
@@ -93,13 +93,13 @@ class SilvercartProductWizardStepOptionSet extends DataObject
             $fields->removeByName('Sort');
             if ($this->exists()) {
                 $stepOptionsField = $fields->dataFieldByName('StepOptions');
-                /* @var $stepOptionsField GridField */
+                /* @var $stepOptionsField \SilverStripe\Forms\GridField\GridField */
                 $stepOptionsField->setList($stepOptionsField->getList()->sort('Sort ASC'));
                 $stepOptionsConfig = $stepOptionsField->getConfig();
-                if (class_exists('GridFieldOrderableRows')) {
-                    $stepOptionsConfig->addComponent(new GridFieldOrderableRows('Sort'));
-                } elseif (class_exists('GridFieldSortableRows')) {
-                    $stepOptionsConfig->addComponent(new GridFieldSortableRows('Sort'));
+                if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
+                    $stepOptionsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
+                } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
+                    $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
                 $fields->removeByName('ProductWizardStepPageID');
             }
@@ -150,7 +150,7 @@ class SilvercartProductWizardStepOptionSet extends DataObject
      */
     public function forTemplate()
     {
-        return $this->renderWith("StepOptionSet");
+        return $this->renderWith(self::class);
     }
     
     /**

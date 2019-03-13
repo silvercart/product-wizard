@@ -1,11 +1,11 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Wizard;
+namespace SilverCart\ProductWizard\Model\Wizard;
 
-use SilvercartProductWizardStep as Step;
-use SilvercartProductWizardStepOptionSet as StepOptionSet;
-use DataObject as DataObject;
-use DropdownField as DropdownField;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\FieldType\DBInt;
 
 /**
  * A display condition for a StepOption or a StepOptionSet.
@@ -17,9 +17,9 @@ use DropdownField as DropdownField;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardDisplayCondition extends DataObject
+class DisplayCondition extends DataObject
 {
-    use SilverCart\ORM\ExtensibleDataObject;
+    use \SilverCart\ORM\ExtensibleDataObject;
     
     const TYPE_IS_EQUAL                 = 'IsEqual';
     const TYPE_IS_NOT_EQUAL             = 'IsNotEqual';
@@ -40,10 +40,10 @@ class SilvercartProductWizardDisplayCondition extends DataObject
      * @var array
      */
     private static $db = [
-        'StepOptionID' => 'Int',
+        'StepOptionID' => DBInt::class,
         'Type'         => 'Enum("IsEqual,IsNotEqual,IsGreaterThan,IsLighterThan,IsGreaterThanOrEqual,IsLighterThanOrEqual","IsEqual")',
         'TargetValue'  => 'Varchar(256)',
-        'Sort'         => 'Int',
+        'Sort'         => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -51,8 +51,8 @@ class SilvercartProductWizardDisplayCondition extends DataObject
      * @var array
      */
     private static $has_one = [
-        'ParentStepOption' => 'SilvercartProductWizardStepOption',
-        'StepOptionSet'    => 'SilvercartProductWizardStepOptionSet',
+        'ParentStepOption' => StepOption::class,
+        'StepOptionSet'    => StepOptionSet::class,
     ];
     /**
      * Default sort field and direction.
@@ -154,7 +154,8 @@ class SilvercartProductWizardDisplayCondition extends DataObject
      */
     public function getTypeNice() : string
     {
-        return _t(self::class . ".Type{$this->Type}", $this->Type);;
+        $default = empty($this->Type) ? 'Type' : $this->Type;
+        return _t(self::class . ".Type{$this->Type}", $default);
     }
     
     /**
@@ -171,8 +172,8 @@ class SilvercartProductWizardDisplayCondition extends DataObject
         $stepOptionID = $this->StepOptionID;
         $step         = $this->getContextStep();
         $stepPage     = $step->ProductWizardStepPage();
-        /* @var $step SilvercartProductWizardStep */
-        /* @var $stepPage SilvercartProductWizardStepPage */
+        /* @var $step Step */
+        /* @var $stepPage \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage */
         $postVars     = $stepPage->getPostVarsFor($step);
         if (array_key_exists('StepOptions', $postVars)
          && is_array($postVars['StepOptions'])

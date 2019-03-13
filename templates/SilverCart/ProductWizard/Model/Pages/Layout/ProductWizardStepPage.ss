@@ -1,5 +1,5 @@
-<% require css('silvercart-product-wizard/client/css/wizard.css') %>
-<% require javascript('silvercart-product-wizard/client/javascript/silvercart.steppedproductwizard.js') %>
+<% require css('silvercart/product-wizard:client/css/wizard.css') %>
+<% require javascript('silvercart/product-wizard:client/javascript/silvercart.steppedproductwizard.js') %>
 <% if not $CurrentStep.StepOptionSets.exists %>
 <div class="row bg-white mb-40 pb-20">
 <% if $InsertWidgetArea('Sidebar') %>
@@ -11,9 +11,9 @@
         <% with $CurrentStep %>
         <form action="{$Link}" method="POST" name="ProductWizardStepForm">
             <% if $StepOptionSets.exists %>
-                <% include ProductWizardStepOptionSets %>
+                <% include SilverCart\ProductWizard\Model\Pages\StepOptionSets %>
             <% else %>
-                <% include ProductWizardStepOptions %>
+                <% include SilverCart\ProductWizard\Model\Pages\StepOptions %>
             <% end_if %>
         </form>
         <% end_with %>
@@ -37,9 +37,9 @@
         <% with $CurrentStep %>
         <form action="{$Link}" method="POST" name="ProductWizardStepForm">
             <% if $StepOptionSets.exists %>
-                <% include ProductWizardStepOptionSets %>
+                <% include SilverCart\ProductWizard\Model\Pages\StepOptionSets %>
             <% else %>
-                <% include ProductWizardStepOptions %>
+                <% include SilverCart\ProductWizard\Model\Pages\StepOptions %>
             <% end_if %>
         </form>
         <% end_with %>

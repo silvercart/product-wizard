@@ -27,27 +27,23 @@
 .product-box.picked .fa-check {
     display: block;
 }
-.panel-default.choosable-option>.panel-heading {
+.card.choosable-option>.card-title {
     border-bottom-width: 0px;
 }
-.panel-default.choosable-option:hover {
+.card.choosable-option:hover {
     border-color: rgba(27,117,186,.45);
     box-shadow: 0 1px 1px rgba(27,117,186,.05);
 }
-.panel-default.choosable-option:hover>.panel-heading {
+.card.choosable-option:hover>.card-title {
     color: #333;
     background-color: rgba(27,117,186,.35);
     border-color: rgba(27,117,186,.45);
 }
-.panel-default.choosable-option.picked {
+.card.choosable-option.picked {
     color: #fff;
     border-color: rgba(27,117,186,1);
     box-shadow: 0 1px 1px rgba(27,117,186,.25);
-}
-.panel-default.choosable-option.picked>.panel-heading {
-    color: #fff;
     background-color: rgba(27,117,186,.95);
-    border-color: rgba(27,117,186,1);
 }
 #product-wizard-step .info-box {
     height: calc(100% - 86px);

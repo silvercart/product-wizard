@@ -1,16 +1,16 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Pages;
+namespace SilverCart\ProductWizard\Model\Pages;
 
-use SilvercartProductWizardStep as Step;
-use Page as Page;
-use FieldList as FieldList;
-use GridField as GridField;
-use GridFieldAddExistingAutocompleter as GridFieldAddExistingAutocompleter;
-use GridFieldConfig_RelationEditor as GridFieldConfig_RelationEditor;
-use Session as Session;
-use SiteTree as SiteTree;
-use ArrayList as ArrayList;
+use Page;
+use SilverCart\Dev\Tools;
+use SilverCart\ProductWizard\Model\Wizard\Step;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\ORM\ArrayList;
 
 /**
  * Page type to guide a cutomer through a stepped product wizard.
@@ -22,7 +22,7 @@ use ArrayList as ArrayList;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardStepPage extends Page
+class ProductWizardStepPage extends Page
 {
     use \SilverCart\ORM\ExtensibleDataObject;
     
@@ -54,7 +54,7 @@ class SilvercartProductWizardStepPage extends Page
      */
     public static function getCurrentStepIDFromSession() : int
     {
-        return (int) Session::get(self::SESSION_KEY_CURRENT_STEP);
+        return (int) Tools::Session()->get(self::SESSION_KEY_CURRENT_STEP);
     }
     
     /**
@@ -64,7 +64,7 @@ class SilvercartProductWizardStepPage extends Page
      */
     public static function getPostVars() : array
     {
-        $postVars = Session::get(self::SESSION_KEY_POST_VARS);
+        $postVars = Tools::Session()->get(self::SESSION_KEY_POST_VARS);
         if (!is_array($postVars)) {
             $postVars = [];
         }
@@ -85,7 +85,7 @@ class SilvercartProductWizardStepPage extends Page
         if ($step instanceof Step) {
             $sessionKey .= ".{$step->ID}";
         }
-        $postVars = Session::get($sessionKey);
+        $postVars = Tools::Session()->get($sessionKey);
         if (!is_array($postVars)) {
             $postVars = [];
         }
@@ -103,10 +103,10 @@ class SilvercartProductWizardStepPage extends Page
      */
     public static function setPostVarsForPage(array $postVars, SiteTree $page, Step $step) : void
     {
-        Session::set(self::SESSION_KEY_POST_VARS . ".{$page->ID}.{$step->ID}", null);
-        Session::save();
-        Session::set(self::SESSION_KEY_POST_VARS . ".{$page->ID}.{$step->ID}", $postVars);
-        Session::save();
+        Tools::Session()->set(self::SESSION_KEY_POST_VARS . ".{$page->ID}.{$step->ID}", null);
+        Tools::saveSession();
+        Tools::Session()->set(self::SESSION_KEY_POST_VARS . ".{$page->ID}.{$step->ID}", $postVars);
+        Tools::saveSession();
     }
     
     /**
@@ -127,7 +127,7 @@ class SilvercartProductWizardStepPage extends Page
      * @var array
      */
     private static $has_many = [
-        'Steps' => 'SilvercartProductWizardStep',
+        'Steps' => Step::class,
     ];
     
     /**
@@ -157,10 +157,10 @@ class SilvercartProductWizardStepPage extends Page
             $field  = GridField::create('Steps', $this->fieldLabel('Steps'), $this->Steps(), $config);
             $tab->push($field);
             $config->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
-            if (class_exists('GridFieldOrderableRows')) {
-                $config->addComponent(new GridFieldOrderableRows('Sort'));
-            } elseif (class_exists('GridFieldSortableRows')) {
-                $config->addComponent(new GridFieldSortableRows('Sort'));
+            if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
+                $config->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
+            } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
+                $config->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
             }
         });
         return parent::getCMSFields();
@@ -171,12 +171,12 @@ class SilvercartProductWizardStepPage extends Page
      * 
      * @param Step $step Step to add
      * 
-     * @return \SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 25.02.2019
      */
-    public function addCompletedStep(Step $step) : SilvercartProductWizardStepPage
+    public function addCompletedStep(Step $step) : ProductWizardStepPage
     {
         $completedStepIDs = $this->getCompletedStepIDs();
         if (!in_array($step->ID, $completedStepIDs)) {
@@ -194,7 +194,7 @@ class SilvercartProductWizardStepPage extends Page
      */
     public function getCompletedStepIDs() : array
     {
-        return (array) Session::get(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}");
+        return (array) Tools::Session()->get(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}");
     }
     
     /**
@@ -202,14 +202,14 @@ class SilvercartProductWizardStepPage extends Page
      * 
      * @param array $ids ID list to set
      * 
-     * @return \SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      */
-    public function setCompletedStepIDs(array $ids) : SilvercartProductWizardStepPage
+    public function setCompletedStepIDs(array $ids) : ProductWizardStepPage
     {
-        Session::set(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}", null);
-        Session::save();
-        Session::set(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}", $ids);
-        Session::save();
+        Tools::Session()->set(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}", null);
+        Tools::saveSession();
+        Tools::Session()->set(self::SESSION_KEY_COMPLETED_STEPS . ".{$this->ID}", $ids);
+        Tools::saveSession();
         return $this;
     }
     
@@ -254,9 +254,9 @@ class SilvercartProductWizardStepPage extends Page
      * 
      * @param Step $step Step to set
      * 
-     * @return SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      */
-    public function setCurrentStep(Step $step) : SilvercartProductWizardStepPage
+    public function setCurrentStep(Step $step) : ProductWizardStepPage
     {
         $this->currentStep = $step;
         return $this;
@@ -295,9 +295,9 @@ class SilvercartProductWizardStepPage extends Page
      * @param array $postVars Post vars
      * @param Step  $step     Step context
      * 
-     * @return SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      */
-    public function setPostVarsFor(array $postVars, Step $step) : SilvercartProductWizardStepPage
+    public function setPostVarsFor(array $postVars, Step $step) : ProductWizardStepPage
     {
         self::setPostVarsForPage($postVars, $this, $step);
         return $this;
@@ -307,12 +307,12 @@ class SilvercartProductWizardStepPage extends Page
      * Initializes the current step by session or sets the first step as current
      * step.
      * 
-     * @return \SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 24.02.2019
      */
-    public function initCurrentStep() : SilvercartProductWizardStepPage
+    public function initCurrentStep() : ProductWizardStepPage
     {
         $idBySession = self::getCurrentStepIDFromSession();
         $currentStep = Step::get()->byID($idBySession);
@@ -328,12 +328,12 @@ class SilvercartProductWizardStepPage extends Page
     /**
      * Resets the submitted step data.
      * 
-     * @return \SilvercartProductWizardStepPage
+     * @return ProductWizardStepPage
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 27.02.2019
      */
-    public function resetPostVars() : SilvercartProductWizardStepPage
+    public function resetPostVars() : ProductWizardStepPage
     {
         foreach ($this->Steps() as $step) {
             $this->setPostVarsFor([], $step);

@@ -2,10 +2,10 @@
 
 namespace SilverCart\ProductWizard\Model\Wizard;
 
-use FieldList;
-use Permission;
-use DropdownField;
-use LiteralField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Security\Permission;
 
 /**
  * Trait to add some SilverCart ProductWizard DisplayCondition related features
@@ -42,13 +42,13 @@ trait DisplayConditional
         $fields->removeByName('DisplayConditionOperation');
         if ($this->exists()) {
             $displayConditionsField = $fields->dataFieldByName('DisplayConditions');
-            /* @var $displayConditionsField GridField */
+            /* @var $displayConditionsField \SilverStripe\Forms\GridField\GridField */
             $displayConditionsField->setList($displayConditionsField->getList()->sort('Sort ASC'));
             $displayConditionsConfig = $displayConditionsField->getConfig();
-            if (class_exists('GridFieldOrderableRows')) {
-                $displayConditionsConfig->addComponent(new \GridFieldOrderableRows('Sort'));
-            } elseif (class_exists('GridFieldSortableRows')) {
-                $displayConditionsConfig->addComponent(new \GridFieldSortableRows('Sort'));
+            if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
+                $displayConditionsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
+            } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
+                $displayConditionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
             }
             $conditionTypes = [];
             foreach ($this->dbObject('DisplayConditionType')->enumValues() as $enumValue) {

@@ -27,7 +27,7 @@ silvercart.SteppedProductWizard = (function () {
             stepOptionSetNavigation: "#ProductWizardStepOptionSetNavigation",
             stepOptionSets: ".ProductWizardStepOptionSet",
             stepOptionSetBox: ".ProductWizardStepOptionSetBox",
-            stepPanel: "#product-wizard-step .panel",
+            stepPanel: "#product-wizard-step .card",
             selectProductButton: "#product-wizard-step .select-product",
             showOriginalOptionInformation: "#product-wizard-step-show-original-option-information"
         },
@@ -63,29 +63,30 @@ silvercart.SteppedProductWizard = (function () {
                 if ($('input[type="radio"]:checked', $(this)).length > 0) {
                     $('input[type="radio"]', $(this)).each(function() {
                         if ($(this).is(':checked') === false) {
-                            $(this).closest('label').hide();
+                            $(this).closest('.form-check').hide();
                         }
                     });
                 }
             },
             selectProduct: function() {
-                var productID   = $(this).data('product-id'),
-                    optionID    = $(this).data('option-id'),
-                    selectField = $('input[name="StepOptions[' + optionID + '][' + productID + '][Select]"]');
+                var productID     = $(this).data('product-id'),
+                    optionID      = $(this).data('option-id'),
+                    selectField   = $('input[name="StepOptions[' + optionID + '][' + productID + '][Select]"]'),
+                    quantityField = $('input[name="StepOptions[' + optionID + '][' + productID + '][Quantity]"]');
                 if (selectField.val() === '0') {
                     selectField.val('1');
                     selectField.closest('.product-box').addClass('picked');
-                    $('input[type="text"]', selectField.closest('.product-box')).attr('required', 'required');
+                    quantityField.attr('required', 'required');
                 } else {
                     selectField.val('0');
                     selectField.closest('.product-box').removeClass('picked');
-                    $('input[type="text"]', selectField.closest('.product-box')).removeAttr('required');
+                    quantityField.removeAttr('required');
                 }
             },
             showNotSelectedRadioButtons: function() {
                 $('input[type="radio"]', $(this)).each(function() {
                     if ($(this).is(':checked') === false) {
-                        $(this).closest('label').show();
+                        $(this).closest('.form-check').show();
                     }
                 });
             },
@@ -291,10 +292,11 @@ silvercart.SteppedProductWizard = (function () {
                     $(selector.stepForm).on('submit', private.doStepOptionValidation);
                 }
                 private.initRadioButtons();
-                private.initResponsiveOptionSets();
                 $(selector.stepPanel).on('mouseover', private.showNotSelectedRadioButtons);
                 $(selector.stepPanel).on('mouseout', private.hideNotSelectedRadioButtons);
                 $(selector.selectProductButton).on('click', private.selectProduct);
+                return;
+                private.initResponsiveOptionSets();
                 $(window).on('resize', private.initResponsiveOptionSets);
                 $('a', selector.stepOptionSetNavigation).on('click', private.showOptionSet);
                 $('a.showOptionSet', selector.stepForm).on('click', private.showOptionSet);

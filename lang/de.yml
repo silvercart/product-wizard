@@ -9,14 +9,12 @@ de:
         RedirectionInProgress: "Sie werden in wenigen Sekunden zum Warenkorb weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button."
         RedirectionInProgress2: "Sie werden in wenigen Sekunden zum Konfigurator weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button."
     SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
-    SilvercartProductWizardStepPage:
         DESCRIPTION: "Seite, die einen auf Schritten basierten Produkt-Konfigurator bereitstellt."
         PLURALNAME: "Produkt-Konfiguratoren (Schritt-basiert)"
         SINGULARNAME: "Produkt-Konfigurator (Schritt-basiert)"
         Back: "Zurück"
         Steps: "Schritte"
     SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
-    SilvercartProductWizardDisplayCondition:
         PLURALNAME: "Anzeigebedingungen"
         SINGULARNAME: "Anzeigebedingung"
         ParentStepOption: "Eltern-Option"
@@ -31,7 +29,6 @@ de:
         TypeIsGreaterThanOrEqual: "entspricht oder ist größer als"
         TypeIsLighterThanOrEqual: "entspricht oder ist kleiner als"
     SilverCart\ProductWizard\Model\Wizard\Step:
-    SilvercartProductWizardStep:
         PLURALNAME: "Konfigurator-Schritte"
         SINGULARNAME: "Konfigurator-Schritt"
         ButtonTitle: "Button-Text"
@@ -47,7 +44,6 @@ de:
         StepIcon: "Icon"
         Title: "Titel"
     SilverCart\ProductWizard\Model\Wizard\StepOption:
-    SilvercartProductWizardStepOption:
         PLURALNAME: "Konfigurator-Schritt-Optionen"
         SINGULARNAME: "Konfigurator-Schritt-Option"
         ButtonTitle: "Button-Text"
@@ -86,7 +82,6 @@ de:
         Text: "Text"
         Title: "Titel"
     SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
-    SilvercartProductWizardStepOptionSet:
         PLURALNAME: "Konfigurator-Schritt-Option-Sets"
         SINGULARNAME: "Konfigurator-Schritt-Option-Set"
         DisplayConditions: "Anzeigebedingungen"

@@ -1,18 +1,22 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Wizard;
+namespace SilverCart\ProductWizard\Model\Wizard;
 
+use SilverCart\Forms\FormFields\TextField;
+use SilverCart\Model\Order\ShoppingCart;
+use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
-use SilvercartProductWizardStep as Step;
-use SilvercartProduct as Product;
-use SilvercartShoppingCart as ShoppingCart;
-use ArrayList as ArrayList;
-use DataList as DataList;
-use DataObject as DataObject;
-use HTMLText as DBHTMLText;
-use DropdownField as DropdownField;
-use GroupedDropdownField as GroupedDropdownField;
-use TextField as TextField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GroupedDropdownField;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\ORM\FieldType\DBInt;
+use SilverStripe\ORM\FieldType\DBText;
+use SilverStripe\ORM\FieldType\DBVarchar;
+use SilverStripe\View\ArrayData;
 
 /**
  * A step option a customer can pick on a SilverCart ProductWizardStepPage.
@@ -24,19 +28,19 @@ use TextField as TextField;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardStepOption extends DataObject
+class StepOption extends DataObject
 {
-    use SilverCart\ORM\ExtensibleDataObject;
-    use SilverCart\ProductWizard\Model\Wizard\DisplayConditional;
+    use \SilverCart\ORM\ExtensibleDataObject;
+    use DisplayConditional;
     
-    const OPTION_TYPE_BINARY              = 'BinaryQuestion';
-    const OPTION_TYPE_BUTTON              = 'Button';
-    const OPTION_TYPE_LABEL               = 'Label';
-    const OPTION_TYPE_NUMBER              = 'Number';
-    const OPTION_TYPE_PRODUCT_VIEW        = 'ProductView';
-    const OPTION_TYPE_RADIO               = 'Radio';
-    const OPTION_TYPE_TEXTAREA            = 'TextArea';
-    const OPTION_TYPE_TEXTFIELD           = 'TextField';
+    const OPTION_TYPE_BINARY       = 'BinaryQuestion';
+    const OPTION_TYPE_BUTTON       = 'Button';
+    const OPTION_TYPE_LABEL        = 'Label';
+    const OPTION_TYPE_NUMBER       = 'Number';
+    const OPTION_TYPE_PRODUCT_VIEW = 'ProductView';
+    const OPTION_TYPE_RADIO        = 'Radio';
+    const OPTION_TYPE_TEXTAREA     = 'TextArea';
+    const OPTION_TYPE_TEXTFIELD    = 'TextField';
     
     /**
      * Delimiter to use for the option separation.
@@ -69,16 +73,16 @@ class SilvercartProductWizardStepOption extends DataObject
      */
     private static $db = [
         'Title'                     => 'Varchar(256)',
-        'Text'                      => 'Text',
+        'Text'                      => DBText::class,
         'OptionType'                => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView","BinaryQuestion")',
         'DefaultValue'              => 'Varchar(256)',
-        'Options'                   => 'Text',
-        'ButtonTitle'               => 'Varchar',
+        'Options'                   => DBText::class,
+        'ButtonTitle'               => DBVarchar::class,
         'DisplayConditionType'      => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation' => 'Enum(",And,Or","")',
-        'ProductRelationData'       => 'Text',
+        'ProductRelationData'       => DBText::class,
         'ProductViewIsReadonly'     => 'Boolean(0)',
-        'Sort'                      => 'Int',
+        'Sort'                      => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -86,8 +90,8 @@ class SilvercartProductWizardStepOption extends DataObject
      * @var array
      */
     private static $has_one = [
-        'Step'          => 'SilvercartProductWizardStep',
-        'StepOptionSet' => 'SilvercartProductWizardStepOptionSet',
+        'Step'          => Step::class,
+        'StepOptionSet' => StepOptionSet::class,
     ];
     /**
      * Has many relations.
@@ -95,7 +99,7 @@ class SilvercartProductWizardStepOption extends DataObject
      * @var array
      */
     private static $has_many = [
-        'DisplayConditions' => 'SilvercartProductWizardDisplayCondition',
+        'DisplayConditions' => DisplayCondition::class,
     ];
     /**
      * Has one relations.
@@ -103,7 +107,7 @@ class SilvercartProductWizardStepOption extends DataObject
      * @var array
      */
     private static $many_many = [
-        'Products' => 'SilvercartProduct',
+        'Products' => Product::class,
     ];
     /**
      * Casted attributes.
@@ -292,7 +296,7 @@ class SilvercartProductWizardStepOption extends DataObject
      */
     public function forTemplate()
     {
-        return $this->renderWith("StepOption_{$this->OptionType}");
+        return $this->renderWith(self::class . "_{$this->OptionType}");
     }
     
     /**
@@ -303,6 +307,39 @@ class SilvercartProductWizardStepOption extends DataObject
     public function getProductRelation() : OptionProductRelation
     {
         return OptionProductRelation::createByString((string) $this->ProductRelationData);
+    }
+    
+    /**
+     * Returns the related product.
+     * 
+     * @return Product|null
+     */
+    public function getProduct() : ?Product
+    {
+        $product = null;
+        if ($this->OptionType === self::OPTION_TYPE_NUMBER) {
+            $products  = $this->getProductRelation()->getProductsMap();
+            if (array_key_exists(0, $products)) {
+                $productID = (int) $products[0];
+                $product   = Product::get()->byID($productID);
+            }
+        }
+        return $product;
+    }
+    
+    /**
+     * Returns the value of ProductViewIsReadonly.
+     * If the option type is self::OPTION_TYPE_NUMBER, it's always false.
+     * 
+     * @return bool
+     */
+    public function getProductViewIsReadonly() : bool
+    {
+        $isReadonly = $this->getField('ProductViewIsReadonly');
+        if ($this->OptionType === self::OPTION_TYPE_NUMBER) {
+            $isReadonly = true;
+        }
+        return (bool) $isReadonly;
     }
     
     /**
@@ -366,7 +403,7 @@ class SilvercartProductWizardStepOption extends DataObject
                     'StepOption'    => $this,
                     'Value'         => $key,
                     'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
-                    'Title'         => $option,
+                    'Title'         => trim($option),
                     'Product'       => $product,
                 ]);
             }
@@ -516,14 +553,24 @@ class SilvercartProductWizardStepOption extends DataObject
     }
     
     /**
+     * Returns whether this option is a product view.
+     * 
+     * @return bool
+     */
+    public function IsProductView() : bool
+    {
+        return $this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW;
+    }
+    
+    /**
      * Executes the shopping cart transformation for this option.
      * 
-     * @return \SilvercartProductWizardStepOption
+     * @return StepOption
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 27.02.2019
      */
-    public function executeCartTransformation() : SilvercartProductWizardStepOption
+    public function executeCartTransformation() : StepOption
     {
         $cartData = [];
         $quantity = 0;

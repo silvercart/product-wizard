@@ -1,9 +1,6 @@
 <?php
-$dir       = __DIR__;
-$sep       = DIRECTORY_SEPARATOR;
-$moduleDir = str_replace([Director::baseFolder(), $sep], '', $dir);
 
-Requirements::add_i18n_javascript("{$moduleDir}{$sep}client{$sep}javascript{$sep}lang");
+use SilverStripe\View\Requirements;
 
-$traitDisplayConditional = "{$dir}{$sep}src{$sep}Model{$sep}Wizard{$sep}DisplayConditional.php";
-require_once $traitDisplayConditional;
+Requirements::javascript('silverstripe/admin:client/dist/js/i18n.js');
+Requirements::add_i18n_javascript('silvercart/product-wizard:client/javascript/lang');

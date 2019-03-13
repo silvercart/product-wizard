@@ -5,7 +5,7 @@ Adds the Product Wizard feature to SilverCart.
 * Sebastian Diel <sdiel@pixeltricks.de>
 
 ## Requirements
-* SilverCart 3.7
+* SilverCart 4.1
 
 ## Summary
 SilverCart is an Open Source E-Commerce module for the CMS Framework SilverStripe.

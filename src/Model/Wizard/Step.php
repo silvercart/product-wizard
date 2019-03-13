@@ -1,11 +1,17 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Wizard;
+namespace SilverCart\ProductWizard\Model\Wizard;
 
-use SilvercartProductWizardStepPage_Controller as ProductWizardStepPageController;
-use DataObject as DataObject;
-use ArrayList as ArrayList;
-use Controller as Controller;
+use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
+use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
+use SilverStripe\Assets\Image;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\ORM\FieldType\DBInt;
+use SilverStripe\ORM\FieldType\DBVarchar;
 
 /**
  * A step on a SilverCart ProductWizardStepPage.
@@ -17,9 +23,9 @@ use Controller as Controller;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardStep extends DataObject
+class Step extends DataObject
 {
-    use SilverCart\ORM\ExtensibleDataObject;
+    use \SilverCart\ORM\ExtensibleDataObject;
     
     const ACTION_TYPE_LINK_TO_EXTERNAL = 'LinkToExternal';
     const ACTION_TYPE_LINK_TO_INTERNAL = 'LinkToInternal';
@@ -40,9 +46,9 @@ class SilvercartProductWizardStep extends DataObject
     private static $db = [
         'Title'          => 'Varchar(256)',
         'InfoBoxTitle'   => 'Varchar(256)',
-        'InfoBoxContent' => 'HTMLText',
-        'ButtonTitle'    => 'Varchar',
-        'Sort'           => 'Int',
+        'InfoBoxContent' => DBHTMLText::class,
+        'ButtonTitle'    => DBVarchar::class,
+        'Sort'           => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -50,8 +56,8 @@ class SilvercartProductWizardStep extends DataObject
      * @var array
      */
     private static $has_one = [
-        'ProductWizardStepPage' => 'SilvercartProductWizardStepPage',
-        'StepIcon'              => 'Image',
+        'ProductWizardStepPage' => ProductWizardStepPage::class,
+        'StepIcon'              => Image::class,
     ];
     /**
      * Has many relations.
@@ -59,8 +65,8 @@ class SilvercartProductWizardStep extends DataObject
      * @var array
      */
     private static $has_many = [
-        'StepOptions'    => 'SilvercartProductWizardStepOption.Step',
-        'StepOptionSets' => 'SilvercartProductWizardStepOptionSet.Step',
+        'StepOptions'    => StepOption::class . '.Step',
+        'StepOptionSets' => StepOptionSet::class . '.Step',
     ];
     /**
      * Casted attributes.
@@ -136,12 +142,12 @@ class SilvercartProductWizardStep extends DataObject
                 $stepOptionSetsField->setList($stepOptionSetsField->getList()->sort('Sort ASC'));
                 $stepOptionsConfig = $stepOptionsField->getConfig();
                 $stepOptionSetsConfig = $stepOptionSetsField->getConfig();
-                if (class_exists('GridFieldOrderableRows')) {
-                    $stepOptionsConfig->addComponent(new GridFieldOrderableRows('Sort'));
-                    $stepOptionSetsConfig->addComponent(new GridFieldOrderableRows('Sort'));
-                } elseif (class_exists('GridFieldSortableRows')) {
-                    $stepOptionsConfig->addComponent(new GridFieldSortableRows('Sort'));
-                    $stepOptionSetsConfig->addComponent(new GridFieldSortableRows('Sort'));
+                if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
+                    $stepOptionsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
+                    $stepOptionSetsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
+                } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
+                    $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
+                    $stepOptionSetsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
                 $fields->removeByName('ProductWizardStepPageID');
             }
@@ -162,7 +168,7 @@ class SilvercartProductWizardStep extends DataObject
         $summaryFields = [
             'Sort'     => '#',
             'Title'    => $this->fieldLabel('Title'),
-            'StepIcon' => $this->fieldLabel('StepIcon'),
+            //'StepIcon' => $this->fieldLabel('StepIcon'),
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
@@ -221,12 +227,12 @@ class SilvercartProductWizardStep extends DataObject
     /**
      * Returns the next step.
      * 
-     * @return \SilvercartProductWizardStep
+     * @return Step
      */
-    public function getNextStep() : SilvercartProductWizardStep
+    public function getNextStep() : Step
     {
         $next = $this->ProductWizardStepPage()->Steps()->where("Sort > {$this->Sort}")->first();
-        if (!($next instanceof SilvercartProductWizardStep)) {
+        if (!($next instanceof Step)) {
             $next = self::singleton();
         }
         return $next;
@@ -235,12 +241,12 @@ class SilvercartProductWizardStep extends DataObject
     /**
      * Returns the previous step.
      * 
-     * @return \SilvercartProductWizardStep
+     * @return Step
      */
-    public function getPreviousStep() : SilvercartProductWizardStep
+    public function getPreviousStep() : Step
     {
         $prev = $this->ProductWizardStepPage()->Steps()->where("Sort < {$this->Sort}")->last();
-        if (!($prev instanceof SilvercartProductWizardStep)) {
+        if (!($prev instanceof Step)) {
             $prev = self::singleton();
         }
         return $prev;

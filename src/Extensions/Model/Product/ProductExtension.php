@@ -2,8 +2,8 @@
 
 namespace SilverCart\ProductWizard\Extensions\Model\Product;
 
-use SilvercartProductWizardStepOption as ProductWizardStepOption;
-use DataExtension;
+use SilverCart\ProductWizard\Model\Wizard\StepOption;
+use SilverStripe\ORM\DataExtension;
 
 /**
  * Extension for a SilverCart product.
@@ -29,7 +29,7 @@ class ProductExtension extends DataExtension
      * @var array
      */
     private static $belongs_many_many = [
-        'ProductWizardStepOption' => 'SilvercartProductWizardStepOption',
+        'ProductWizardStepOption' => StepOption::class,
     ];
     
     /**
@@ -52,5 +52,20 @@ class ProductExtension extends DataExtension
     public function getCurrentOptionID() : ?int
     {
         return $this->currentOptionID;
+    }
+    
+    /**
+     * Returns the current step option context.
+     * 
+     * @return StepOption|null
+     */
+    public function getCurrentOption() : ?StepOption
+    {
+        $option   = null;
+        $optionID = $this->getCurrentOptionID();
+        if (is_numeric($optionID)) {
+            $option = StepOption::get()->byID($optionID);
+        }
+        return $option;
     }
 }

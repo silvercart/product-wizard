@@ -1,11 +1,11 @@
 <?php
 
-//namespace SilverCart\ProductWizard\Model\Pages;
+namespace SilverCart\ProductWizard\Model\Pages;
 
-use Page_Controller as PageController;
-use SilvercartProductWizardStep as Step;
-use SS_HTTPRequest as HTTPRequest;
-use HTMLText as DBHTMLText;
+use PageController;
+use SilverCart\ProductWizard\Model\Wizard\Step;
+use SilverStripe\Control\HTTPRequest;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
  * Controller for SilverCart ProductWizardStepPage.
@@ -17,7 +17,7 @@ use HTMLText as DBHTMLText;
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
  */
-class SilvercartProductWizardStepPage_Controller extends PageController
+class ProductWizardStepPageController extends PageController
 {
     /**
      * List of allowed actions.

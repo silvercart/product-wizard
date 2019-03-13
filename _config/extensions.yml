@@ -1,6 +1,6 @@
 ---
 name: silvercart-productwizard-extensions
 ---
-SilvercartProduct:
+SilverCart\Model\Product\Product:
     extensions:
         - SilverCart\ProductWizard\Extensions\Model\Product\ProductExtension
