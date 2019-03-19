@@ -3,6 +3,7 @@
 namespace SilverCart\ProductWizard\Extensions\Model\Product;
 
 use SilverCart\ProductWizard\Model\Wizard\StepOption;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 
 /**
@@ -31,6 +32,18 @@ class ProductExtension extends DataExtension
     private static $belongs_many_many = [
         'ProductWizardStepOption' => StepOption::class,
     ];
+    
+    /**
+     * Updates the CMS fiedls.
+     * 
+     * @param FieldList $fields Fields to update
+     * 
+     * @return void
+     */
+    public function updateCMSFields(FieldList $fields) : void
+    {
+        $fields->removeByName('ProductWizardStepOption');
+    }
     
     /**
      * Sets the current option ID.
