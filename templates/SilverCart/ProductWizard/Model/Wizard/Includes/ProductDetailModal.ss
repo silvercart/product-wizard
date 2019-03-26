@@ -18,8 +18,8 @@
                 <% end_if %>
                 <div class="text-justify">{$LongDescription}</div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary float-left" data-dismiss="modal"><%t ProductWizard.Close 'Close' %></button>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-gray" data-dismiss="modal"><%t ProductWizard.Close 'Close' %></button>
             <% if not $CurrentOption.getProductViewIsReadonly %>
                 <a href="javascript:;" class="btn btn-primary select-product" data-option-id="{$CurrentOptionID}" data-product-id="{$ID}" data-dismiss="modal"><%t ProductWizard.Choose 'Choose' %></a>
             <% end_if %>
