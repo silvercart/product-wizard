@@ -55,6 +55,12 @@ class StepOption extends DataObject
      */
     private static $short_option_max_length = 6;
     /**
+     * Determines whether $this->getCMSFields is called or not.
+     *
+     * @var bool
+     */
+    protected $getCMSFieldsIsCalled = false;
+    /**
      * Option list as ArrayList.
      *
      * @var ArrayList
@@ -72,17 +78,22 @@ class StepOption extends DataObject
      * @var array
      */
     private static $db = [
-        'Title'                     => 'Varchar(256)',
-        'Text'                      => DBText::class,
-        'OptionType'                => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView","BinaryQuestion")',
-        'DefaultValue'              => 'Varchar(256)',
-        'Options'                   => DBText::class,
-        'ButtonTitle'               => DBVarchar::class,
-        'DisplayConditionType'      => 'Enum(",Show,Hide","")',
-        'DisplayConditionOperation' => 'Enum(",And,Or","")',
-        'ProductRelationData'       => DBText::class,
-        'ProductViewIsReadonly'     => 'Boolean(0)',
-        'Sort'                      => DBInt::class,
+        'Title'                      => 'Varchar(256)',
+        'Content'                    => DBHTMLText::class,
+        'Text'                       => DBText::class,
+        'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView","BinaryQuestion")',
+        'DefaultValue'               => 'Varchar(256)',
+        'Options'                    => DBText::class,
+        'ButtonTitle'                => DBVarchar::class,
+        'DisplayConditionType'       => 'Enum(",Show,Hide","")',
+        'DisplayConditionOperation'  => 'Enum(",And,Or","")',
+        'ProductRelationData'        => DBText::class,
+        'ProductViewIsReadonly'      => 'Boolean(0)',
+        'ProductQuantityDropdownMax' => 'Int(5)',
+        'ProductQuantitySingular'    => 'Varchar(24)',
+        'ProductQuantityPlural'      => 'Varchar(24)',
+        'ProductPriceLabels'         => 'Text',
+        'Sort'                       => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -148,11 +159,14 @@ class StepOption extends DataObject
      */
     public function getCMSFields() : FieldList
     {
+        $this->getCMSFieldsIsCalled = true;
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
             $fields->removeByName('StepID');
             $fields->removeByName('StepOptionSetID');
             $fields->removeByName('ProductRelationData');
+            $fields->removeByName('ProductPriceLabels');
             $fields->removeByName('Sort');
+            $fields->dataFieldByName('Text')->setDescription($this->fieldLabel('TextDesc'));
             $optionTypes = [];
             foreach ($this->dbObject('OptionType')->enumValues() as $enumValue) {
                 $optionTypes[$enumValue] = _t(self::class . ".OptionType{$enumValue}", $enumValue);
@@ -171,6 +185,29 @@ class StepOption extends DataObject
             if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
                 $fields->removeByName('Products');
                 $fields->removeByName('ProductViewIsReadonly');
+                $fields->removeByName('ProductQuantityDropdownMax');
+                $fields->removeByName('ProductQuantityPlural');
+                $fields->removeByName('ProductQuantitySingular');
+            } else {
+                $fields->dataFieldByName('ProductQuantityDropdownMax')->setDescription($this->fieldLabel('ProductQuantityDropdownMaxDesc'));
+                $fields->dataFieldByName('ProductQuantityPlural')->setDescription($this->fieldLabel('ProductQuantityPluralDesc'));
+                $fields->dataFieldByName('ProductQuantitySingular')->setDescription($this->fieldLabel('ProductQuantitySingularDesc'));
+                foreach ($this->Products() as $product) {
+                    $fields->addFieldToTab('Root.Main', TextField::create(
+                            "ProductPriceLabel[{$product->ID}]",
+                            _t(self::class . '.ProductPriceLabelFor', 'Price label for {product}', ['product' => $product->Title]),
+                            $this->getProductPriceLabel($product->ID)));
+                }
+            }
+            if ($this->OptionType !== self::OPTION_TYPE_BUTTON
+             && $this->OptionType !== self::OPTION_TYPE_LABEL
+             && $this->OptionType !== self::OPTION_TYPE_NUMBER
+             && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
+             && $this->OptionType !== self::OPTION_TYPE_TEXTFIELD
+            ) {
+                $fields->removeByName('Content');
+            } else {
+                $fields->dataFieldByName('Content')->setRows(3);
             }
             if ($this->OptionType !== self::OPTION_TYPE_BUTTON) {
                 $fields->removeByName('ButtonTitle');
@@ -266,6 +303,9 @@ class StepOption extends DataObject
             $relation = OptionProductRelation::createByArray($_POST['OptionProductRelation']);
             $this->ProductRelationData = $relation->serialize();
         }
+        if (array_key_exists('ProductPriceLabel', $_POST)) {
+            $this->ProductPriceLabels = serialize($_POST['ProductPriceLabel']);
+        }
     }
     
     /**
@@ -279,8 +319,10 @@ class StepOption extends DataObject
     public function summaryFields() : array
     {
         $summaryFields = [
-            'Sort'     => '#',
-            'Title'    => $this->fieldLabel('Title'),
+            'Sort'                    => '#',
+            'Title'                   => $this->fieldLabel('Title'),
+            'OptionTypeNice'          => $this->fieldLabel('OptionType'),
+            'DisplayConditionSummary' => $this->fieldLabel('DisplayConditions'),
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
@@ -297,6 +339,83 @@ class StepOption extends DataObject
     public function forTemplate()
     {
         return $this->renderWith(self::class . "_{$this->OptionType}");
+    }
+    
+    /**
+     * Returns the display condition summary text.
+     * 
+     * @return DBHTMLText
+     */
+    public function getDisplayConditionSummary() : DBHTMLText
+    {
+        $summary = DBHTMLText::create();
+        if ($this->DisplayConditions()->exists()) {
+            foreach ($this->DisplayConditions() as $condition) {
+                $summary->setValue("{$summary->getValue()}• {$condition->getSummary()}<br/>");
+            }
+        }
+        return $summary;
+    }
+    
+    /**
+     * Returns the option type as an i18n readable string.
+     * 
+     * @return string
+     */
+    public function getOptionTypeNice()
+    {
+        $default = empty($this->OptionType) ? '---' : $this->OptionType;
+        return _t(self::class . ".OptionType{$this->OptionType}", $default);
+    }
+    
+    /**
+     * Returns the product price label for the given $productID.
+     * 
+     * @param int $productID Product ID
+     * 
+     * @return string
+     */
+    public function getProductPriceLabel(int $productID) : string
+    {
+        $label  = '';
+        $labels = unserialize($this->ProductPriceLabels);
+        if (is_array($labels)
+         && array_key_exists($productID, $labels)) {
+            $label = $labels[$productID];
+        }
+        return $label;
+    }
+    
+    /**
+     * Returns the dropdown values as ArrayData to render in a template.
+     * 
+     * @return ArrayData
+     */
+    public function getProductQuantityDropdownValues() : ArrayData
+    {
+        $currentAmount = 1;
+        $current = ArrayData::create();
+        $values  = ArrayList::create();
+        for ($x = 1; $x <= $this->ProductQuantityDropdownMax; $x++) {
+            if ($x === 1) {
+                $title = $this->ProductQuantitySingular;
+            } else {
+                $title = $this->ProductQuantityPlural;
+            }
+            $item = ArrayData::create([
+                'Title'    => $title,
+                'Quantity' => $x,
+            ]);
+            if ($x === $currentAmount) {
+                $current = $item;
+            } else {
+                $values->push($item);
+            }
+        }
+        return ArrayData::create([
+            'CurrentValue' => $current,
+            'Values'       => $values,
+        ]);
     }
     
     /**

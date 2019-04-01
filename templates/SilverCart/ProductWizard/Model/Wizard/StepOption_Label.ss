@@ -1,11 +1,14 @@
-<div class="panel panel-default w-100 my-10 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
-    <div class="panel-heading h-100 text-center d-none">
-        <h3 class="panel-title">{$Title}</h3>
+<div class="card rounded-0 w-100 shadow">
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$Title}</div>
+    <div class="card-body pt-0 pb-10 px-10 p-relative">
+    <% if $Text %>
+        <% if $Content %>
+        <div class="mt-10" style="height: calc(100% - 115px);">{$Content}</div>
+        <% end_if %>
+        <hr>
+        <p class="mb-0 text-center">{$Text}</p>
+    <% else_if $Content %>
+        <div class="mt-10">{$Content}</div>
+    <% end_if %>
     </div>
-    <div class="panel-body p-relative clearfix">
-        {$Title}
-    </div>
-<% if $Text %>
-    <span class="fa fa-info-circle p-absolute t-0 l-0 ml-20 mt-20"></span>
-<% end_if %>
 </div>

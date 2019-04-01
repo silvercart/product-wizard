@@ -11,6 +11,7 @@ use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\DataList;
 
 /**
  * Page type to guide a cutomer through a stepped product wizard.
@@ -93,6 +94,22 @@ class ProductWizardStepPage extends Page
     }
     
     /**
+     * Returns the current step ID from Session.
+     * 
+     * @param int $stepID Step ID to set
+     * 
+     * @return void
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 29.03.2019
+     */
+    public static function setCurrentStepIDToSession(int $stepID) : void
+    {
+        Tools::Session()->set(self::SESSION_KEY_CURRENT_STEP, $stepID);
+        Tools::saveSession();
+    }
+    
+    /**
      * Sets the $postVars for the given $page and $step.
      * 
      * @param array    $postVars Post vars
@@ -141,6 +158,7 @@ class ProductWizardStepPage extends Page
     {
         return $this->defaultFieldLabels($includerelations, [
             'Back' => _t(self::class . '.Back', 'Back'),
+            'Step' => _t(self::class . '.Step', 'Step'),
         ]);
     }
     
@@ -152,10 +170,10 @@ class ProductWizardStepPage extends Page
     public function getCMSFields() : FieldList
     {
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
-            $tab    = $fields->findOrMakeTab('Root.Steps', $this->fieldLabel('Steps'));
             $config = GridFieldConfig_RelationEditor::create(30);
             $field  = GridField::create('Steps', $this->fieldLabel('Steps'), $this->Steps(), $config);
-            $tab->push($field);
+            $fields->addFieldToTab('Root.Main', $field, 'Content');
+            $fields->removeByName('Content');
             $config->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
             if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
                 $config->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
@@ -259,7 +277,42 @@ class ProductWizardStepPage extends Page
     public function setCurrentStep(Step $step) : ProductWizardStepPage
     {
         $this->currentStep = $step;
+        self::setCurrentStepIDToSession($step->ID);
         return $this;
+    }
+    
+    /**
+     * Returns the current step.
+     * 
+     * @return DataList
+     */
+    public function getNavigationSteps() : DataList
+    {
+        return $this->Steps()->filter('ShowInStepNavigation', true);
+    }
+    
+    /**
+     * Returns the navigation progress as percentage.
+     * 
+     * @return float
+     */
+    public function getNavigationStepProgressPercentage() : float
+    {
+        $percentage   = 0;
+        $current      = $this->getCurrentStep();
+        $steps        = $this->getNavigationSteps();
+        $total        = $steps->count();
+        $completedIDs = $this->getCompletedStepIDs();
+        foreach ($steps as $index => $navStep) {
+            $currentStepNumber = $index + 1;
+            if ($current->ID === $navStep->ID) {
+                $percentage = $currentStepNumber / ($total / 100);
+                break;
+            } elseif (in_array($navStep->ID, $completedIDs)) {
+                $percentage = $currentStepNumber / ($total / 100);
+            }
+        }
+        return $percentage;
     }
     
     /**

@@ -1,19 +1,17 @@
-<div class="card w-100 mb-4 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
-    <div class="card-body">
-        <div class="form-group row">
-            <label for="StepOptions-{$ID}" class="col-sm-9 col-form-label">{$Title}</label>
-            <div class="col-sm-3">
-                <input type="number" name="StepOptions[{$ID}]" value="{$Value}" class="form-control" id="StepOptions-{$ID}" placeholder="" required="required">
-            </div>
-        </div>
-    <% if $Text %>
-        <span class="fa fa-info-circle p-absolute t-0 l-0 ml-1 mt-1"></span>
+<div class="card rounded-0 w-100 shadow">
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$Title}</div>
+    <div class="card-body pt-0 pb-10 px-10 p-relative">
+    <% if $Content %>
+        <div class="mt-10" style="height: calc(100% - 115px);">{$Content}</div>
     <% end_if %>
-    <% if $Product %>
-        <% with $Product %>
-            {$setCurrentOptionID($Up.ID)}
-            <% include SilverCart\ProductWizard\Model\Wizard\ProductBox %>
-        <% end_with %>
-    <% end_if %>
+        <hr>
+        <p class="mb-0 text-center">{$Text}</p>
+        <input type="number" name="StepOptions[{$ID}]" value="{$Value}" class="form-control" id="StepOptions-{$ID}" placeholder="" required="required">
     </div>
 </div>
+<% if $Product %>
+    <% with $Product %>
+        {$setCurrentOptionID($Up.ID)}
+        <% include SilverCart\ProductWizard\Model\Wizard\ProductBox %>
+    <% end_with %>
+<% end_if %>

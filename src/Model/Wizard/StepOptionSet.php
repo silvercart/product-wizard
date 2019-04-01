@@ -36,6 +36,8 @@ class StepOptionSet extends DataObject
      */
     private static $db = [
         'Title'                     => 'Varchar(256)',
+        'Description'               => 'Text',
+        'FontAwesomeIcon'           => 'Varchar(25)',
         'DisplayConditionType'      => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation' => 'Enum(",And,Or","")',
         'Sort'                      => DBInt::class,

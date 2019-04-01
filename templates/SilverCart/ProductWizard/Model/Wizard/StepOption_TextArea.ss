@@ -1,14 +1,15 @@
-<div class="card w-100 mb-4 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
-    <div class="card-body">
-        <h5 class="card-title">{$Title}</h5>
+<div class="card rounded-0 w-100 shadow">
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$Title}</div>
+    <div class="card-body pt-0 pb-10 px-10 p-relative">
+        <div class="mt-10">{$Content}</div>
         <div class="form-group row">
-            <label for="StepOptions-{$ID}" class="col-sm-12 col-form-label">{$Title}</label>
             <div class="col-sm-12">
                 <textarea name="StepOptions[{$ID}]" class="form-control" id="StepOptions-{$ID}" rows="3" placeholder="" required="required">{$Value}</textarea>
             </div>
         </div>
     <% if $Text %>
-        <span class="fa fa-info-circle p-absolute t-0 l-0 ml-1 mt-1"></span>
+        <hr>
+        <p class="mb-0 text-center">{$Text}</p>
     <% end_if %>
     </div>
 </div>

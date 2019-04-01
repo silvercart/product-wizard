@@ -4,7 +4,6 @@ namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
-use SilverStripe\Assets\Image;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataObject;
@@ -12,6 +11,7 @@ use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\FieldType\DBVarchar;
+use SilverStripe\View\Requirements;
 
 /**
  * A step on a SilverCart ProductWizardStepPage.
@@ -33,9 +33,15 @@ class Step extends DataObject
     const SKIP_TYPE_PARENT_YES         = 'ParentYes';
     
     /**
+     * FontAwesome CSS file source.
+     *
+     * @var string
+     */
+    private static $admin_font_awesome_css = 'silvercart/silvercart:client/css/font-awesome.css';
+    /**
      * DB table name.
      *
-     * @var array
+     * @var string
      */
     private static $table_name = 'SilvercartProductWizardStep';
     /**
@@ -44,11 +50,14 @@ class Step extends DataObject
      * @var array
      */
     private static $db = [
-        'Title'          => 'Varchar(256)',
-        'InfoBoxTitle'   => 'Varchar(256)',
-        'InfoBoxContent' => DBHTMLText::class,
-        'ButtonTitle'    => DBVarchar::class,
-        'Sort'           => DBInt::class,
+        'Title'                => 'Varchar(256)',
+        'InfoBoxTitle'         => 'Varchar(256)',
+        'InfoBoxContent'       => DBHTMLText::class,
+        'FontAwesomeIcon'      => 'Varchar(25)',
+        'ButtonTitle'          => DBVarchar::class,
+        'ShowInStepNavigation' => 'Boolean(0)',
+        'Template'             => 'Enum("OptionsWithProgress,OptionsWithInfo","OptionsWithProgress")',
+        'Sort'                 => DBInt::class,
     ];
     /**
      * Has one relations.
@@ -57,7 +66,6 @@ class Step extends DataObject
      */
     private static $has_one = [
         'ProductWizardStepPage' => ProductWizardStepPage::class,
-        'StepIcon'              => Image::class,
     ];
     /**
      * Has many relations.
@@ -89,11 +97,12 @@ class Step extends DataObject
     {
         $can = false;
         if ($this->exists()) {
-            if (!$this->ID === $this->ProductWizardStepPage()->Steps()->first()->ID) {
+            if ($this->ID === $this->ProductWizardStepPage()->Steps()->first()->ID) {
                 $can = $this->ProductWizardStepPage()->canView();
             } else {
                 $completedStepIDs = $this->ProductWizardStepPage()->getCompletedStepIDs();
                 if (in_array($this->ID, $completedStepIDs)
+                 || in_array($this->getPreviousStep()->ID, $completedStepIDs)
                  || $this->ID === $this->ProductWizardStepPage()->getCurrentStep()->ID
                 ) {
                     $can = true;
@@ -114,6 +123,7 @@ class Step extends DataObject
     {
         return $this->defaultFieldLabels($includerelations, [
             'Continue' => _t(self::class . '.Continue', 'Continue'),
+            'Step'     => _t(self::class . '.Step', 'Step'),
         ]);
     }
     
@@ -124,6 +134,9 @@ class Step extends DataObject
      */
     public function getCMSFields() : FieldList
     {
+        if (!empty($this->config()->admin_font_awesome_css)) {
+            Requirements::css($this->config()->admin_font_awesome_css);
+        }
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
             $fields->dataFieldByName('ButtonTitle')
                     ->setDescription($this->fieldLabel('ButtonTitleDesc'));
@@ -132,6 +145,9 @@ class Step extends DataObject
             $fields->dataFieldByName('InfoBoxContent')
                     ->setDescription($this->fieldLabel('InfoBoxContentDesc'))
                     ->setRows(3);
+            $fields->dataFieldByName('FontAwesomeIcon')
+                    ->setDescription($this->fieldLabel('FontAwesomeIconDesc'))
+                    ->setRightTitle($this->getStepIcon());
             $fields->removeByName('Sort');
             if ($this->exists()) {
                 $stepOptionsField    = $fields->dataFieldByName('StepOptions');
@@ -166,9 +182,9 @@ class Step extends DataObject
     public function summaryFields() : array
     {
         $summaryFields = [
-            'Sort'     => '#',
-            'Title'    => $this->fieldLabel('Title'),
-            //'StepIcon' => $this->fieldLabel('StepIcon'),
+            'Sort'                      => '#',
+            'Title'                     => $this->fieldLabel('Title'),
+            'ShowInStepNavigation.Nice' => $this->fieldLabel('ShowInStepNavigation'),
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
@@ -210,6 +226,20 @@ class Step extends DataObject
     public function getButtonTitleYes() : string
     {
         return _t('Boolean.YESANSWER', 'Yes');
+    }
+    
+    /**
+     * Returns the FontAwesome step icon.
+     * 
+     * @return DBHTMLText
+     */
+    public function getStepIcon() : DBHTMLText
+    {
+        $icon = DBHTMLText::create();
+        if (!empty($this->FontAwesomeIcon)) {
+            $icon->setValue("<span class=\"fa fa-{$this->FontAwesomeIcon}\"></span>");
+        }
+        return $icon;
     }
     
     /**
@@ -354,5 +384,60 @@ class Step extends DataObject
             $link = $this->ProductWizardStepPage()->Link($action);
         }
         return $link;
+    }
+    
+    /**
+     * Returns whether this is the current step.
+     * 
+     * @return bool
+     */
+    public function IsCurrent() : bool
+    {
+        $isCurrent   = false;
+        $currentStep = $this->ProductWizardStepPage()->getCurrentStep();
+        if ($currentStep instanceof Step
+         && $currentStep->ID === $this->ID
+        ) {
+            $isCurrent = true;
+        }
+        return $isCurrent;
+    }
+    
+    /**
+     * Returns whether this step is completed.
+     * 
+     * @return bool
+     */
+    public function IsCompleted() : bool
+    {
+        $isCompleted      = false;
+        $completedStepIDs = $this->ProductWizardStepPage()->getCompletedStepIDs();
+        if (in_array($this->ID, $completedStepIDs)) {
+            $isCompleted = true;
+        }
+        return $isCompleted;
+    }
+    
+    /**
+     * Returns whether this step is completed.
+     * Alias for $this->IsCompleted().
+     * 
+     * @return bool
+     * 
+     * @see $this->IsCompleted()
+     */
+    public function IsFinished() : bool
+    {
+        return $this->IsCompleted();
+    }
+    
+    /**
+     * Returns the rendered step.
+     * 
+     * @return DBHTMLText
+     */
+    public function forTemplate() : DBHTMLText
+    {
+        return $this->renderWith(self::class . "_{$this->Template}");
     }
 }

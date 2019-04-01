@@ -3,8 +3,9 @@
 namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilverStripe\ORM\DataObject;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GroupedDropdownField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\FieldType\DBInt;
 
 /**
@@ -91,7 +92,7 @@ class DisplayCondition extends DataObject
             }
             $fields->dataFieldByName('Type')
                     ->setSource($types);
-            $fields->addFieldToTab('Root.Main', DropdownField::create('StepOptionID', $this->fieldLabel('StepOptionID'), $this->getOptions(), $this->OptionID), 'Type');
+            $fields->addFieldToTab('Root.Main', GroupedDropdownField::create('StepOptionID', $this->fieldLabel('StepOptionID'), $this->getOptions(), $this->OptionID), 'Type');
         });
         return parent::getCMSFields();
     }
@@ -123,13 +124,29 @@ class DisplayCondition extends DataObject
      */
     protected function getOptions() : array
     {
-        $options = [];
-        $step    = $this->getContextStep();
-        if ($step->exists()) {
-            $stepOptions = $step->StepOptions();
-            $options     = $stepOptions->map()->toArray();
+        $options     = [];
+        $contextStep = $this->getContextStep();
+        $stepPage    = $contextStep->ProductWizardStepPage();
+        foreach ($stepPage->Steps() as $step) {
+            if ($step->Sort > $contextStep->Sort) {
+                break;
+            }
+            if ($step->exists()) {
+                $stepOptions = $step->StepOptions();
+                $options[$step->Title] = $stepOptions->map()->toArray();
+            }
         }
         return $options;
+    }
+    
+    /**
+     * Returns the option.
+     * 
+     * @return StepOption|null
+     */
+    public function getStepOption() : ?StepOption
+    {
+        return StepOption::get()->byID($this->StepOptionID);
     }
     
     /**
@@ -139,12 +156,32 @@ class DisplayCondition extends DataObject
      */
     public function getStepOptionNice() : string
     {
-        $option  = '---';
-        $options = $this->getOptions();
-        if (array_key_exists($this->StepOptionID, $options)) {
-            $option = $options[$this->StepOptionID];
+        $option         = '---';
+        $groupedOptions = $this->getOptions();
+        foreach ($groupedOptions as $options) {
+            if (array_key_exists($this->StepOptionID, $options)) {
+                $option = $options[$this->StepOptionID];
+                break;
+            }
         }
         return $option;
+    }
+    
+    /**
+     * Returns a summary text for this condition.
+     * 
+     * @return DBHTMLText
+     */
+    public function getSummary() : DBHTMLText
+    {
+        $summary = DBHTMLText::create();
+        $option  = $this->getStepOption();
+        if ($option instanceof StepOption
+         && $option->exists()
+        ) {
+            $summary->setValue("\"{$this->getStepOptionNice()}\" {$this->getTypeNice()} {$this->TargetValue}");
+        }
+        return $summary;
     }
     
     /**
@@ -174,24 +211,27 @@ class DisplayCondition extends DataObject
         $stepPage     = $step->ProductWizardStepPage();
         /* @var $step Step */
         /* @var $stepPage \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage */
-        $postVars     = $stepPage->getPostVarsFor($step);
-        if (array_key_exists('StepOptions', $postVars)
-         && is_array($postVars['StepOptions'])
-         && array_key_exists($stepOptionID, $postVars['StepOptions'])
-         && (($postVars['StepOptions'][$stepOptionID] == $this->TargetValue
-           && $this->Type === self::TYPE_IS_EQUAL)
-          || ($postVars['StepOptions'][$stepOptionID] != $this->TargetValue
-           && $this->Type === self::TYPE_IS_NOT_EQUAL)
-          || ($postVars['StepOptions'][$stepOptionID] > $this->TargetValue
-           && $this->Type === self::TYPE_IS_GREATER_THAN)
-          || ($postVars['StepOptions'][$stepOptionID] < $this->TargetValue
-           && $this->Type === self::TYPE_IS_LIGHTER_THAN)
-          || ($postVars['StepOptions'][$stepOptionID] >= $this->TargetValue
-           && $this->Type === self::TYPE_IS_GREATER_THAN_OR_EQUAL)
-          || ($postVars['StepOptions'][$stepOptionID] <= $this->TargetValue
-           && $this->Type === self::TYPE_IS_LIGHTER_THAN_OR_EQUAL))
-        ) {
-            $isMatching = true;
+        $allPostVars     = $stepPage->getPostVarsFor();
+        foreach ($allPostVars as $postVars) {
+            if (array_key_exists('StepOptions', $postVars)
+             && is_array($postVars['StepOptions'])
+             && array_key_exists($stepOptionID, $postVars['StepOptions'])
+             && (($postVars['StepOptions'][$stepOptionID] == $this->TargetValue
+               && $this->Type === self::TYPE_IS_EQUAL)
+              || ($postVars['StepOptions'][$stepOptionID] != $this->TargetValue
+               && $this->Type === self::TYPE_IS_NOT_EQUAL)
+              || ($postVars['StepOptions'][$stepOptionID] > $this->TargetValue
+               && $this->Type === self::TYPE_IS_GREATER_THAN)
+              || ($postVars['StepOptions'][$stepOptionID] < $this->TargetValue
+               && $this->Type === self::TYPE_IS_LIGHTER_THAN)
+              || ($postVars['StepOptions'][$stepOptionID] >= $this->TargetValue
+               && $this->Type === self::TYPE_IS_GREATER_THAN_OR_EQUAL)
+              || ($postVars['StepOptions'][$stepOptionID] <= $this->TargetValue
+               && $this->Type === self::TYPE_IS_LIGHTER_THAN_OR_EQUAL))
+            ) {
+                $isMatching = true;
+                break;
+            }
         }
         return $isMatching;
     }

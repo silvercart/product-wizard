@@ -68,6 +68,10 @@ class ProductWizardStepPageController extends PageController
             $this->redirectBack();
             return $this->render();
         }
+        if (!$step->canAccess()) {
+            $this->redirect($this->data()->getCurrentStep()->Link());
+            return $this->render();
+        }
         if ($request->isPOST()) {
             $postVars = $request->postVars();
             $this->data()->setPostVarsFor($postVars, $step);

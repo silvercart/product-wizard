@@ -1,17 +1,22 @@
-<div class="card w-100 mb-4 info-on-hover" data-info-content="{$Text.ATT}" data-info-heading="{$Title.ATT}">
-    <div class="card-body">
-        <h5 class="card-title">{$Title}</h5>
+<div class="card rounded-0 w-100 shadow">
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$Title}</div>
+    <div class="card-body pt-0 pb-10 px-10 p-relative">
     <% loop $OptionList %>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="StepOptions[{$StepOption.ID}]" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
-            <label class="form-check-label" for="StepOptions-{$StepOption.ID}-{$Value}">{$Title}
+        <label class="d-block cursor-pointer border rounded mt-10 p-10 p-relative clearfix" for="StepOptions-{$StepOption.ID}-{$Value}">
+            <div class="float-left" style="width: calc(100% - 20px);">{$Title}
             <% if $Product %>
                 <% with $Product %>
-                <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-{$ID}"><span class="fa fa-info-circle"></span></a>
+                <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><span class="fa fa-info-circle"></span></a>
                 <% end_with %>
             <% end_if %>
-            </label>
-        </div>
+            </div>
+            <input class="float-right mb-20" type="radio" name="StepOptions[{$StepOption.ID}]" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
+            <% if $Product %>
+                <% with $Product %>
+                <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
+                <% end_with %>
+            <% end_if %>
+        </label>
         <% if $Product %>
             <% with $Product %>
                 {$setCurrentOptionID}
@@ -20,7 +25,9 @@
         <% end_if %>
     <% end_loop %>
     <% if $Text %>
-        <span class="fa fa-info-circle p-absolute t-0 l-0 ml-1 mt-1"></span>
+        <hr>
+        <p class="mb-0 text-center">{$Text}</p>
+        <a href="#" class="btn btn-secondary btn-block">{$ButtonTitle}</a>
     <% end_if %>
     </div>
 </div>
