@@ -4,6 +4,7 @@ namespace SilverCart\ProductWizard\Model\Pages;
 
 use Page;
 use SilverCart\Dev\Tools;
+use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\Step;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\FieldList;
@@ -12,6 +13,8 @@ use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\FieldType\DBMoney;
+use SilverStripe\View\ArrayData;
 
 /**
  * Page type to guide a cutomer through a stepped product wizard.
@@ -203,6 +206,96 @@ class ProductWizardStepPage extends Page
             $this->setCompletedStepIDs($completedStepIDs);
         }
         return $this;
+    }
+    
+    /**
+     * Returns the cart summary.
+     * 
+     * @return array
+     */
+    public function getCartSummary() : array
+    {
+        $stepData   = [];
+        $amountData = [];
+        foreach ($this->Steps() as $step) {
+            $stepData[$step->ID] = [];
+            if ($step->StepOptionSets()->exists()) {
+                foreach ($step->StepOptionSets() as $optionSet) {
+                    $this->loadStepAndAmountData($optionSet->StepOptions(), $step, $stepData, $amountData);
+                }
+            } else {
+                $this->loadStepAndAmountData($step->StepOptions(), $step, $stepData, $amountData);
+            }
+        }
+        return [
+            'Steps'   => $stepData,
+            'Amounts' => $amountData,
+        ];
+    }
+    
+    /**
+     * Loads the step and amount data for the given $stepOptions and $step into 
+     * the given $stepData and $amountData array.
+     * 
+     * @param DataList $stepOptions Step options to load data for
+     * @param Step     $step        Step context
+     * @param array    &$stepData   Step data store
+     * @param array    &$amountData Amount data store
+     * 
+     * @return \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 02.04.2019
+     */
+    public function loadStepAndAmountData(DataList $stepOptions, Step $step, array &$stepData, array &$amountData) : ProductWizardStepPage
+    {
+        foreach ($stepOptions as $option) {
+            $data = $option->getCartSummary();
+            if (!empty($data)) {
+                $stepData[$step->ID][$option->ID] = $data;
+                foreach ($data as $positionData) {
+                    $billingPeriod = _t('SilverCart\Model\Pages\Page.TOTAL', 'Total');
+                    if (Product::singleton()->hasMethod('getBillingPeriodNice')) {
+                        $billingPeriod = $positionData['BillingPeriodNice'];
+                    }
+                    if (!array_key_exists($billingPeriod, $amountData)) {
+                        $amountData[$billingPeriod] = [
+                            'Amount'   => $positionData['priceTotal']['Amount'],
+                            'Currency' => $positionData['priceTotal']['Currency'],
+                            'Nice'     => $positionData['priceTotal']['Nice'],
+                        ];
+                    } else {
+                        $amountData[$billingPeriod]['Amount'] += $positionData['priceTotal']['Amount'];
+                        $amountData[$billingPeriod]['Nice']    = DBMoney::create()
+                                ->setCurrency($amountData[$billingPeriod]['Currency'])
+                                ->setAmount($amountData[$billingPeriod]['Amount'])
+                                ->Nice();
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+    
+    /**
+     * Returns the cart summary to use in a template.
+     * 
+     * @return ArrayData
+     */
+    public function getCartSummaryForTemplate() : ArrayData
+    {
+        $summary = $this->getCartSummary();
+        $steps   = ArrayList::create();
+        $amounts = ArrayList::create();
+        foreach ($summary['Amounts'] as $interval => $amountData) {
+            $amount = ArrayData::create($amountData);
+            $amount->Interval = $interval;
+            $amounts->push($amount);
+        }
+        return ArrayData::create([
+            'Steps'   => $steps,
+            'Amounts' => $amounts,
+        ]);
     }
     
     /**

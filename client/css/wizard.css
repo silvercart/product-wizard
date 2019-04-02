@@ -10,6 +10,7 @@
     line-height: 20px;
     margin-top: 0px;
 }
+.wizard-option .tooltip,
 .ProductWizardStepOptionSet .tooltip {
     min-width: 200px;
 }
@@ -48,23 +49,46 @@
 #product-wizard-step .info-box {
     height: calc(100% - 86px);
 }
-.product-box {
-    margin: -5px -5px 10px -5px;
-    padding: 5px;
-    height: calc(100% - 10px);
-    position: relative;
-    top: 5px;
+.wizard-option.pickable {
+    transition: box-shadow 500ms;
 }
-.product-box.picked {
-    color: #fff;
-    border-color: rgba(27,117,186,1);
-    box-shadow: 0 1px 1px rgba(27,117,186,.25);
-    background-color: rgba(27,117,186,.75);
-    border-radius: 4px;
+.wizard-option.pickable .wizard-option-picker {
+    cursor: pointer;
+    transition: color 500ms, border-color 500ms, background-color 500ms;
 }
-.product-box.picked a:not([class^="spinner-"]) {
-    color: #fff;
+.wizard-option.pickable.not-picked .btn-primary {
+    transition: color 500ms, border-color 500ms, background-color 500ms;
 }
-.product-box.picked input {
-    color: #000;
+.wizard-option.pickable.not-picked .wizard-option-picker {
+    color: #919191 !important;
+    border-color: rgba(0, 0, 0, 0.125) !important;
+}
+.wizard-option.pickable.not-picked {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) inset !important;
+    box-shadow: none !important;
+}
+.wizard-option.pickable.not-picked:hover {
+    box-shadow: none !important;
+}
+.wizard-option.pickable.not-picked .card-header {
+    background-color: #e8e8e8 !important;
+    color: #919191 !important;
+}
+.wizard-option.pickable.not-picked .btn-primary {
+    background-color: #e8e8e8 !important;
+    border-color: #e8e8e8 !important;
+    color: #919191 !important;
+}
+#ProductWizardCartSummary.loading::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    background-image: url(/resources/vendor/silvercart/silvercart/client/img/loader-circle.gif);
+    background-repeat: no-repeat;
+    background-position: center;
 }

@@ -14,6 +14,7 @@ use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\FieldType\DBInt;
+use SilverStripe\ORM\FieldType\DBMoney;
 use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\View\ArrayData;
@@ -78,6 +79,7 @@ class StepOption extends DataObject
      * @var array
      */
     private static $db = [
+        'IsOptional'                 => 'Boolean(1)',
         'Title'                      => 'Varchar(256)',
         'Content'                    => DBHTMLText::class,
         'Text'                       => DBText::class,
@@ -391,9 +393,9 @@ class StepOption extends DataObject
      * 
      * @return ArrayData
      */
-    public function getProductQuantityDropdownValues() : ArrayData
+    public function getProductQuantityDropdownValues(int $productID = 0) : ArrayData
     {
-        $currentAmount = 1;
+        $currentQuantity = $this->getProductQuantityValue($productID);
         $current = ArrayData::create();
         $values  = ArrayList::create();
         for ($x = 1; $x <= $this->ProductQuantityDropdownMax; $x++) {
@@ -406,11 +408,10 @@ class StepOption extends DataObject
                 'Title'    => $title,
                 'Quantity' => $x,
             ]);
-            if ($x === $currentAmount) {
+            if ($x === $currentQuantity) {
                 $current = $item;
-            } else {
-                $values->push($item);
             }
+            $values->push($item);
         }
         return ArrayData::create([
             'CurrentValue' => $current,
@@ -608,7 +609,17 @@ class StepOption extends DataObject
      */
     public function getProductIsSelectedClass(int $productID) : string
     {
-        return $this->getProductSelectValue($productID) === 1 ? 'picked' : '';
+        return $this->getProductSelectValue($productID) === 1 ? 'picked' : 'not-picked';
+    }
+    
+    /**
+     * Returns the CSS class for the options's pickable status (IsOptional).
+     * 
+     * @return string
+     */
+    public function getIsOptionalClass() : string
+    {
+        return $this->IsOptional ? 'pickable' : 'not-pickable';
     }
     
     /**
@@ -619,8 +630,19 @@ class StepOption extends DataObject
      * 
      * @return int
      */
-    public function getProductSelectValue(int $productID) : int
+    public function getProductSelectValue(int $productID = 0) : int
     {
+        if (!$this->IsOptional
+         && $this->isVisible()
+        ) {
+            return 1;
+        }
+        if ($productID === 0) {
+            $first = $this->Products()->first();
+            if ($first instanceof Product) {
+                $productID = $first->ID;
+            }
+        }
         $postedValues = (array) $this->getValue();
         $value        = 0;
         if (array_key_exists($productID, $postedValues)
@@ -639,8 +661,14 @@ class StepOption extends DataObject
      * 
      * @return int
      */
-    public function getProductQuantityValue(int $productID) : int
+    public function getProductQuantityValue(int $productID = 0) : int
     {
+        if ($productID === 0) {
+            $first = $this->Products()->first();
+            if ($first instanceof Product) {
+                $productID = $first->ID;
+            }
+        }
         $postedValues = (array) $this->getValue();
         $value        = 1;
         if (array_key_exists($productID, $postedValues)
@@ -723,6 +751,44 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns the cart summary data for this option.
+     * 
+     * @return array
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 27.02.2019
+     */
+    public function getCartSummary() : array
+    {
+        $cartData = [];
+        $quantity = 0;
+        $relation = $this->getProductRelation();
+        if ($this->OptionType === self::OPTION_TYPE_NUMBER
+         && (int) $this->getValue() > 0
+        ) {
+            $products = $relation->getProducts();
+            $product  = array_shift($products);
+            $quantity = (int) $this->getValue();
+            $this->addCartData($cartData, $quantity, $product);
+        } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
+            $products = $relation->getProducts();
+            if (array_key_exists($this->getValue(), $products)) {
+                $product  = $products[$this->getValue()];
+                $quantity = $relation->getQuantity();
+                $this->addCartData($cartData, $quantity, $product);
+            }
+        } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
+            $products = $this->Products();
+            foreach ($products as $product) {
+                if ($this->getProductSelectValue($product->ID) === 1) {
+                    $this->addCartData($cartData, $this->getProductQuantityValue($product->ID), $product);
+                }
+            }
+        }
+        return $cartData;
+    }
+    
+    /**
      * Addes the given $quantity and $product to the $cartData.
      * 
      * @param array   &$cartData Cart data to manipulate
@@ -740,10 +806,29 @@ class StepOption extends DataObject
          && $product->exists()
          && $quantity > 0
         ) {
-            $cartData[] = [
+            $priceTotal = DBMoney::create()->setCurrency($product->getPrice()->getCurrency())->setAmount($product->getPrice()->getAmount() * $quantity);
+            $data       = [
                 'productID'       => $product->ID,
                 'productQuantity' => $quantity,
+                'productTitle'    => $product->Title,
+                'priceSingle'     => [
+                    'Amount'   => $product->getPrice()->getAmount(),
+                    'Currency' => $product->getPrice()->getCurrency(),
+                    'Nice'     => $product->getPrice()->Nice(),
+                ],
+                'priceTotal'      => [
+                    'Amount'   => $priceTotal->getAmount(),
+                    'Currency' => $priceTotal->getCurrency(),
+                    'Nice'     => $priceTotal->Nice(),
+                ],
             ];
+            if ($product->hasMethod('getBillingPeriodNice')) {
+                $data = array_merge($data, [
+                    'BillingPeriod'     => $product->BillingPeriod,
+                    'BillingPeriodNice' => $product->getBillingPeriodNice(),
+                ]);
+            }
+            $cartData[] = $data;
         }
     }
 }

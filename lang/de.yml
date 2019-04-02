@@ -65,6 +65,7 @@ de:
         DisplayConditionOperation: "Boolesche Verknüpfung"
         DisplayConditionOperationAnd: "aller"
         DisplayConditionOperationOr: "einer"
+        IsOptional: "Ist optional"
         moreThanMax: "mehr als {max} {maxTitle}..."
         NumberProductRelationTitle: "Artikel für diese Option"
         NumberProductRelationDesc: "Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt."

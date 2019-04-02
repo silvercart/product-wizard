@@ -1,10 +1,10 @@
-<div class="card rounded-0 w-100 shadow {$CurrentOption.getProductIsSelectedClass($ID)}">
+<div class="card rounded-0 w-100 shadow wizard-option {$CurrentOption.IsOptionalClass} {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}">
 <% if $CurrentOption.IsProductView %>
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
 <% end_if %>
-    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$CurrentOption.Title}</div>
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6 wizard-option-picker" style="height: 55px; overflow: hidden;">{$CurrentOption.Title}</div>
     <div class="card-body pt-0 pb-10 px-10 p-relative">
-        <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6 cursor-pointer"></span>
+        <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6 wizard-option-picker"></span>
         <a class="d-inline-block px-40" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" alt="{$Title}" src="{$ListImage.Pad(260,220).URL}" /></a>
         <a class="h5 card-title d-inline-block mb-0 text-truncate mw-100" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}" title="{$Title.ATT}">{$Title}</a>
         <% if $hasVariants %>
@@ -16,7 +16,7 @@
             </button>
             <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-variant-dropdown-{$CurrentOption.ID}">
                 <% loop $Variants %>
-                <a class="dropdown-item" href="javascript" data-product-id="{$ID}">{$Title}</a>
+                <a class="dropdown-item" href="javascript:;" data-product-id="{$ID}">{$Title}</a>
                 <% end_loop %>
             </div>
         </div>
@@ -43,9 +43,9 @@
             </button>
             <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$ID}">
                 <% loop $ProductQuantityDropdownValues.Values %>
-                <a class="dropdown-item" href="#">{$Quantity} {$Title}</a>
+                <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
                 <% end_loop %>
-                <a class="dropdown-item" href="#"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$ProductQuantityDropdownMax maxTitle=$ProductQuantityPlural %></a>
+                <a class="dropdown-item pick-more-quantity" href="javascript:;"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$ProductQuantityDropdownMax maxTitle=$ProductQuantityPlural %></a>
             </div>
         </div>
         <div class="spinner-field clearfix text-nowrap d-none">
@@ -53,9 +53,15 @@
             <a href="javascript:;" style="width: calc(100% - 70px);" class="btn btn-xs btn-primary select-product" data-option-id="{$ID}" data-product-id="{$Up.ID}"><span class="d-inline d-md-none d-lg-inline"><%t ProductWizard.Choose 'Choose' %></span><span class="d-none d-md-inline d-lg-none fa fa-check"></span></a>
         </div>
         <% end_with %>
+    <% else_if $CurrentOption.IsOptional %>
+        <hr>
+        <p class="mb-0 text-center">{$CurrentOption.Text}</p>
+        <button class="btn btn-primary btn-block wizard-option-picker" type="button" ><%t ProductWizard.Choose 'Choose' %></button>
+        <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
     <% else %>
         <hr>
         <p class="mb-0 text-center">{$CurrentOption.Text}</p>
+        <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
     <% end_if %>
     </div>
 </div>
