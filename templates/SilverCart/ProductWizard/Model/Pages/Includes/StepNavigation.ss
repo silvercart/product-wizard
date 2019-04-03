@@ -33,6 +33,6 @@
     <% if $PreviousStep %>
     <a href="{$BackLink}"><span class="fa fa-angle-double-left"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.BackTo 'Back to {step}' step=$PreviousStep.Title %></a>
     <% end_if %>
-    <span class="ml-20 fa fa-{$CurrentStep.FontAwesomeIcon} border border-black rounded-circle p-6"></span> {$fieldLabel('Step')} {$Pos}: {$CurrentStep.InfoBoxTitle}
+    <span class="ml-20 fa fa-{$CurrentStep.FontAwesomeIcon} border border-black rounded-circle p-6"></span> {$fieldLabel('Step')} {$CurrentStep.NavigationStepNumber}: {$CurrentStep.InfoBoxTitle}
 </div>
 <% end_if %>

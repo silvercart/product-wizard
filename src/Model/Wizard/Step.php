@@ -283,6 +283,23 @@ class Step extends DataObject
     }
     
     /**
+     * Returns the step number to show in the step navigation context.
+     * 
+     * @return int
+     */
+    public function getNavigationStepNumber() : int
+    {
+        $number = 0;
+        foreach ($this->ProductWizardStepPage()->getNavigationSteps() as $pos => $step) {
+            if ($step->ID === $this->ID) {
+                $number = ++$pos;
+                break;
+            }
+        }
+        return $number;
+    }
+    
+    /**
      * Returns the visible option sets.
      * 
      * @return ArrayList
