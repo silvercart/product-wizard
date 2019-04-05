@@ -150,20 +150,15 @@ class Step extends DataObject
                     ->setRightTitle($this->getStepIcon());
             $fields->removeByName('Sort');
             if ($this->exists()) {
+                $fields->removeByName('StepOptionSets');
                 $stepOptionsField    = $fields->dataFieldByName('StepOptions');
-                $stepOptionSetsField = $fields->dataFieldByName('StepOptionSets');
                 /* @var $stepOptionsField GridField */
-                /* @var $stepOptionSetsField GridField */
                 $stepOptionsField->setList($stepOptionsField->getList()->sort('Sort ASC'));
-                $stepOptionSetsField->setList($stepOptionSetsField->getList()->sort('Sort ASC'));
                 $stepOptionsConfig = $stepOptionsField->getConfig();
-                $stepOptionSetsConfig = $stepOptionSetsField->getConfig();
                 if (class_exists('\Symbiote\GridFieldExtensions\GridFieldOrderableRows')) {
                     $stepOptionsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
-                    $stepOptionSetsConfig->addComponent(new \Symbiote\GridFieldExtensions\GridFieldOrderableRows('Sort'));
                 } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
                     $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
-                    $stepOptionSetsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
                 $fields->removeByName('ProductWizardStepPageID');
             }
