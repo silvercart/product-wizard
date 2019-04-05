@@ -30,6 +30,7 @@ class ProductWizardStepPageController extends PageController
         'getCartSummaryData',
         'deleteOptionData',
         'postOptionData',
+        'postPlainOptionData',
     ];
     
     /**
@@ -112,6 +113,7 @@ class ProductWizardStepPageController extends PageController
             }
         }
         $this->data()->resetPostVars();
+        $this->data()->resetCurrentStep();
         $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
         return $this->render();
     }
@@ -161,6 +163,34 @@ class ProductWizardStepPageController extends PageController
     public function postOptionData(HTTPRequest $request) : string
     {
         return $this->handlePostedOptionData($request);
+    }
+    
+    /**
+     * Action to handle the posted option data.
+     * Returns the cart summary data as JSON.
+     * 
+     * @param HTTPRequest $request Request
+     * 
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 05.04.2019
+     */
+    public function postPlainOptionData(HTTPRequest $request) : string
+    {
+        if ($request->isPOST()) {
+            $page          = $this->data();
+            $step          = $page->getCurrentStep();
+            $storedVars    = $page->getPostVarsFor($step);
+            $postedOptions = $request->postVar('StepOptions');
+            if (is_array($postedOptions)) {
+                foreach ($postedOptions as $optionID => $optionValue) {
+                    $storedVars['StepOptions'][$optionID] = $optionValue;
+                }
+                $page->setPostVarsFor($storedVars, $step);
+            }
+        }
+        return json_encode($this->data()->getCartSummary());
     }
     
     /**

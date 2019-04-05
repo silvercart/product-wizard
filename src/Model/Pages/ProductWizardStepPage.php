@@ -488,6 +488,20 @@ class ProductWizardStepPage extends Page
     }
     
     /**
+     * Resets the submitted step data.
+     * 
+     * @return ProductWizardStepPage
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 27.02.2019
+     */
+    public function resetCurrentStep() : ProductWizardStepPage
+    {
+        self::setCurrentStepIDToSession(0);
+        return $this;
+    }
+    
+    /**
      * Returns the back link.
      * 
      * @return string
