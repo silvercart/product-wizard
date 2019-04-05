@@ -92,3 +92,39 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+form[name="ProductWizardStepForm"] .btn-additional-options {
+    padding: 10px 20px;
+    margin: 10px -10px -10px -10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    cursor: pointer;
+    transition: color 500ms, background-color 500ms;
+}
+form[name="ProductWizardStepForm"] .btn-additional-options .fa:last-child {
+    float: right;
+    line-height: 1.5;
+    transition: margin 500ms;
+}
+form[name="ProductWizardStepForm"] .btn-additional-options:hover {
+    color: #ffffff;
+    background-color: #919191;
+}
+form[name="ProductWizardStepForm"] .btn-additional-options:hover .fa:last-child {
+    margin-right: -10px;
+}
+form[name="ProductWizardStepForm"] .radio-option-picker:nth-child(n+4) {
+    display: none !important;
+}
+.radio-option-picker {
+    min-height: 80px;
+    transition: color 500ms;
+}
+.radio-option-picker .label {
+    float: left;
+    width: calc(100% - 50px);
+}
+.radio-option-picker .fa {
+    transition: color 500ms;
+}
+.radio-option-picker:not(.checked) .fa.text-blue {
+    color: #ffffff !important;
+}

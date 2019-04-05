@@ -145,6 +145,7 @@ class StepOption extends DataObject
     public function fieldLabels($includerelations = true) : array
     {
         return $this->defaultFieldLabels($includerelations, [
+            'Advanced'                           => _t(self::class . '.Advanced', 'Advanced'),
             'Continue'                           => _t(self::class . '.Continue', 'Continue'),
             'OptionProductRelation'              => _t(self::class . '.OptionProductRelation', 'Related Products'),
             'ProductMinQuantity'                 => _t(self::class . '.ProductMinQuantity', 'Minimum quantity'),
@@ -239,13 +240,14 @@ class StepOption extends DataObject
             $fields->dataFieldByName('Options')->setDescription($this->fieldLabel('OptionsDesc'));
             $optionList = $this->getOptionList();
             if ($optionList->exists()) {
-                $fields->findOrMakeTab('Root.OptionProductRelation', $this->fieldLabel('OptionProductRelation'));
+                $fields->findOrMakeTab('Root.Advanced', $this->fieldLabel('Advanced'));
                 $productsSource         = Product::get()->map()->toArray();
                 $products               = $this->getProductRelation()->getProductsMap();
                 $minQuantityValue       = $this->getProductRelation()->getMinimumQuantity();
                 $dynQuantityOptionValue = $this->getProductRelation()->getDynamicQuantityOption()->ID;
-                $fields->addFieldToTab('Root.OptionProductRelation', TextField::create('OptionProductRelation[MinimumQuantity]', $this->fieldLabel('ProductMinQuantity'), $minQuantityValue)->setDescription($this->fieldLabel('ProductMinQuantityDesc')));
-                $fields->addFieldToTab('Root.OptionProductRelation', GroupedDropdownField::create('OptionProductRelation[DynamicQuantityOption]', $this->fieldLabel('ProductDynQuantityStepOptionID'), $this->getGroupedContextOptions(), $dynQuantityOptionValue)->setEmptyString('')->setDescription($this->fieldLabel('ProductDynQuantityStepOptionIDDesc')));
+                $descriptions           = $this->getProductRelation()->getDescriptions();
+                $fields->addFieldToTab('Root.Advanced', TextField::create('OptionProductRelation[MinimumQuantity]', $this->fieldLabel('ProductMinQuantity'), $minQuantityValue)->setDescription($this->fieldLabel('ProductMinQuantityDesc')));
+                $fields->addFieldToTab('Root.Advanced', GroupedDropdownField::create('OptionProductRelation[DynamicQuantityOption]', $this->fieldLabel('ProductDynQuantityStepOptionID'), $this->getGroupedContextOptions(), $dynQuantityOptionValue)->setEmptyString('')->setDescription($this->fieldLabel('ProductDynQuantityStepOptionIDDesc')));
                 foreach ($optionList as $option) {
                     $productsValue = '';
                     $title         = _t(self::class . '.OptionProductRelationTitle', 'Product for option {option}', [
@@ -257,7 +259,18 @@ class StepOption extends DataObject
                     if (array_key_exists($option->Value, $products)) {
                         $productsValue = $products[$option->Value];
                     }
-                    $fields->addFieldToTab('Root.OptionProductRelation', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
+                    $descValue       = '';
+                    $descTitle       = _t(self::class . '.OptionDescriptionTitle', 'Description for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    $descDescription = _t(self::class . '.OptionDescriptionDesc', 'Will be displayed as a description for "{option}".', [
+                        'option' => $option->Title,
+                    ]);
+                    if (array_key_exists($option->Value, $descriptions)) {
+                        $descValue = $descriptions[$option->Value];
+                    }
+                    $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[Descriptions][{$option->Value}]", $descTitle, $descValue)->setDescription($descDescription));
+                    $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
                 }
             }
         }
@@ -511,11 +524,17 @@ class StepOption extends DataObject
             $plainValue = $this->getValue();
             $intValue   = (int) $plainValue;
             $products   = $this->getProductRelation()->getProducts();
+            $descriptions = $this->getProductRelation()->getDescriptions();
             foreach ($options as $key => $option) {
                 if (array_key_exists($key, $products)) {
                     $product  = $products[$key];
                 } else {
                     $product = null;
+                }
+                if (array_key_exists($key, $descriptions)) {
+                    $description = $descriptions[$key];
+                } else {
+                    $description = null;
                 }
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
@@ -525,11 +544,34 @@ class StepOption extends DataObject
                     'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
                     'Title'         => trim($option),
                     'Product'       => $product,
+                    'Description'   => $description,
                 ]);
             }
             $this->optionList = ArrayList::create($optionList);
         }
         return $this->optionList;
+    }
+    
+    /**
+     * Returns the radio option with the given int value.
+     * 
+     * @param int $value Value to get option for
+     * 
+     * @return ArrayData|null
+     */
+    public function getOption(int $value) : ?ArrayData
+    {
+        return $this->getOptionList()->filter('Value', $value)->first();
+    }
+    
+    /**
+     * Returns the currently checked radio option.
+     * 
+     * @return ArrayData|null
+     */
+    public function getCheckedOption() : ?ArrayData
+    {
+        return $this->getOptionList()->filter('Checked', 'checked')->first();
     }
     
     /**

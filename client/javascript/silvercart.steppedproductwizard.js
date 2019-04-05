@@ -163,6 +163,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
             radioOption: "#product-wizard-step-options input[type='radio']",
+            radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
             selectProductButton: "#product-wizard-step .select-product"
         },
@@ -245,6 +246,16 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 }
                 property.cartSummary.postOptionData(optionID, productID, quantity);
             },
+            pickRadioOptionByPicker: function() {
+                $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]').removeClass('checked');
+                $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]').addClass('checked');
+                var visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]:visible', selector.stepForm),
+                    pickedOption   = $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]', selector.stepForm);
+                if (!pickedOption.is(':visible')) {
+                    visibleOptions.last().css('cssText', 'display: none !important;');
+                    pickedOption.css('cssText', 'display: block !important;');
+                }
+            },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
             }
@@ -262,6 +273,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(selector.optionPicker).on('click', private.pickOptionByPicker);
                 $(selector.pickQuantity).on('click', private.pickQuantity);
                 $(selector.radioOption).on('change', private.pickRadioOption);
+                $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
             }
         };
     return public;

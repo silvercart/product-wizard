@@ -47,6 +47,12 @@ class OptionProductRelation
      * @var Product[]
      */
     protected $products = [];
+    /**
+     * Key value pair of option index and description.
+     *
+     * @var string[]
+     */
+    protected $descriptions = [];
     
     /**
      * Creates a new instance of OptionProductRelation by the given array $data.
@@ -111,6 +117,9 @@ class OptionProductRelation
                 }
                 $this->setProducts($products);
             }
+            if (array_key_exists('Descriptions', $data)) {
+                $this->setDescriptions((array) $data['Descriptions']);
+            }
         }
     }
     
@@ -128,6 +137,7 @@ class OptionProductRelation
             'MinimumQuantity'       => $this->getMinimumQuantity(),
             'DynamicQuantityOption' => $this->getDynamicQuantityOption()->ID,
             'Products'              => $this->getProductsMap(),
+            'Descriptions'          => $this->getDescriptions(),
         ];
         return serialize($data);
     }
@@ -169,6 +179,16 @@ class OptionProductRelation
     public function getQuantityByOption() : int
     {
         return $this->quantityByOption;
+    }
+
+    /**
+     * Returns the related descriptions.
+     * 
+     * @return string[]
+     */
+    public function getDescriptions() : array
+    {
+        return $this->descriptions;
     }
 
     /**
@@ -250,6 +270,19 @@ class OptionProductRelation
     public function setQuantityByOption(int $quantityByOption) : OptionProductRelation
     {
         $this->quantityByOption = $quantityByOption;
+        return $this;
+    }
+
+    /**
+     * Sets the related descriptions.
+     * 
+     * @param array $descriptions Descriptions
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setDescriptions(array $descriptions) : OptionProductRelation
+    {
+        $this->descriptions = $descriptions;
         return $this;
     }
 
