@@ -10,7 +10,7 @@
                 <% end_with %>
             <% end_if %>
             </div>
-            <input class="float-right mb-20" type="radio" name="StepOptions[{$StepOption.ID}]" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
+            <input class="float-right mb-20" type="radio" name="StepOptions[{$StepOption.ID}]" data-option-id="{$StepOption.ID}" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
             <% if $Product %>
                 <% with $Product %>
                 <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>

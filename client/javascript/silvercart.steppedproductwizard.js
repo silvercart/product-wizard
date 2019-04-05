@@ -117,6 +117,23 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
+            postPlainOptionData: function(radioOptionName) {
+                var radioOptionValue = $('input[name="' + radioOptionName + '"]:checked').val(),
+                    optionID         = $('input[name="' + radioOptionName + '"]:checked').data('option-id'),
+                    postData         = {};
+                postData[optionID]= radioOptionValue;
+                $(selector.container).addClass('loading');
+                $.post(
+                        private.getBaseControllerURL() + 'postPlainOptionData',
+                        {
+                            'StepOptions': postData
+                        },
+                        function(data) {
+                            public.initWith(data);
+                            $(selector.container).removeClass('loading');
+                        }
+                );
+            },
             deleteOptionData: function(optionID, productID) {
                 $(selector.container).addClass('loading');
                 $.post(
@@ -145,34 +162,11 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             optionPicker: ".wizard-option-picker",
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
-            productWizardStep: "#product-wizard-step",
-            productWizardOptions: "#product-wizard-step-options",
-            choosableOption: "#product-wizard-step-options .choosable-option",
-            infoOnHover: "#product-wizard-step-options .info-on-hover",
+            radioOption: "#product-wizard-step-options input[type='radio']",
             stepForm: "form[name='ProductWizardStepForm']",
-            stepPanel: "#product-wizard-step .card",
             selectProductButton: "#product-wizard-step .select-product"
         },
         private = {
-            initRadioButtons: function() {
-                $(selector.stepPanel).each(private.hideNotSelectedRadioButtons);
-            },
-            hideNotSelectedRadioButtons: function() {
-                if ($('input[type="radio"]:checked', $(this)).length > 0) {
-                    $('input[type="radio"]', $(this)).each(function() {
-                        if ($(this).is(':checked') === false) {
-                            $(this).closest('.form-check').hide();
-                        }
-                    });
-                }
-            },
-            showNotSelectedRadioButtons: function() {
-                $('input[type="radio"]', $(this)).each(function() {
-                    if ($(this).is(':checked') === false) {
-                        $(this).closest('.form-check').show();
-                    }
-                });
-            },
             validateFields: function() {
                 var valid = true;
                 $('input', property.optionSetSelector).each(function() {
@@ -250,6 +244,9 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     private.pickOption(option);
                 }
                 property.cartSummary.postOptionData(optionID, productID, quantity);
+            },
+            pickRadioOption: function() {
+                property.cartSummary.postPlainOptionData($(this).attr('name'));
             }
         },
         public = {
@@ -260,13 +257,11 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 }
                 property.cartSummary = silvercart.ProductWizard.CartSummary();
                 property.cartSummary.init();
-                private.initRadioButtons();
-                $(selector.stepPanel).on('mouseover', private.showNotSelectedRadioButtons);
-                $(selector.stepPanel).on('mouseout', private.hideNotSelectedRadioButtons);
                 $(selector.selectProductButton).on('click', private.pickOptionByModal);
                 $('input', selector.stepForm).on('keyup', private.resetValidationTooltipByInput);
                 $(selector.optionPicker).on('click', private.pickOptionByPicker);
                 $(selector.pickQuantity).on('click', private.pickQuantity);
+                $(selector.radioOption).on('change', private.pickRadioOption);
             }
         };
     return public;
