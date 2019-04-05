@@ -1,4 +1,4 @@
-<form action="{$Link}" method="POST" name="ProductWizardStepForm">
+<form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithProgress">
     <div class="row" id="product-wizard-step">
         <div class="col-12 col-sm-6 col-md-8 col-lg-9">
             <div class="row" id="product-wizard-step-options">

@@ -81,6 +81,9 @@ silvercart.ProductWizard.CartSummary = (function () {
             },
             init: function()
             {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
                 $(document).on('click', selector.positions + ' a', private.togglePositionTable);
                 $(selector.container).addClass('loading');
                 $.get(
@@ -131,12 +134,13 @@ silvercart.ProductWizard.CartSummary = (function () {
         };
     return public;
 });
-silvercart.ProductWizard.Main = (function () {
+silvercart.ProductWizard.OptionsWithProgress = (function () {
     var property = {
             optionSetSelector: false,
             cartSummary: false
         },
         selector = {
+            container: "#ProductWizardStepOptionsWithProgress",
             option: ".wizard-option",
             optionPicker: ".wizard-option-picker",
             pickQuantity: ".pick-quantity",
@@ -145,39 +149,11 @@ silvercart.ProductWizard.Main = (function () {
             productWizardOptions: "#product-wizard-step-options",
             choosableOption: "#product-wizard-step-options .choosable-option",
             infoOnHover: "#product-wizard-step-options .info-on-hover",
-            infoBox: "#product-wizard-step .info-box",
-            infoBoxHeading: "#product-wizard-step .info-box .info-box-heading",
-            infoBoxContent: "#product-wizard-step .info-box .info-box-content",
             stepForm: "form[name='ProductWizardStepForm']",
             stepPanel: "#product-wizard-step .card",
-            selectProductButton: "#product-wizard-step .select-product",
-            showOriginalOptionInformation: "#product-wizard-step-show-original-option-information"
+            selectProductButton: "#product-wizard-step .select-product"
         },
         private = {
-            chooseOption: function() {
-                $(this).toggleClass('picked');
-                if ($(this).hasClass('picked')) {
-                    $('input[type="hidden"]', this).val('1');
-                } else {
-                    $('input[type="hidden"]', this).val('0');
-                }
-                return false;
-            },
-            doStepOptionValidation: function() {
-                var isValid = false;
-                $(selector.productWizardOptions + ' input').each(function() {
-                    if ($(this).val() === '1') {
-                        isValid = true;
-                    }
-                });
-                if (!isValid) {
-                    $(selector.infoBoxHeading).html('<span class="fa fa-exclamation-circle"></span> ' + ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptionHeading', 'An error occured'));
-                    $(selector.infoBoxContent).html(ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptionContent', 'Please pick at least one option to continue.'));
-                    $(selector.infoBoxHeading).addClass('text-danger');
-                    $(selector.infoBoxContent).addClass('text-danger');
-                }
-                return isValid;
-            },
             initRadioButtons: function() {
                 $(selector.stepPanel).each(private.hideNotSelectedRadioButtons);
             },
@@ -196,25 +172,6 @@ silvercart.ProductWizard.Main = (function () {
                         $(this).closest('.form-check').show();
                     }
                 });
-            },
-            showOptionInformation: function() {
-                if ($(selector.showOriginalOptionInformation).length === 0) {
-                    var buttonCloseID = selector.showOriginalOptionInformation.replace('#', ''),
-                        buttonClose = '<a href="javascript:;" class="text-lg p-absolute t-15 r-20" id="' + buttonCloseID + '"><span class="fa fa-times-circle"></span></a>';
-                    $(selector.infoBox).append(buttonClose);
-                }
-                $(selector.infoBoxHeading).removeClass('text-danger');
-                $(selector.infoBoxContent).removeClass('text-danger');
-                $(selector.infoBoxHeading).html($(this).data('info-heading'));
-                $(selector.infoBoxContent).html($(this).data('info-content'));
-                return false;
-            },
-            showOriginalOptionInformation: function() {
-                if ($(selector.infoBoxHeading).data('original').length > 0) {
-                    $(selector.showOriginalOptionInformation).remove();
-                    $(selector.infoBoxHeading).html($(selector.infoBoxHeading).data('original'));
-                    $(selector.infoBoxContent).html($(selector.infoBoxContent).data('original'));
-                }
             },
             validateFields: function() {
                 var valid = true;
@@ -298,14 +255,11 @@ silvercart.ProductWizard.Main = (function () {
         public = {
             init: function()
             {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
                 property.cartSummary = silvercart.ProductWizard.CartSummary();
                 property.cartSummary.init();
-                if ($(selector.productWizardOptions).length > 0) {
-                    $(selector.choosableOption).on('click', private.chooseOption);
-                    $(selector.infoOnHover).on('mouseover', private.showOptionInformation);
-                    $(document).on('click', selector.showOriginalOptionInformation, private.showOriginalOptionInformation);
-                    $(selector.stepForm).on('submit', private.doStepOptionValidation);
-                }
                 private.initRadioButtons();
                 $(selector.stepPanel).on('mouseover', private.showNotSelectedRadioButtons);
                 $(selector.stepPanel).on('mouseout', private.hideNotSelectedRadioButtons);
@@ -317,9 +271,81 @@ silvercart.ProductWizard.Main = (function () {
         };
     return public;
 });
+silvercart.ProductWizard.OptionsWithInfo = (function () {
+    var property = {},
+        selector = {
+            container: "#ProductWizardStepOptionsWithInfo",
+            choosableOption: "#product-wizard-step-options .choosable-option",
+            infoBox: "#product-wizard-step .info-box",
+            infoBoxHeading: "#product-wizard-step .info-box .info-box-heading",
+            infoBoxContent: "#product-wizard-step .info-box .info-box-content",
+            infoOnHover: "#product-wizard-step-options .info-on-hover",
+            productWizardOptions: "#product-wizard-step-options",
+            showOriginalOptionInformation: "#product-wizard-step-show-original-option-information",
+            stepForm: "form[name='ProductWizardStepForm']"
+        },
+        private = {
+            chooseOption: function() {
+                $(this).toggleClass('picked');
+                if ($(this).hasClass('picked')) {
+                    $('input[type="hidden"]', this).val('1');
+                } else {
+                    $('input[type="hidden"]', this).val('0');
+                }
+                return false;
+            },
+            doStepOptionValidation: function() {
+                var isValid = false;
+                $(selector.productWizardOptions + ' input').each(function() {
+                    if ($(this).val() === '1') {
+                        isValid = true;
+                    }
+                });
+                if (!isValid) {
+                    $(selector.infoBoxHeading).html('<span class="fa fa-exclamation-circle"></span> ' + ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptionHeading', 'An error occured'));
+                    $(selector.infoBoxContent).html(ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptionContent', 'Please pick at least one option to continue.'));
+                    $(selector.infoBoxHeading).addClass('text-danger');
+                    $(selector.infoBoxContent).addClass('text-danger');
+                }
+                return isValid;
+            },
+            showOptionInformation: function() {
+                if ($(selector.showOriginalOptionInformation).length === 0) {
+                    var buttonCloseID = selector.showOriginalOptionInformation.replace('#', ''),
+                        buttonClose = '<a href="javascript:;" class="text-lg p-absolute t-15 r-20" id="' + buttonCloseID + '"><span class="fa fa-times-circle"></span></a>';
+                    $(selector.infoBox).append(buttonClose);
+                }
+                $(selector.infoBoxHeading).removeClass('text-danger');
+                $(selector.infoBoxContent).removeClass('text-danger');
+                $(selector.infoBoxHeading).html($(this).data('info-heading'));
+                $(selector.infoBoxContent).html($(this).data('info-content'));
+                return false;
+            },
+            showOriginalOptionInformation: function() {
+                if ($(selector.infoBoxHeading).data('original').length > 0) {
+                    $(selector.showOriginalOptionInformation).remove();
+                    $(selector.infoBoxHeading).html($(selector.infoBoxHeading).data('original'));
+                    $(selector.infoBoxContent).html($(selector.infoBoxContent).data('original'));
+                }
+            },
+        },
+        public = {
+            init: function()
+            {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
+                $(selector.choosableOption).on('click', private.chooseOption);
+                $(selector.infoOnHover).on('mouseover', private.showOptionInformation);
+                $(document).on('click', selector.showOriginalOptionInformation, private.showOriginalOptionInformation);
+                $(selector.stepForm).on('submit', private.doStepOptionValidation);
+            }
+        };
+    return public;
+});
 
-var silvercartProductWizard            = silvercart.ProductWizard.Main();
 $(function()
 {
-    silvercartProductWizard.init();
+    silvercart.ProductWizard.OptionsWithProgress().init();
+    silvercart.ProductWizard.OptionsWithInfo().init();
 });
