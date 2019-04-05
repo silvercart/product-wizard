@@ -120,7 +120,7 @@ form[name="ProductWizardStepForm"] .radio-option-picker:nth-child(n+4) {
 }
 .radio-option-picker .label {
     float: left;
-    width: calc(100% - 50px);
+    width: calc(100% - 38px);
 }
 .radio-option-picker .fa {
     transition: color 500ms;

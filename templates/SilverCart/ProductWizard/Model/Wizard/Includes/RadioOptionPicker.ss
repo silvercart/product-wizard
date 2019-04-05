@@ -1,5 +1,5 @@
 <label class="d-block cursor-pointer border rounded mt-10 p-10 p-relative clearfix radio-option-picker {$Checked}" data-option-id="{$StepOption.ID}" data-value="{$Value}" for="StepOptions-{$StepOption.ID}-{$Value}">
-    <div class="label">{$Title}
+    <div class="label"><span class="font-weight-bold">{$Title}</span>
     <% if $Product %>
         <% with $Product %>
         <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><span class="fa fa-info-circle"></span></a>
