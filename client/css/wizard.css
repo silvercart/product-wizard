@@ -79,6 +79,12 @@
     border-color: #e8e8e8 !important;
     color: #919191 !important;
 }
+.wizard-option.pickable .border-blue {
+    transition: border-color 500ms;
+}
+.wizard-option.pickable.not-picked .border-blue {
+    border-color: #e8e8e8 !important;
+}
 #ProductWizardCartSummary.loading::after {
     content: '';
     display: block;
@@ -93,9 +99,10 @@
     background-position: center;
 }
 form[name="ProductWizardStepForm"] .btn-additional-options {
-    padding: 10px 20px;
-    margin: 10px -10px -10px -10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 30px 10px;
+    margin-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
     cursor: pointer;
     transition: color 500ms, background-color 500ms;
 }
@@ -109,9 +116,9 @@ form[name="ProductWizardStepForm"] .btn-additional-options:hover {
     background-color: #919191;
 }
 form[name="ProductWizardStepForm"] .btn-additional-options:hover .fa:last-child {
-    margin-right: -10px;
+    margin-right: -8px;
 }
-form[name="ProductWizardStepForm"] .radio-option-picker:nth-child(n+4) {
+form[name="ProductWizardStepForm"] .has-additional-options .radio-option-picker:nth-child(n+2) {
     display: none !important;
 }
 .radio-option-picker {

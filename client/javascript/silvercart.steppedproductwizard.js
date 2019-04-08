@@ -255,6 +255,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     visibleOptions.last().css('cssText', 'display: none !important;');
                     pickedOption.css('cssText', 'display: block !important;');
                 }
+                pickedOption.closest(selector.option).removeClass('not-picked').addClass('picked');
             },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));

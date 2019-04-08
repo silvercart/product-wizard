@@ -642,6 +642,19 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns whether this option has a checked radio option.
+     * 
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 08.04.2019
+     */
+    public function IsRadioCheckedClass() : string
+    {
+        return $this->getValue() !== '' ? 'picked' : 'not-picked';
+    }
+    
+    /**
      * Returns the CSS class for the product's (with the given $productID) picked 
      * status.
      * 
