@@ -85,6 +85,18 @@
 .wizard-option.pickable.not-picked .border-blue {
     border-color: #e8e8e8 !important;
 }
+.wizard-option .product-description-sm {
+    height: 3em;
+    overflow: hidden;
+}
+.wizard-option .product-description-md {
+    height: 4.5em;
+    overflow: hidden;
+}
+.wizard-option .product-description-lg {
+    height: 6em;
+    overflow: hidden;
+}
 #ProductWizardCartSummary.loading::after {
     content: '';
     display: block;
