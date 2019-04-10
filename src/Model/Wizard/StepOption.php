@@ -861,29 +861,46 @@ class StepOption extends DataObject
          && $product->exists()
          && $quantity > 0
         ) {
-            $priceTotal = DBMoney::create()->setCurrency($product->getPrice()->getCurrency())->setAmount($product->getPrice()->getAmount() * $quantity);
-            $data       = [
-                'productID'       => $product->ID,
-                'productQuantity' => $quantity,
-                'productTitle'    => $product->Title,
-                'priceSingle'     => [
-                    'Amount'   => $product->getPrice()->getAmount(),
-                    'Currency' => $product->getPrice()->getCurrency(),
-                    'Nice'     => $product->getPrice()->Nice(),
-                ],
-                'priceTotal'      => [
-                    'Amount'   => $priceTotal->getAmount(),
-                    'Currency' => $priceTotal->getCurrency(),
-                    'Nice'     => $priceTotal->Nice(),
-                ],
-            ];
-            if ($product->hasMethod('getBillingPeriodNice')) {
-                $data = array_merge($data, [
-                    'BillingPeriod'     => $product->BillingPeriod,
-                    'BillingPeriodNice' => $product->getBillingPeriodNice(),
-                ]);
-            }
-            $cartData[] = $data;
+            $cartData[] = $data = self::getCartPositionData($quantity, $product);
+            $product->extend('updateAfterProductWizardStepOptionAddCartData', $cartData, $data, $quantity);
         }
+    }
+    
+    /**
+     * Returns the cart position data for the given $quantity and $product.
+     * 
+     * @param int     $quantity Quantity
+     * @param Product $product  Product
+     * 
+     * @return array
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 10.04.2019
+     */
+    public static function getCartPositionData(int $quantity, Product $product) : array
+    {
+        $priceTotal = DBMoney::create()->setCurrency($product->getPrice()->getCurrency())->setAmount($product->getPrice()->getAmount() * $quantity);
+        $data       = [
+            'productID'       => $product->ID,
+            'productQuantity' => $quantity,
+            'productTitle'    => $product->Title,
+            'priceSingle'     => [
+                'Amount'   => $product->getPrice()->getAmount(),
+                'Currency' => $product->getPrice()->getCurrency(),
+                'Nice'     => $product->getPrice()->Nice(),
+            ],
+            'priceTotal'      => [
+                'Amount'   => $priceTotal->getAmount(),
+                'Currency' => $priceTotal->getCurrency(),
+                'Nice'     => $priceTotal->Nice(),
+            ],
+        ];
+        if ($product->hasMethod('getBillingPeriodNice')) {
+            $data = array_merge($data, [
+                'BillingPeriod'     => $product->BillingPeriod,
+                'BillingPeriodNice' => $product->getBillingPeriodNice(),
+            ]);
+        }
+        return $data;
     }
 }
