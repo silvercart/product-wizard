@@ -8,7 +8,7 @@
         <a class="d-inline-block px-40" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" alt="{$Title}" src="{$ListImage.Pad(260,220).URL}" /></a>
         <a class="h5 card-title d-inline-block mb-0 text-truncate mw-100" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}" title="{$Title.ATT}">{$Title}</a>
         <% if $hasVariants %>
-        <p class="card-text text-muted mb-6 product-description-sm">{$ShortDescription.LimitWordCount(12)}</p>
+        <p class="card-text text-muted mb-6 product-description-sm">{$ShortDescription.LimitCharactersToClosestWord(70)}</p>
         <small>{$VariantAttributesNice}:</small>
         <div class="dropdown">
             <button class="btn btn-light btn-block dropdown-toggle px-6" type="button" id="product-variant-dropdown-{$CurrentOption.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,9 +21,9 @@
             </div>
         </div>
         <% else_if $hasChainedProduct %>
-        <p class="card-text text-muted mb-16 product-description-md">{$ShortDescription.LimitWordCount(17)}</p>
+        <p class="card-text text-muted mb-16 product-description-md">{$ShortDescription.LimitCharactersToClosestWord(95)}</p>
         <% else %>
-        <p class="card-text text-muted mb-16 product-description-lg">{$ShortDescription.LimitWordCount(23)}</p>
+        <p class="card-text text-muted mb-16 product-description-lg">{$ShortDescription.LimitCharactersToClosestWord(130)}</p>
         <% end_if %>
         <div class="text-right pt-6">
         <% if $PriceIsLowerThanMsr %>
