@@ -60,7 +60,7 @@
     transition: color 500ms, border-color 500ms, background-color 500ms;
 }
 .wizard-option.pickable.not-picked .wizard-option-picker {
-    color: #919191 !important;
+    color: #e8e8e8 !important;
     border-color: rgba(0, 0, 0, 0.125) !important;
 }
 .wizard-option.pickable.not-picked {
