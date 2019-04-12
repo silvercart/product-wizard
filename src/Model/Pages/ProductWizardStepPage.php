@@ -221,10 +221,10 @@ class ProductWizardStepPage extends Page
             $stepData[$step->ID] = [];
             if ($step->StepOptionSets()->exists()) {
                 foreach ($step->StepOptionSets() as $optionSet) {
-                    $this->loadStepAndAmountData($optionSet->StepOptions(), $step, $stepData, $amountData);
+                    $this->loadStepAndAmountData($optionSet->getVisibleStepOptions(), $step, $stepData, $amountData);
                 }
             } else {
-                $this->loadStepAndAmountData($step->StepOptions(), $step, $stepData, $amountData);
+                $this->loadStepAndAmountData($step->getVisibleStepOptions(), $step, $stepData, $amountData);
             }
         }
         return [
@@ -237,17 +237,17 @@ class ProductWizardStepPage extends Page
      * Loads the step and amount data for the given $stepOptions and $step into 
      * the given $stepData and $amountData array.
      * 
-     * @param DataList $stepOptions Step options to load data for
-     * @param Step     $step        Step context
-     * @param array    &$stepData   Step data store
-     * @param array    &$amountData Amount data store
+     * @param ArrayList $stepOptions Step options to load data for
+     * @param Step      $step        Step context
+     * @param array     &$stepData   Step data store
+     * @param array     &$amountData Amount data store
      * 
      * @return \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 02.04.2019
      */
-    public function loadStepAndAmountData(DataList $stepOptions, Step $step, array &$stepData, array &$amountData) : ProductWizardStepPage
+    public function loadStepAndAmountData(ArrayList $stepOptions, Step $step, array &$stepData, array &$amountData) : ProductWizardStepPage
     {
         foreach ($stepOptions as $option) {
             $data = $option->getCartSummary();
