@@ -1,17 +1,17 @@
 <form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithProgress">
     <div class="row" id="product-wizard-step">
-        <div class="col-12 col-sm-6 col-md-8 col-lg-9">
+        <div class="col-12 col-sm-6 col-md-8 col-xl-9">
             <div class="row" id="product-wizard-step-options">
             <% if $VisibleStepOptions.exists %>
                 <% loop $VisibleStepOptions %>
-                <div class="col-12 col-md-6 col-lg-4 d-flex mb-20">
+                <div class="col-12 col-md-6 col-xl-4 d-flex mb-20">
                     {$Me}
                 </div>
                 <% end_loop %>
             <% end_if %>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3">
             <div class="bg-gray-light p-20 mb-20 sticky" id="ProductWizardCartSummary">
                 <h3><%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.YourChoices 'Your choices' %></h3>
             <% with $ProductWizardStepPage %>
