@@ -178,11 +178,9 @@ class StepOption extends DataObject
             $fields->dataFieldByName('OptionType')
                     ->setSource($optionTypes);
             if ($this->OptionType === self::OPTION_TYPE_BINARY) {
-                $fields->removeByName('Text');
-                $textField = HTMLEditorField::create('Text', $this->fieldLabel('Text'))
-                        ->setDescription($this->fieldLabel('TextDesc'))
-                        ->setRows(10);
-                $fields->insertAfter('Title', $textField);
+                if (empty($this->Text)) {
+                    $fields->removeByName('Text');
+                }
             }
             if ($this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_RADIO
@@ -210,7 +208,8 @@ class StepOption extends DataObject
                             $this->getProductPriceLabel($product->ID)));
                 }
             }
-            if ($this->OptionType !== self::OPTION_TYPE_BUTTON
+            if ($this->OptionType !== self::OPTION_TYPE_BINARY
+             && $this->OptionType !== self::OPTION_TYPE_BUTTON
              && $this->OptionType !== self::OPTION_TYPE_LABEL
              && $this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
@@ -362,6 +361,21 @@ class StepOption extends DataObject
     public function forTemplate()
     {
         return $this->renderWith(self::class . "_{$this->OptionType}");
+    }
+    
+    /**
+     * Returns the content with the short code parser option if the current context
+     * is not $this->getCMSFields().
+     * 
+     * @return DBHTMLText
+     */
+    public function getContent() : DBHTMLText
+    {
+        $content = DBHTMLText::create()->setValue($this->getField('Content'));
+        if (!$this->getCMSFieldsIsCalled) {
+            $content->setOptions(['shortcodes' => true]);
+        }
+        return $content;
     }
     
     /**
