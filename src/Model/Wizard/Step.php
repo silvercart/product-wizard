@@ -31,6 +31,8 @@ class Step extends DataObject
     const ACTION_TYPE_LINK_TO_INTERNAL = 'LinkToInternal';
     const SKIP_TYPE_PARENT_NO          = 'ParentNo';
     const SKIP_TYPE_PARENT_YES         = 'ParentYes';
+    const TEMPLATE_OPTIONS_WITH_PROGRESS = 'OptionsWithProgress';
+    const TEMPLATE_OPTIONS_WITH_INFO     = 'OptionsWithInfo';
     
     /**
      * FontAwesome CSS file source.
@@ -51,6 +53,8 @@ class Step extends DataObject
      */
     private static $db = [
         'Title'                => 'Varchar(256)',
+        'DescriptionTitle'     => 'Varchar(256)',
+        'DescriptionContent'   => DBHTMLText::class,
         'InfoBoxTitle'         => 'Varchar(256)',
         'InfoBoxContent'       => DBHTMLText::class,
         'FontAwesomeIcon'      => 'Varchar(25)',
@@ -140,6 +144,11 @@ class Step extends DataObject
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
             $fields->dataFieldByName('ButtonTitle')
                     ->setDescription($this->fieldLabel('ButtonTitleDesc'));
+            $fields->dataFieldByName('DescriptionTitle')
+                    ->setDescription($this->fieldLabel('DescriptionTitleDesc'));
+            $fields->dataFieldByName('DescriptionContent')
+                    ->setDescription($this->fieldLabel('DescriptionContentDesc'))
+                    ->setRows(3);
             $fields->dataFieldByName('InfoBoxTitle')
                     ->setDescription($this->fieldLabel('InfoBoxTitleDesc'));
             $fields->dataFieldByName('InfoBoxContent')
@@ -161,6 +170,11 @@ class Step extends DataObject
                     $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
                 $fields->removeByName('ProductWizardStepPageID');
+                if ($this->Template === self::TEMPLATE_OPTIONS_WITH_PROGRESS) {
+                    $fields->removeByName('InfoBoxContent');
+                    $fields->removeByName('DescriptionTitle');
+                    $fields->removeByName('DescriptionContent');
+                }
             }
         });
         return parent::getCMSFields();

@@ -1,4 +1,6 @@
 <form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithInfo">
+    <% if $DescriptionTitle %><h1>{$DescriptionTitle}</h1><% end_if %>
+    <% if $DescriptionContent %>{$DescriptionContent}<hr/><% end_if %>
     <div class="row" id="product-wizard-step">
         <div class="d-flex col-xs-12 col-sm-8 col-md-6">
             <div class="row" id="product-wizard-step-options">
