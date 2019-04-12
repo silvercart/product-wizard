@@ -9,6 +9,7 @@ use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GroupedDropdownField;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
@@ -176,6 +177,13 @@ class StepOption extends DataObject
             }
             $fields->dataFieldByName('OptionType')
                     ->setSource($optionTypes);
+            if ($this->OptionType === self::OPTION_TYPE_BINARY) {
+                $fields->removeByName('Text');
+                $textField = HTMLEditorField::create('Text', $this->fieldLabel('Text'))
+                        ->setDescription($this->fieldLabel('TextDesc'))
+                        ->setRows(10);
+                $fields->insertAfter('Title', $textField);
+            }
             if ($this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_RADIO
              && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
@@ -473,6 +481,16 @@ class StepOption extends DataObject
             $isReadonly = true;
         }
         return (bool) $isReadonly;
+    }
+    
+    /**
+     * Returns the Text as DBHTMLText.
+     * 
+     * @return DBHTMLText
+     */
+    public function getTextHtml() : DBHTMLText
+    {
+        return DBHTMLText::create()->setOptions(['shortcodes' => true])->setValue($this->Text);
     }
     
     /**
