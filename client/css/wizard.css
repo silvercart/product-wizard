@@ -145,5 +145,9 @@ form[name="ProductWizardStepForm"] .has-additional-options .radio-option-picker:
     transition: color 500ms;
 }
 .radio-option-picker:not(.checked) .fa.text-blue {
+    color: #e8e8e8 !important;
+}
+.modal-sidebar .radio-option-picker:not(.checked) .fa.text-blue,
+.wizard-option.picked .radio-option-picker:not(.checked) .fa.text-blue {
     color: #ffffff !important;
 }
