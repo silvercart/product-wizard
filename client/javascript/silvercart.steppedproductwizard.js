@@ -303,7 +303,7 @@ silvercart.ProductWizard.OptionsWithInfo = (function () {
                 return false;
             },
             doStepOptionValidation: function() {
-                var isValid = false;
+                var isValid = true;
                 $(selector.productWizardOptions + ' input').each(function() {
                     if ($(this).val() === '1') {
                         isValid = true;
