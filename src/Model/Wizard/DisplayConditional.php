@@ -5,6 +5,7 @@ namespace SilverCart\ProductWizard\Model\Wizard;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LiteralField;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Permission;
 
 /**
@@ -67,10 +68,10 @@ trait DisplayConditional
                 $conditionOperations[$enumValue] = _t(self::class . ".DisplayConditionOperation{$enumValue}", $enumValue);
             }
             $field = _t(self::class . '.DisplayConditionText', '{type} this option-set when matching {operation} of the following conditions', [
-                'type'      => DropdownField::create('DisplayConditionType', '', $conditionTypes, $this->DisplayConditionType)->setAttribute('style', 'width:auto;')->Field(),
-                'operation' => DropdownField::create('DisplayConditionOperation', '', $conditionOperations, $this->DisplayConditionOperation)->setAttribute('style', 'width:auto;')->Field(),
+                'type'      => DropdownField::create('DisplayConditionType', '', $conditionTypes, $this->DisplayConditionType)->setAttribute('style', 'width:auto; display: inline-block;')->Field(),
+                'operation' => DropdownField::create('DisplayConditionOperation', '', $conditionOperations, $this->DisplayConditionOperation)->setAttribute('style', 'width:auto; display: inline-block;')->Field(),
             ]);
-            $fields->addFieldToTab('Root.DisplayConditions', LiteralField::create('DisplayConditionLiteral', $field), 'DisplayConditions');
+            $fields->addFieldToTab('Root.DisplayConditions', LiteralField::create('DisplayConditionLiteral', "<div style=\"margin-bottom: 15px;\">{$field}</div>"), 'DisplayConditions');
         }
     }
     
@@ -130,5 +131,21 @@ trait DisplayConditional
             $isVisible = !$isMatching;
         }
         return $isVisible;
+    }
+    
+    /**
+     * Returns the display condition summary text.
+     * 
+     * @return DBHTMLText
+     */
+    public function getDisplayConditionSummary() : DBHTMLText
+    {
+        $summary = DBHTMLText::create();
+        if ($this->DisplayConditions()->exists()) {
+            foreach ($this->DisplayConditions() as $condition) {
+                $summary->setValue("{$summary->getValue()}• {$condition->getSummary()}<br/>");
+            }
+        }
+        return $summary;
     }
 }

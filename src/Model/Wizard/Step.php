@@ -26,6 +26,7 @@ use SilverStripe\View\Requirements;
 class Step extends DataObject
 {
     use \SilverCart\ORM\ExtensibleDataObject;
+    use DisplayConditional;
     
     const ACTION_TYPE_LINK_TO_EXTERNAL = 'LinkToExternal';
     const ACTION_TYPE_LINK_TO_INTERNAL = 'LinkToInternal';
@@ -62,6 +63,8 @@ class Step extends DataObject
         'ShowInStepNavigation' => 'Boolean(0)',
         'Template'             => 'Enum("OptionsWithProgress,OptionsWithInfo","OptionsWithProgress")',
         'Sort'                 => DBInt::class,
+        'DisplayConditionType'       => 'Enum(",Show,Hide","")',
+        'DisplayConditionOperation'  => 'Enum(",And,Or","")',
     ];
     /**
      * Has one relations.
@@ -79,6 +82,7 @@ class Step extends DataObject
     private static $has_many = [
         'StepOptions'    => StepOption::class . '.Step',
         'StepOptionSets' => StepOptionSet::class . '.Step',
+        'DisplayConditions' => DisplayCondition::class,
     ];
     /**
      * Casted attributes.
@@ -176,8 +180,23 @@ class Step extends DataObject
                     $fields->removeByName('DescriptionContent');
                 }
             }
+            $this->addDisplayConditionalCMSFields($fields);
         });
         return parent::getCMSFields();
+    }
+    
+    /**
+     * On before write.
+     * 
+     * @return void
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 25.02.2019
+     */
+    protected function onBeforeWrite()
+    {
+        parent::onBeforeWrite();
+        $this->onBeforeWriteDisplayCondition();
     }
     
     /**
@@ -194,6 +213,7 @@ class Step extends DataObject
             'Sort'                      => '#',
             'Title'                     => $this->fieldLabel('Title'),
             'ShowInStepNavigation.Nice' => $this->fieldLabel('ShowInStepNavigation'),
+            'DisplayConditionSummary'   => $this->fieldLabel('DisplayConditions'),
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
@@ -287,6 +307,8 @@ class Step extends DataObject
         $prev = $this->ProductWizardStepPage()->Steps()->where("Sort < {$this->Sort}")->last();
         if (!($prev instanceof Step)) {
             $prev = self::singleton();
+        } elseif (!$prev->isVisible()) {
+            $prev = $prev->getPreviousStep();
         }
         return $prev;
     }

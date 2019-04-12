@@ -52,6 +52,7 @@ class DisplayCondition extends DataObject
      * @var array
      */
     private static $has_one = [
+        'ParentStep'       => Step::class,
         'ParentStepOption' => StepOption::class,
         'StepOptionSet'    => StepOptionSet::class,
     ];
@@ -82,6 +83,7 @@ class DisplayCondition extends DataObject
     public function getCMSFields() : FieldList
     {
         $this->beforeUpdateCMSFields(function(FieldList $fields) {
+            $fields->removeByName('ParentStepID');
             $fields->removeByName('ParentStepOptionID');
             $fields->removeByName('StepOptionSetID');
             $fields->removeByName('StepOptionID');
@@ -243,9 +245,10 @@ class DisplayCondition extends DataObject
      */
     public function getContextStep() : Step
     {
-        $step = Step::singleton();
-        if ($this->StepOptionSet()->exists()
-         || $this->ParentStepOption()->exists()
+        $step = $this->ParentStep();
+        if (!$step->exists()
+         && ($this->StepOptionSet()->exists()
+          || $this->ParentStepOption()->exists())
         ) {
             if ($this->StepOptionSet()->exists()) {
                 $step = $this->StepOptionSet()->Step()->getPreviousStep();

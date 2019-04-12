@@ -218,6 +218,9 @@ class ProductWizardStepPage extends Page
         $stepData   = [];
         $amountData = [];
         foreach ($this->Steps() as $step) {
+            if (!$step->isVisible()) {
+                continue;
+            }
             $stepData[$step->ID] = [];
             if ($step->StepOptionSets()->exists()) {
                 foreach ($step->StepOptionSets() as $optionSet) {
@@ -379,9 +382,16 @@ class ProductWizardStepPage extends Page
      * 
      * @return DataList
      */
-    public function getNavigationSteps() : DataList
+    public function getNavigationSteps() : ArrayList
     {
-        return $this->Steps()->filter('ShowInStepNavigation', true);
+        $steps           = $this->Steps()->filter('ShowInStepNavigation', true);
+        $navigationSteps = ArrayList::create();
+        foreach ($steps as $step) {
+            if ($step->isVisible()) {
+                $navigationSteps->push($step);
+            }
+        }
+        return $navigationSteps;
     }
     
     /**

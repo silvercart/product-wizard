@@ -19,11 +19,11 @@
                 <div id="ProductWizardCartSummaryPositions">
                     <% loop $NavigationSteps %>
                         <% if $IsCurrent %>
-                    <a class="h3 d-block mb-10 ml-10 current" href="javascript:;" data-step-id="{$ID}"><span class="fa fa-angle-right"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.YourStep 'Your {step}' step=$Title %></a>
+                    <a class="h3 d-block mb-10 ml-10 current" href="javascript:;" data-step-id="{$ID}"><span class="fa fa-angle-right"></span> {$Title}</a>
                         <% else_if $IsFinished %>
-                    <a class="h3 d-block mb-10 ml-10" href="javascript:;" data-step-id="{$ID}"><span class="fa fa-angle-right"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.YourStep 'Your {step}' step=$Title %></a>
+                    <a class="h3 d-block mb-10 ml-10" href="javascript:;" data-step-id="{$ID}"><span class="fa fa-angle-right"></span> {$Title}</a>
                         <% else %>
-                    <span class="h3 d-block mb-10 ml-10 text-muted"><span class="fa fa-angle-right"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.YourStep 'Your {step}' step=$Title %></span>
+                    <span class="h3 d-block mb-10 ml-10 text-muted"><span class="fa fa-angle-right"></span> {$Title}</span>
                         <% end_if %>
                     <div class="mt--5 mb-10 clearfix" style="display: none;" id="ProductWizardCartSummaryStep-{$ID}"></div>
                     <% end_loop %>

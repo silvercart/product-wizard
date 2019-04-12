@@ -379,22 +379,6 @@ class StepOption extends DataObject
     }
     
     /**
-     * Returns the display condition summary text.
-     * 
-     * @return DBHTMLText
-     */
-    public function getDisplayConditionSummary() : DBHTMLText
-    {
-        $summary = DBHTMLText::create();
-        if ($this->DisplayConditions()->exists()) {
-            foreach ($this->DisplayConditions() as $condition) {
-                $summary->setValue("{$summary->getValue()}• {$condition->getSummary()}<br/>");
-            }
-        }
-        return $summary;
-    }
-    
-    /**
      * Returns the option type as an i18n readable string.
      * 
      * @return string
