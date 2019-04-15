@@ -258,22 +258,36 @@ class ProductWizardStepPage extends Page
             if (!empty($data)) {
                 $stepData[$step->ID][$option->ID] = $data;
                 foreach ($data as $positionData) {
-                    $billingPeriod = _t('SilverCart\Model\Pages\Page.TOTAL', 'Total');
+                    $billingPeriod  = _t('SilverCart\Model\Pages\Page.TOTAL', 'Total');
+                    $billingPeriods = [$billingPeriod];
+                    $prices         = [$billingPeriod => $positionData['priceTotal']];
                     if (Product::singleton()->hasMethod('getBillingPeriodNice')) {
-                        $billingPeriod = $positionData['BillingPeriodNice'];
+                        $billingPeriod  = $positionData['BillingPeriodNice'];
+                        $billingPeriods = [$billingPeriod];
+                        $prices         = [$billingPeriod => $positionData['priceTotal']];
+                        if (array_key_exists('BillingPeriodConsequential', $positionData)) {
+                            $billingPeriod    = $positionData['BillingPeriodConsequentialNice'];
+                            $billingPeriods[] = $billingPeriod;
+                            $prices[$billingPeriod] = $positionData['priceTotalConsequential'];
+                            $positionData['priceSingleConsequential'];
+                            $positionData['BillingPeriodConsequential'];
+                        }
                     }
-                    if (!array_key_exists($billingPeriod, $amountData)) {
-                        $amountData[$billingPeriod] = [
-                            'Amount'   => $positionData['priceTotal']['Amount'],
-                            'Currency' => $positionData['priceTotal']['Currency'],
-                            'Nice'     => $positionData['priceTotal']['Nice'],
-                        ];
-                    } else {
-                        $amountData[$billingPeriod]['Amount'] += $positionData['priceTotal']['Amount'];
-                        $amountData[$billingPeriod]['Nice']    = DBMoney::create()
-                                ->setCurrency($amountData[$billingPeriod]['Currency'])
-                                ->setAmount($amountData[$billingPeriod]['Amount'])
-                                ->Nice();
+                    foreach ($billingPeriods as $billingPeriod) {
+                        $price = $prices[$billingPeriod];
+                        if (!array_key_exists($billingPeriod, $amountData)) {
+                            $amountData[$billingPeriod] = [
+                                'Amount'   => $price['Amount'],
+                                'Currency' => $price['Currency'],
+                                'Nice'     => $price['Nice'],
+                            ];
+                        } else {
+                            $amountData[$billingPeriod]['Amount'] += $price['Amount'];
+                            $amountData[$billingPeriod]['Nice']    = DBMoney::create()
+                                    ->setCurrency($amountData[$billingPeriod]['Currency'])
+                                    ->setAmount($amountData[$billingPeriod]['Amount'])
+                                    ->Nice();
+                        }
                     }
                 }
             }

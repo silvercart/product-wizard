@@ -34,23 +34,28 @@ silvercart.ProductWizard.CartSummary = (function () {
                         $(table).append(row);
                     } else {
                         $.each(stepPositions, function(optionID, positions) {
-                            $.each(positions, function(key, position) {
-                                var row  = document.createElement('tr'),
-                                    col1 = document.createElement('td'),
-                                    col2 = document.createElement('td');
-                                $(col1).addClass('text-muted align-top line-height-1 pb-5px pr-5px');
-                                $(col2).addClass('text-muted align-top line-height-1 pb-5px text-right text-nowrap');
-                                $(col1).html(position.productQuantity + 'x ' + position.productTitle);
-                                $(col2).html(position.priceTotal.Nice + '<br/>' + position.BillingPeriodNice);
-                                $(row).append(col1).append(col2);
-                                $(table).append(row);
-                            });
+                            private.renderPositions(positions, table);
                         });
                     }
                     stepSummary.append($(table));
                 });
             },
-            renderPositions: function(positions) {
+            renderPositions: function(positions, table) {
+                $.each(positions, function(key, position) {
+                    var row  = document.createElement('tr'),
+                        col1 = document.createElement('td'),
+                        col2 = document.createElement('td');
+                    $(col1).addClass('text-muted align-top line-height-1 pb-5px pr-5px');
+                    $(col2).addClass('text-muted align-top line-height-1 pb-5px text-right text-nowrap');
+                    $(col1).html(position.productQuantity + 'x ' + position.productTitle);
+                    if (typeof position.priceTotalConsequential === 'object') {
+                        $(col2).html(position.priceTotal.Nice + '<br/>' + position.BillingPeriodNice + '<br/>' + position.priceTotalConsequential.Nice + '<br/>' + position.BillingPeriodConsequentialNice);
+                    } else {
+                        $(col2).html(position.priceTotal.Nice + '<br/>' + position.BillingPeriodNice);
+                    }
+                    $(row).append(col1).append(col2);
+                    $(table).append(row);
+                });
             },
             renderPriceTotalAmounts: function(amounts) {
                 var trClasses = $('tr', selector.amounts).attr('class');
@@ -215,10 +220,12 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickOptionByPicker: function() {
                 var option = $(this).closest(selector.option),
                     quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
-                if (option.hasClass('picked')) {
-                    quantityField.val('0');
-                } else {
-                    quantityField.val('1');
+                if (option.hasClass('readonly')) {
+                    if (option.hasClass('picked')) {
+                        quantityField.val('0');
+                    } else {
+                        quantityField.val('1');
+                    }
                 }
                 private.pickOption(option);
             },

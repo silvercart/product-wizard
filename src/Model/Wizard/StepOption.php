@@ -717,6 +717,16 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns the CSS class for the options's readonly status (getProductViewIsReadonly).
+     * 
+     * @return string
+     */
+    public function getProductViewIsReadonlyClass() : string
+    {
+        return $this->getProductViewIsReadonly() ? 'readonly' : '';
+    }
+    
+    /**
      * Returns the whether the product with the given $productID was picked by the
      * customer.
      * 
@@ -938,10 +948,31 @@ class StepOption extends DataObject
             ],
         ];
         if ($product->hasMethod('getBillingPeriodNice')) {
-            $data = array_merge($data, [
-                'BillingPeriod'     => $product->BillingPeriod,
-                'BillingPeriodNice' => $product->getBillingPeriodNice(),
-            ]);
+            if ($product->HasConsequentialCosts) {
+                $priceSingleConsequential = $product->getPriceConsequentialCosts();
+                $priceTotalConsequential  = DBMoney::create()->setCurrency($priceSingleConsequential->getCurrency())->setAmount($priceSingleConsequential->getAmount() * $quantity);
+                $data = array_merge($data, [
+                    'priceSingleConsequential' => [
+                        'Amount'   => $priceSingleConsequential->getAmount(),
+                        'Currency' => $priceSingleConsequential->getCurrency(),
+                        'Nice'     => $priceSingleConsequential->Nice(),
+                    ],
+                    'priceTotalConsequential'      => [
+                        'Amount'   => $priceTotalConsequential->getAmount(),
+                        'Currency' => $priceTotalConsequential->getCurrency(),
+                        'Nice'     => $priceTotalConsequential->Nice(),
+                    ],
+                    'BillingPeriod'                  => Product::singleton()->BillingPeriod,
+                    'BillingPeriodNice'              => Product::singleton()->getBillingPeriodNice(),
+                    'BillingPeriodConsequential'     => $product->BillingPeriod,
+                    'BillingPeriodConsequentialNice' => $product->getBillingPeriodNice(),
+                ]);
+            } else {
+                $data = array_merge($data, [
+                    'BillingPeriod'     => $product->BillingPeriod,
+                    'BillingPeriodNice' => $product->getBillingPeriodNice(),
+                ]);
+            }
         }
         return $data;
     }
