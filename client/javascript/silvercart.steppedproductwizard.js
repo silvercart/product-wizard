@@ -167,14 +167,21 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             radioOption: "#product-wizard-step-options input[type='radio']",
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
-            selectProductButton: "#product-wizard-step .select-product"
+            selectProductButton: "#product-wizard-step .select-product",
+            submitButton: "form[name='ProductWizardStepForm'] button[type='submit']"
         },
         private = {
             validateFields: function() {
                 var valid = true;
                 $('input', property.optionSetSelector).each(function() {
                     if (typeof $(this).attr('required') !== 'undefined') {
-                        if ($(this).val() === '') {
+                        if ($(this).attr('type') === 'radio') {
+                            var selectedField = $('input[name="' + $(this).attr('name') + '"]:checked');
+                            if (selectedField.length === 0) {
+                                valid = false;
+                                $(this).closest(selector.option).addClass('validation-error');
+                            }
+                        } else if ($(this).val() === '') {
                             valid = false;
                             $(this).tooltip({title: ss.i18n._t('Form.FIELD_MAY_NOT_BE_EMPTY', 'This field may not be empty.')});
                             $(this).tooltip('show');
@@ -213,6 +220,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 if (!option.hasClass('pickable')) {
                     return;
                 }
+                option.removeClass('validation-error');
                 var productID     = option.data('product-id'),
                     optionID      = option.data('option-id'),
                     selectField   = $('input[name="StepOptions[' + optionID + '][' + productID + '][Select]"]'),
@@ -269,7 +277,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     visibleOptions.last().css('cssText', 'display: none !important;');
                     pickedOption.css('cssText', 'display: block !important;');
                 }
-                pickedOption.closest(selector.option).removeClass('not-picked').addClass('picked');
+                pickedOption.closest(selector.option).removeClass('validation-error').removeClass('not-picked').addClass('picked');
             },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
@@ -291,6 +299,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
                 $(selector.radioOption).on('change', private.pickRadioOption);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
+                $(document).on('click', selector.submitButton, private.validateFields);
             }
         };
     return public;

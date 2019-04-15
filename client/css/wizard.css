@@ -56,7 +56,11 @@
     cursor: pointer;
     transition: color 500ms, border-color 500ms, background-color 500ms;
 }
-.wizard-option.pickable.not-picked .btn-primary {
+.wizard-option.pickable .card-header {
+    transition: color 500ms, border-color 500ms, background-color 500ms;
+}
+.wizard-option.pickable.not-picked .btn-primary,
+.wizard-option.pickable.validation-error .btn-primary {
     transition: color 500ms, border-color 500ms, background-color 500ms;
 }
 .wizard-option.pickable.not-picked .wizard-option-picker {
@@ -84,6 +88,22 @@
 }
 .wizard-option.pickable.not-picked .border-blue {
     border-color: #e8e8e8 !important;
+}
+.wizard-option.pickable.validation-error .wizard-option-picker {
+    color: #e3000f !important;
+    border-color: rgba(0, 0, 0, 0.125) !important;
+}
+.wizard-option.pickable.validation-error .card-header {
+    background-color: #e3000f !important;
+    color: #ffffff !important;
+}
+.wizard-option.pickable.validation-error .btn-primary {
+    background-color: #e3000f !important;
+    border-color: #e3000f !important;
+    color: #ffffff !important;
+}
+.wizard-option.pickable.validation-error .border-blue {
+    border-color: #e3000f !important;
 }
 .wizard-option .product-description-sm {
     height: 3em;
