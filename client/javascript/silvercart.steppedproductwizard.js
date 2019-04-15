@@ -213,7 +213,13 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 }
             },
             pickOptionByPicker: function() {
-                var option = $(this).closest(selector.option);
+                var option = $(this).closest(selector.option),
+                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
+                if (option.hasClass('picked')) {
+                    quantityField.val('0');
+                } else {
+                    quantityField.val('1');
+                }
                 private.pickOption(option);
             },
             pickOption: function(option) {
