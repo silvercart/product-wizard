@@ -13,6 +13,7 @@ use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\ORM\FieldType\DBMoney;
 use SilverStripe\View\ArrayData;
 
@@ -509,6 +510,19 @@ class ProductWizardStepPage extends Page
     {
         self::setCurrentStepIDToSession(0);
         return $this;
+    }
+    
+    /**
+     * Provides an extension hook to display content right after the cart summary
+     * content.
+     * 
+     * @return DBHTMLText
+     */
+    public function AfterProductWizardCartSummaryContent() : DBHTMLText
+    {
+        $content = '';
+        $this->extend('updateAfterProductWizardCartSummaryContent', $content);
+        return DBHTMLText::create()->setValue($content);
     }
     
     /**
