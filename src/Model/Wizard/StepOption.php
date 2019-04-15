@@ -253,6 +253,7 @@ class StepOption extends DataObject
                 $minQuantityValue       = $this->getProductRelation()->getMinimumQuantity();
                 $dynQuantityOptionValue = $this->getProductRelation()->getDynamicQuantityOption()->ID;
                 $descriptions           = $this->getProductRelation()->getDescriptions();
+                $longDescriptions       = $this->getProductRelation()->getLongDescriptions();
                 $fields->addFieldToTab('Root.Advanced', TextField::create('OptionProductRelation[MinimumQuantity]', $this->fieldLabel('ProductMinQuantity'), $minQuantityValue)->setDescription($this->fieldLabel('ProductMinQuantityDesc')));
                 $fields->addFieldToTab('Root.Advanced', GroupedDropdownField::create('OptionProductRelation[DynamicQuantityOption]', $this->fieldLabel('ProductDynQuantityStepOptionID'), $this->getGroupedContextOptions(), $dynQuantityOptionValue)->setEmptyString('')->setDescription($this->fieldLabel('ProductDynQuantityStepOptionIDDesc')));
                 foreach ($optionList as $option) {
@@ -276,7 +277,18 @@ class StepOption extends DataObject
                     if (array_key_exists($option->Value, $descriptions)) {
                         $descValue = $descriptions[$option->Value];
                     }
+                    $longDescValue       = '';
+                    $longDescTitle       = _t(self::class . '.OptionLongDescriptionTitle', 'Long description for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    $longDescDescription = _t(self::class . '.OptionLongDescriptionDesc', 'Will be displayed as a long description in a modal for "{option}".', [
+                        'option' => $option->Title,
+                    ]);
+                    if (array_key_exists($option->Value, $longDescriptions)) {
+                        $longDescValue = $longDescriptions[$option->Value];
+                    }
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[Descriptions][{$option->Value}]", $descTitle, $descValue)->setDescription($descDescription));
+                    $fields->addFieldToTab('Root.Advanced', HTMLEditorField::create("OptionProductRelation[LongDescriptions][{$option->Value}]", $longDescTitle, $longDescValue)->setDescription($longDescDescription)->setRows(3));
                     $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
                 }
             }
@@ -541,6 +553,7 @@ class StepOption extends DataObject
             $intValue   = (int) $plainValue;
             $products   = $this->getProductRelation()->getProducts();
             $descriptions = $this->getProductRelation()->getDescriptions();
+            $longDescriptions = $this->getProductRelation()->getLongDescriptions();
             foreach ($options as $key => $option) {
                 if (array_key_exists($key, $products)) {
                     $product  = $products[$key];
@@ -552,6 +565,11 @@ class StepOption extends DataObject
                 } else {
                     $description = null;
                 }
+                if (array_key_exists($key, $longDescriptions)) {
+                    $longDescription = $longDescriptions[$key];
+                } else {
+                    $longDescription = null;
+                }
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
                     'StepOptionSet' => $this->StepOptionSet(),
@@ -561,6 +579,7 @@ class StepOption extends DataObject
                     'Title'         => trim($option),
                     'Product'       => $product,
                     'Description'   => $description,
+                    'LongDescription' => DBHTMLText::create()->setValue($longDescription),
                 ]);
             }
             $this->optionList = ArrayList::create($optionList);

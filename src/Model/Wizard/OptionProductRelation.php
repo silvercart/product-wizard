@@ -53,6 +53,12 @@ class OptionProductRelation
      * @var string[]
      */
     protected $descriptions = [];
+    /**
+     * Key value pair of option index and long description.
+     *
+     * @var string[]
+     */
+    protected $longDescriptions = [];
     
     /**
      * Creates a new instance of OptionProductRelation by the given array $data.
@@ -120,6 +126,9 @@ class OptionProductRelation
             if (array_key_exists('Descriptions', $data)) {
                 $this->setDescriptions((array) $data['Descriptions']);
             }
+            if (array_key_exists('LongDescriptions', $data)) {
+                $this->setLongDescriptions((array) $data['LongDescriptions']);
+            }
         }
     }
     
@@ -138,6 +147,7 @@ class OptionProductRelation
             'DynamicQuantityOption' => $this->getDynamicQuantityOption()->ID,
             'Products'              => $this->getProductsMap(),
             'Descriptions'          => $this->getDescriptions(),
+            'LongDescriptions'      => $this->getLongDescriptions(),
         ];
         return serialize($data);
     }
@@ -202,6 +212,16 @@ class OptionProductRelation
             $this->dynamicQuantityOption = StepOption::singleton();
         }
         return $this->dynamicQuantityOption;
+    }
+
+    /**
+     * Returns the related long descriptions.
+     * 
+     * @return string[]
+     */
+    public function getLongDescriptions() : array
+    {
+        return $this->longDescriptions;
     }
 
     /**
@@ -296,6 +316,19 @@ class OptionProductRelation
     public function setDynamicQuantityOption(StepOption $dynamicQuantityOption) : OptionProductRelation
     {
         $this->dynamicQuantityOption = $dynamicQuantityOption;
+        return $this;
+    }
+
+    /**
+     * Sets the related long descriptions.
+     * 
+     * @param array $longDescriptions Long descriptions
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setLongDescriptions(array $longDescriptions) : OptionProductRelation
+    {
+        $this->longDescriptions = $longDescriptions;
         return $this;
     }
 

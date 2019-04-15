@@ -30,6 +30,8 @@
             {$setCurrentOptionID}
             <% include SilverCart\ProductWizard\Model\Wizard\ProductDetailModal %>
         <% end_with %>
+    <% else_if $LongDescription %>
+        <% include SilverCart\ProductWizard\Model\Wizard\OptionDescriptionModal %>
     <% end_if %>
 <% end_loop %>
 <% if $OptionList.count > 3 %>
