@@ -38,8 +38,8 @@
     <% if not $CurrentOption.getProductViewIsReadonly %>
         <hr>
         <% with $CurrentOption %>
-        <p class="mb-0 text-center" style="height: 42px;">{$Text}</p>
-        <div class="dropdown">
+        <p class="mb-0 text-center pick-button-label">{$Text}</p>
+        <div class="dropdown <% if $ProductQuantityValue > $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-quantity-{$ID}">
             <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="product-quantity-dropdown-{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {$ProductQuantityDropdownValues.CurrentValue.Quantity} {$ProductQuantityDropdownValues.CurrentValue.Title}
             </button>
@@ -47,17 +47,17 @@
                 <% loop $ProductQuantityDropdownValues.Values %>
                 <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
                 <% end_loop %>
-                <a class="dropdown-item pick-more-quantity" href="javascript:;"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$ProductQuantityDropdownMax maxTitle=$ProductQuantityPlural %></a>
+                <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$ID}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$ProductQuantityDropdownMax maxTitle=$ProductQuantityPlural %></a>
             </div>
         </div>
-        <div class="spinner-field clearfix text-nowrap d-none">
-            <input type="text" name="StepOptions[{$ID}][{$Up.ID}][Quantity]" value="{$getProductQuantityValue($Up.ID)}" />
+        <div class="spinner-field clearfix text-nowrap <% if $ProductQuantityValue <= $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-more-quantity-{$ID}">
+            <input type="text" name="StepOptions[{$ID}][{$Up.ID}][Quantity]" value="{$getProductQuantityValue($Up.ID)}" class="pick-more-quantity-field" data-option-id="{$ID}" data-product-id="{$Up.ID}" />
             <a href="javascript:;" style="width: calc(100% - 70px);" class="btn btn-xs btn-primary select-product" data-option-id="{$ID}" data-product-id="{$Up.ID}"><span class="d-inline d-md-none d-lg-inline"><%t ProductWizard.Choose 'Choose' %></span><span class="d-none d-md-inline d-lg-none fa fa-check"></span></a>
         </div>
         <% end_with %>
     <% else_if $CurrentOption.IsOptional %>
         <hr>
-        <p class="mb-0 text-center">{$CurrentOption.Text}</p>
+        <p class="mb-0 text-center pick-button-label">{$CurrentOption.Text}</p>
         <button class="btn btn-primary btn-block wizard-option-picker" type="button" ><%t ProductWizard.Choose 'Choose' %></button>
         <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
     <% else %>

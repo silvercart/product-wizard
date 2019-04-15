@@ -97,6 +97,10 @@
     height: 6em;
     overflow: hidden;
 }
+.wizard-option .pick-button-label {
+    height: 42px;
+    overflow: hidden;
+}
 #ProductWizardCartSummary.loading::after {
     content: '';
     display: block;

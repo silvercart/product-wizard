@@ -154,7 +154,8 @@ silvercart.ProductWizard.CartSummary = (function () {
 silvercart.ProductWizard.OptionsWithProgress = (function () {
     var property = {
             optionSetSelector: false,
-            cartSummary: false
+            cartSummary: false,
+            spinnerTimeout: false
         },
         selector = {
             container: "#ProductWizardStepOptionsWithProgress",
@@ -162,6 +163,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             optionPicker: ".wizard-option-picker",
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
+            pickMoreQuantityField: ".pick-more-quantity-field",
             radioOption: "#product-wizard-step-options input[type='radio']",
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
@@ -174,8 +176,8 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     if (typeof $(this).attr('required') !== 'undefined') {
                         if ($(this).val() === '') {
                             valid = false;
-                            $(this).bstooltip({title: ss.i18n._t('Form.FIELD_MAY_NOT_BE_EMPTY', 'This field may not be empty.')});
-                            $(this).bstooltip('show');
+                            $(this).tooltip({title: ss.i18n._t('Form.FIELD_MAY_NOT_BE_EMPTY', 'This field may not be empty.')});
+                            $(this).tooltip('show');
                         }
                     }
                 });
@@ -185,16 +187,14 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 if (typeof input === 'undefined') {
                     input = $(this);
                 }
-                console.log(input.val());
                 if (input.val() !== '') {
-                    input.bstooltip('destroy');
+                    input.tooltip('hide');
                 }
             },
             resetValidationTooltipByInput: function() {
                 private.resetValidationTooltip($(this));
             },
             resetValidationTooltipBySpinner: function() {
-                console.log($(this).closest('input'));
                 private.resetValidationTooltip($(this).closest('input'));
             },
             pickOptionByModal: function() {
@@ -246,6 +246,20 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 }
                 property.cartSummary.postOptionData(optionID, productID, quantity);
             },
+            pickMoreQuantity: function() {
+                var optionID = $(this).data('option-id');
+                $('#pick-quantity-' + optionID).hide();
+                $('#pick-more-quantity-' + optionID).removeClass('d-none').show();
+            },
+            pickMoreQuantityFieldChanged: function() {
+                clearTimeout(property.spinnerTimeout);
+                var quantity  = $(this).val(),
+                    optionID  = $(this).data('option-id'),
+                    productID = $(this).data('product-id');
+                property.spinnerTimeout = setTimeout(function() {
+                    property.cartSummary.postOptionData(optionID, productID, quantity);
+                },300);
+            },
             pickRadioOptionByPicker: function() {
                 $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]').removeClass('checked');
                 $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]').addClass('checked');
@@ -273,6 +287,8 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $('input', selector.stepForm).on('keyup', private.resetValidationTooltipByInput);
                 $(selector.optionPicker).on('click', private.pickOptionByPicker);
                 $(selector.pickQuantity).on('click', private.pickQuantity);
+                $(selector.pickMoreQuantity).on('click', private.pickMoreQuantity);
+                $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
                 $(selector.radioOption).on('change', private.pickRadioOption);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
             }
