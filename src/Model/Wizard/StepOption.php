@@ -427,9 +427,13 @@ class StepOption extends DataObject
     public function getProductQuantityDropdownValues(int $productID = 0) : ArrayData
     {
         $currentQuantity = $this->getProductQuantityValue($productID);
-        $current = ArrayData::create();
-        $values  = ArrayList::create();
-        for ($x = 0; $x <= $this->ProductQuantityDropdownMax; $x++) {
+        $current         = ArrayData::create();
+        $values          = ArrayList::create();
+        $firstValue      = 1;
+        if ($this->IsOptional) {
+            $firstValue = 0;
+        }
+        for ($x = $firstValue; $x <= $this->ProductQuantityDropdownMax; $x++) {
             if ($x === 1) {
                 $title = $this->ProductQuantitySingular;
             } else {
@@ -761,6 +765,9 @@ class StepOption extends DataObject
         }
         $postedValues = (array) $this->getValue();
         $value        = 1;
+        if ($this->IsOptional) {
+            $value = 0;
+        }
         if (array_key_exists($productID, $postedValues)
          && array_key_exists('Quantity', $postedValues[$productID])
         ) {
