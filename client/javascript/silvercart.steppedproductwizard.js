@@ -100,8 +100,8 @@ silvercart.ProductWizard.CartSummary = (function () {
                 );
             },
             postOptionData: function(optionID, productID, quantity) {
-                if (quantity < 1) {
-                    quantity = 1;
+                if (quantity < 0) {
+                    quantity = 0;
                 }
                 $(selector.container).addClass('loading');
                 $.post(
@@ -249,6 +249,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $('#product-quantity-dropdown-' + optionID).html($(this).html());
                 if (option.hasClass('not-picked')
                  && parseInt(quantity) > 0
+                ) {
+                    private.pickOption(option);
+                } else if (!option.hasClass('not-picked')
+                        && parseInt(quantity) <= 0
                 ) {
                     private.pickOption(option);
                 }

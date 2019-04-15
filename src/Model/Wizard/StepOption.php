@@ -429,7 +429,7 @@ class StepOption extends DataObject
         $currentQuantity = $this->getProductQuantityValue($productID);
         $current = ArrayData::create();
         $values  = ArrayList::create();
-        for ($x = 1; $x <= $this->ProductQuantityDropdownMax; $x++) {
+        for ($x = 0; $x <= $this->ProductQuantityDropdownMax; $x++) {
             if ($x === 1) {
                 $title = $this->ProductQuantitySingular;
             } else {
