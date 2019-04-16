@@ -6,10 +6,18 @@ use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
 use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
+use SilverStripe\CMS\Model\RedirectorPage;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GroupedDropdownField;
+use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\DataObject;
@@ -41,6 +49,7 @@ class StepOption extends DataObject
     const OPTION_TYPE_NUMBER       = 'Number';
     const OPTION_TYPE_PRODUCT_VIEW = 'ProductView';
     const OPTION_TYPE_RADIO        = 'Radio';
+    const OPTION_TYPE_REDIRECTION  = 'Redirection';
     const OPTION_TYPE_TEXTAREA     = 'TextArea';
     const OPTION_TYPE_TEXTFIELD    = 'TextField';
     
@@ -84,7 +93,7 @@ class StepOption extends DataObject
         'Title'                      => 'Varchar(256)',
         'Content'                    => DBHTMLText::class,
         'Text'                       => DBText::class,
-        'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView","BinaryQuestion")',
+        'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView,Redirection","BinaryQuestion")',
         'DefaultValue'               => 'Varchar(256)',
         'Options'                    => DBText::class,
         'ButtonTitle'                => DBVarchar::class,
@@ -96,6 +105,8 @@ class StepOption extends DataObject
         'ProductQuantitySingular'    => 'Varchar(24)',
         'ProductQuantityPlural'      => 'Varchar(24)',
         'ProductPriceLabels'         => 'Text',
+        'RedirectionType'            => 'Enum("Internal,External","Internal")',
+        'RedirectionExternalURL'     => 'Varchar(2083)', // 2083 is the maximum length of a URL in Internet Explorer.
         'Sort'                       => DBInt::class,
     ];
     /**
@@ -104,8 +115,9 @@ class StepOption extends DataObject
      * @var array
      */
     private static $has_one = [
-        'Step'          => Step::class,
-        'StepOptionSet' => StepOptionSet::class,
+        'RedirectionLinkTo' => SiteTree::class,
+        'Step'              => Step::class,
+        'StepOptionSet'     => StepOptionSet::class,
     ];
     /**
      * Has many relations.
@@ -149,10 +161,16 @@ class StepOption extends DataObject
             'Advanced'                           => _t(self::class . '.Advanced', 'Advanced'),
             'Continue'                           => _t(self::class . '.Continue', 'Continue'),
             'OptionProductRelation'              => _t(self::class . '.OptionProductRelation', 'Related Products'),
+            'OptionTypeRedirectionHeader'        => _t(self::class . '.OptionTypeRedirectionHeader', "This option will redirect customers to another page"),
             'ProductMinQuantity'                 => _t(self::class . '.ProductMinQuantity', 'Minimum quantity'),
             'ProductMinQuantityDesc'             => _t(self::class . '.ProductMinQuantityDesc', 'Minimum quantity to add to cart.'),
             'ProductDynQuantityStepOptionID'     => _t(self::class . '.ProductDynQuantityStepOptionID', 'Step Option'),
             'ProductDynQuantityStepOptionIDDesc' => _t(self::class . '.ProductDynQuantityStepOptionIDDesc', 'The user input value of this step option will be used as cart quantity.'),
+            'RedirectTo'                         => _t(RedirectorPage::class . '.REDIRECTTO', "Redirect to"),
+            'RedirectToPage'                     => _t(RedirectorPage::class . '.REDIRECTTOPAGE', "A page on your website"),
+            'RedirectToExternal'                 => _t(RedirectorPage::class . '.REDIRECTTOEXTERNAL', "Another website"),
+            'RedirectionLinkToID'                => _t(RedirectorPage::class . '.YOURPAGE', "Page on your website"),
+            'RedirectionExternalURL'             => _t(RedirectorPage::class . '.OTHERURL', "Other website URL"),
         ]);
     }
     
@@ -171,6 +189,15 @@ class StepOption extends DataObject
             $fields->removeByName('ProductPriceLabels');
             $fields->removeByName('Sort');
             $fields->dataFieldByName('Text')->setDescription($this->fieldLabel('TextDesc'));
+            if ($this->exists()) {
+                $displayConditionsGrid = $fields->dataFieldByName('DisplayConditions');
+                /* @var $displayConditionsGrid \SilverStripe\Forms\GridField\GridField */
+                $displayConditionsGrid->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
+                $displayConditionsGrid->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
+            } else {
+                $fields->removeByName('IsOptional');
+                $fields->removeByName('Text');
+            }
             $optionTypes = [];
             foreach ($this->dbObject('OptionType')->enumValues() as $enumValue) {
                 $optionTypes[$enumValue] = _t(self::class . ".OptionType{$enumValue}", $enumValue);
@@ -224,6 +251,7 @@ class StepOption extends DataObject
             }
             $this->addFieldsForOptionTypeNumber($fields);
             $this->addFieldsForOptionTypeRadio($fields);
+            $this->addFieldsForOptionTypeRedirection($fields);
             $this->addDisplayConditionalCMSFields($fields);
         });
         return parent::getCMSFields();
@@ -322,6 +350,41 @@ class StepOption extends DataObject
     }
     
     /**
+     * Adds the CMS fields for the option type 'Redirection'.
+     * 
+     * @param FieldList $fields CMS fields
+     * 
+     * @return void
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 16.04.2019
+     */
+    public function addFieldsForOptionTypeRedirection(FieldList $fields) : void
+    {
+        if ($this->OptionType === self::OPTION_TYPE_REDIRECTION) {
+            $fields->removeByName('IsOptional');
+            $fields->removeByName('Text');
+            $fields->insertBefore('RedirectionType', HeaderField::create('RedirectorDescHeader', $this->fieldLabel('OptionTypeRedirectionHeader')));
+            $fields->addFieldsToTab(
+                'Root.Main',
+                [
+                    HeaderField::create('RedirectorDescHeader', $this->fieldLabel('OptionTypeRedirectionHeader')),
+                    OptionsetField::create('RedirectionType', $this->fieldLabel('RedirectTo'), [
+                            "Internal" => $this->fieldLabel('RedirectToPage'),
+                            "External" => $this->fieldLabel('RedirectToExternal'),
+                        ], 'Internal'),
+                    TreeDropdownField::create('RedirectionLinkToID', $this->fieldLabel('RedirectionLinkToID'), SiteTree::class),
+                    TextField::create('RedirectionExternalURL', $this->fieldLabel('RedirectionExternalURL'))
+                ]
+            );
+        } else {
+            $fields->removeByName('RedirectionType');
+            $fields->removeByName('RedirectionLinkToID');
+            $fields->removeByName('RedirectionExternalURL');
+        }
+    }
+    
+    /**
      * On before write.
      * 
      * @return void
@@ -372,7 +435,37 @@ class StepOption extends DataObject
      */
     public function forTemplate()
     {
+        if ($this->OptionType == self::OPTION_TYPE_REDIRECTION) {
+            $link = $this->redirectionLink();
+            if (!is_null($link)) {
+                Controller::curr()->redirect($link, 301);
+            }
+        }
         return $this->renderWith(self::class . "_{$this->OptionType}");
+    }
+
+    /**
+     * Return the link that we should redirect to.
+     * Only return a value if there is a legal redirection destination.
+     * 
+     * @return string|null
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 16.04.2019
+     */
+    public function redirectionLink() : ?string
+    {
+        if ($this->RedirectionType == 'External') {
+            return $this->RedirectionExternalURL ?: null;
+        }
+        $linkTo = $this->RedirectionLinkToID ? SiteTree::get()->byID($this->RedirectionLinkToID) : null;
+        if (empty($linkTo)) {
+            return null;
+        }
+        if ($linkTo instanceof RedirectorPage) {
+            return $linkTo->regularLink();
+        }
+        return $linkTo->Link();
     }
     
     /**
