@@ -67,6 +67,9 @@
     color: #e8e8e8 !important;
     border-color: rgba(0, 0, 0, 0.125) !important;
 }
+.wizard-option.wizard-option-product.pickable.not-picked .wizard-option-picker {
+    color: #ffffff !important;
+}
 .wizard-option.pickable.not-picked {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) inset !important;
     box-shadow: none !important;
@@ -87,7 +90,10 @@
     transition: border-color 500ms;
 }
 .wizard-option.pickable.not-picked .border-blue {
-    border-color: #e8e8e8 !important;
+    border-color: #919191 !important;
+}
+.wizard-option.wizard-option-product.pickable.not-picked .border-blue {
+    border-color: #ffffff !important;
 }
 .wizard-option.pickable.validation-error .wizard-option-picker {
     color: #e3000f !important;
@@ -169,7 +175,7 @@ form[name="ProductWizardStepForm"] .has-additional-options .radio-option-picker:
     transition: color 500ms;
 }
 .radio-option-picker:not(.checked) .fa.text-blue {
-    color: #e8e8e8 !important;
+    color: #ffffff !important;
 }
 .modal-sidebar .radio-option-picker:not(.checked) .fa.text-blue,
 .wizard-option.picked .radio-option-picker:not(.checked) .fa.text-blue {
