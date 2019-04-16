@@ -306,6 +306,15 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
+            },
+            equalizeWizardOptionHeadings: function() {
+                $('.wizard-option .card-header').each(function() {
+                    if ($(this).outerHeight() < 55) {
+                        $(this).css('height', '55px');
+                    } else if ($(this).outerHeight() > 55) {
+                        $(this).css('line-height', '1em');
+                    }
+                });
             }
         },
         public = {
@@ -314,6 +323,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 if ($(selector.container).length === 0) {
                     return;
                 }
+                private.equalizeWizardOptionHeadings();
                 property.cartSummary = silvercart.ProductWizard.CartSummary();
                 property.cartSummary.init();
                 $(selector.selectProductButton).on('click', private.pickOptionByModal);

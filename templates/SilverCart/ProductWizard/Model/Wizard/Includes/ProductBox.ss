@@ -2,7 +2,7 @@
 <% if $CurrentOption.IsProductView %>
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
 <% end_if %>
-    <div class="card-header rounded-0 bg-blue text-white px-10 py-6 wizard-option-picker" style="height: 55px; overflow: hidden;">{$CurrentOption.Title}</div>
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6 wizard-option-picker">{$CurrentOption.Title}</div>
     <div class="card-body pt-0 pb-10 px-10 p-relative">
         <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6 wizard-option-picker"></span>
         <a class="d-inline-block px-40" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" alt="{$Title}" src="{$ListImage.Pad(260,220).URL}" /></a>

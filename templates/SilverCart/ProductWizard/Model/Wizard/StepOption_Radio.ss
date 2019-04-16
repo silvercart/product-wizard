@@ -1,5 +1,5 @@
 <div class="card rounded-0 w-100 shadow wizard-option pickable {$IsRadioCheckedClass}">
-    <div class="card-header rounded-0 bg-blue text-white px-10 py-6" style="height: 55px; overflow: hidden;">{$Title}</div>
+    <div class="card-header rounded-0 bg-blue text-white px-10 py-6">{$Title}</div>
     <% loop $OptionList %>
         <input class="d-none" type="radio" name="StepOptions[{$StepOption.ID}]" data-option-id="{$StepOption.ID}" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
     <% end_loop %>
