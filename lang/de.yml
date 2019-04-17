@@ -81,6 +81,7 @@ de:
         DisplayConditionOperationAnd: "aller"
         DisplayConditionOperationOr: "einer"
         IsOptional: "Ist optional"
+        IsPreselected: "Ist vorausgewählt"
         moreThanMax: "mehr als {max} {maxTitle}..."
         NumberProductRelationTitle: "Artikel für diese Option"
         NumberProductRelationDesc: "Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt."

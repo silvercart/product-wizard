@@ -90,6 +90,7 @@ class StepOption extends DataObject
      */
     private static $db = [
         'IsOptional'                 => 'Boolean(1)',
+        'IsPreselected'              => 'Boolean(0)',
         'Title'                      => 'Varchar(256)',
         'Content'                    => DBHTMLText::class,
         'Text'                       => DBText::class,
@@ -219,6 +220,7 @@ class StepOption extends DataObject
                 $fields->dataFieldByName('DefaultValue')->setDescription($this->fieldLabel('DefaultValueDesc'));
             }
             if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
+                $fields->removeByName('IsPreselected');
                 $fields->removeByName('Products');
                 $fields->removeByName('ProductViewIsReadonly');
                 $fields->removeByName('ProductQuantityDropdownMax');
@@ -628,6 +630,31 @@ class StepOption extends DataObject
          && empty($value)
         ) {
             $value = '0';
+        } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW
+               && empty($value)
+               && $this->IsPreselected
+        ) {
+            $product = $this->Products()->first();
+            if ($product instanceof Product) {
+                $page     = $step->ProductWizardStepPage();
+                $postVars = $page->getPostVarsFor($step);
+                if (!is_array($postVars)) {
+                    $postVars = [];
+                }
+                if (!array_key_exists('StepOptions', $postVars)) {
+                    $postVars['StepOptions'] = [];
+                }
+                if (!array_key_exists($this->ID, $postVars['StepOptions'])) {
+                    $postVars['StepOptions'][$this->ID] = [];
+                }
+                $postValue = [
+                    'Select'   => "1",
+                    'Quantity' => "1",
+                ];
+                $postVars['StepOptions'][$this->ID][$product->ID] = $postValue;
+                $value = [$product->ID => $postValue];
+                $page->setPostVarsFor($postVars, $step);
+            }
         }
         return $value;
     }
