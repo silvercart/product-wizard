@@ -165,7 +165,18 @@ class OptionProductRelation
             if ($option instanceof StepOption
              && $option->exists()
             ) {
-                $this->quantity = (int) $option->getValue();
+                $value = $option->getValue();
+                if (is_array($value)
+                 && !empty($value)
+                ) {
+                    $firstChoice = array_shift($value);
+                    $quantity    = (int) $firstChoice['Quantity'];
+                } else {
+                    $quantity = (int) $value;
+                }
+                if ($quantity > $this->quantity) {
+                    $this->quantity = $quantity;
+                }
             }
         }
         return $this->quantity;
