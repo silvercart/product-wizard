@@ -218,18 +218,30 @@ class DisplayCondition extends DataObject
             if (array_key_exists('StepOptions', $postVars)
              && is_array($postVars['StepOptions'])
              && array_key_exists($stepOptionID, $postVars['StepOptions'])
-             && (($postVars['StepOptions'][$stepOptionID] == $this->TargetValue
+            ) {
+                $value = $postVars['StepOptions'][$stepOptionID];
+                if (is_array($value)) {
+                    $array = array_shift($value);
+                    $value = 0;
+                    if (is_array($array)) {
+                        $value = $array['Quantity'];
+                    }
+                }
+            } else {
+                continue;
+            }
+            if (($value == $this->TargetValue
                && $this->Type === self::TYPE_IS_EQUAL)
-              || ($postVars['StepOptions'][$stepOptionID] != $this->TargetValue
+              || ($value != $this->TargetValue
                && $this->Type === self::TYPE_IS_NOT_EQUAL)
-              || ($postVars['StepOptions'][$stepOptionID] > $this->TargetValue
+              || ($value > $this->TargetValue
                && $this->Type === self::TYPE_IS_GREATER_THAN)
-              || ($postVars['StepOptions'][$stepOptionID] < $this->TargetValue
+              || ($value < $this->TargetValue
                && $this->Type === self::TYPE_IS_LIGHTER_THAN)
-              || ($postVars['StepOptions'][$stepOptionID] >= $this->TargetValue
+              || ($value >= $this->TargetValue
                && $this->Type === self::TYPE_IS_GREATER_THAN_OR_EQUAL)
-              || ($postVars['StepOptions'][$stepOptionID] <= $this->TargetValue
-               && $this->Type === self::TYPE_IS_LIGHTER_THAN_OR_EQUAL))
+              || ($value <= $this->TargetValue
+               && $this->Type === self::TYPE_IS_LIGHTER_THAN_OR_EQUAL)
             ) {
                 $isMatching = true;
                 break;
