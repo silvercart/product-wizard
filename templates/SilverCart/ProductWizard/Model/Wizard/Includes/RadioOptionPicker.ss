@@ -5,7 +5,7 @@
         <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><span class="fa fa-info-circle"></span></a>
         <% end_with %>
     <% else_if $LongDescription %>
-        <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$ID}"><span class="fa fa-info-circle"></span></a>
+        <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><span class="fa fa-info-circle"></span></a>
     <% end_if %>
     <% if $Description %>
         <% if $Product %>
@@ -13,7 +13,7 @@
         <br/><a href="javascript:;" class="text-muted" data-toggle="modal" data-target="#modal-product-{$ID}">{$Up.Description}</a>
             <% end_with %>
         <% else_if $LongDescription %>
-        <br/><a href="javascript:;" class="text-muted" data-toggle="modal" data-target="#modal-description-{$ID}">{$Description}</a>
+        <br/><a href="javascript:;" class="text-muted" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}">{$Description}</a>
         <% else %>
         <br/><span class="text-muted">{$Description}</span>
         <% end_if %>
@@ -25,6 +25,6 @@
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
         <% end_with %>
     <% else_if $LongDescription %>
-        <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$ID}"><%t ProductWizard.MoreInformation 'more information' %></a>
+        <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><%t ProductWizard.MoreInformation 'more information' %></a>
     <% end_if %>
 </label>

@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="modal-description-{$CurrentOption.ID}">
+<div class="modal fade" tabindex="-1" role="dialog" id="modal-description-{$StepOption.ID}-{$Value}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
