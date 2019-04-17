@@ -6,16 +6,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="<%t ProductWizard.Close 'Close' %>"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body clearfix">
-                <img class="img-fluid float-left mr-2 mb-2" src="{$ListImage.Pad(214,145).URL}" alt="{$Title}" />
-                <div class="mb-2 text-right">
-                    <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
-                <% if $PriceIsLowerThanMsr %>
-                    <span class="text-line-through text-gray">{$MSRPrice.Nice}</span>
-                <% end_if %>
-                </div>
+                <div class="clearfix">
+                    <img class="img-fluid float-left mr-2 mb-2" src="{$ListImage.Pad(214,145).URL}" alt="{$Title}" />
+                    <div class="mb-2 text-right">
+                        <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
+                    <% if $PriceIsLowerThanMsr %>
+                        <span class="text-line-through text-gray">{$MSRPrice.Nice}</span>
+                    <% end_if %>
+                    </div>
                 <% if $ShortDescription %>
                     <div class="text-muted mb-1">{$ShortDescription}</div>
                 <% end_if %>
+                </div>
                 <div class="text-justify">{$LongDescription}</div>
             </div>
             <div class="modal-footer justify-content-between">
