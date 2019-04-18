@@ -67,7 +67,7 @@
     color: #e8e8e8 !important;
     border-color: rgba(0, 0, 0, 0.125) !important;
 }
-.wizard-option.wizard-option-product.pickable.not-picked .wizard-option-picker {
+.wizard-option.wizard-option-product.pickable.not-picked .fa.wizard-option-picker {
     color: #ffffff !important;
 }
 .wizard-option.pickable.not-picked {
