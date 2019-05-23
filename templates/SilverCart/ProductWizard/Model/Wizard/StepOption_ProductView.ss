@@ -1,10 +1,10 @@
-<% if $Products.count == 1 %>
-    <% loop $Products %>
+<% if $ProductsToDisplay.count == 1 %>
+    <% loop $ProductsToDisplay %>
         {$setCurrentOptionID($Up.ID)}
         <% include SilverCart\ProductWizard\Model\Wizard\ProductBox %>
     <% end_loop %>
 <% else %>
-    <% loop $Products %>
+    <% loop $ProductsToDisplay %>
         {$setCurrentOptionID($Up.ID)}
         <% include SilverCart\ProductWizard\Model\Wizard\ProductBox_Tile %>
     <% end_loop %>

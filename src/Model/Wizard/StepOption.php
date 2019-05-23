@@ -2,6 +2,7 @@
 
 namespace SilverCart\ProductWizard\Model\Wizard;
 
+use SilverCart\Dev\Tools;
 use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
 use SilverCart\Model\Product\Product;
@@ -26,6 +27,7 @@ use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\FieldType\DBMoney;
 use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBVarchar;
+use SilverStripe\ORM\SS_List;
 use SilverStripe\View\ArrayData;
 
 /**
@@ -42,6 +44,9 @@ class StepOption extends DataObject
 {
     use \SilverCart\ORM\ExtensibleDataObject;
     use DisplayConditional;
+    
+    const SESSION_KEY                  = 'SilverCart.ProductWizard.StepOption';
+    const SESSION_KEY_PRODUCT_VARIANTS = self::SESSION_KEY . '.PickedVariants';
     
     const OPTION_TYPE_BINARY       = 'BinaryQuestion';
     const OPTION_TYPE_BUTTON       = 'Button';
@@ -149,6 +154,24 @@ class StepOption extends DataObject
      */
     private static $default_sort = 'Sort ASC';
     
+    /**
+     * Stores the picked variant data in session.
+     * 
+     * @param int $optionID  Step option ID
+     * @param int $productID Related product ID
+     * @param int $variantID Product variant ID
+     * 
+     * @return void
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 23.05.2019
+     */
+    public static function pickVariantBy(int $optionID, int $productID, int $variantID) : void
+    {
+        Tools::Session()->set(self::SESSION_KEY_PRODUCT_VARIANTS . ".{$optionID}.{$productID}", $variantID);
+        Tools::saveSession();
+    }
+
     /**
      * Returns the field labels.
      * 
@@ -593,6 +616,59 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns the related product.
+     * 
+     * @return \SilverStripe\ORM\ManyManyList|ArrayList
+     */
+    public function getProductsToDisplay() : SS_List
+    {
+        $products    = $this->Products();
+        $variantData = $this->getProductVariantData();
+        if (!empty($variantData)) {
+            $productIDs = array_keys($variantData);
+            $variantIDs = array_values($variantData);
+            $filtered   = $products->filter('ID', array_merge($productIDs, $variantIDs));
+            if ($filtered->exists()) {
+                $newProducts = ArrayList::create();
+                foreach ($products as $product) {
+                    $variant = $product;
+                    if (in_array($product->ID, $productIDs)) {
+                        $variantID = $variantData[$product->ID];
+                        $variant   = Product::get()->byID($variantID);
+                    } elseif (in_array($product->ID, $variantIDs)) {
+                        $variantID = array_search($product->ID, $variantData);
+                        $variant   = Product::get()->byID($variantID);
+                    }
+                    $newProducts->push($variant);
+                }
+                $products = $newProducts;
+            }
+        }
+        return $products;
+    }
+    
+    /**
+     * Returns the related product ID for the given product variant's $productID.
+     * 
+     * @param int $productID Product ID
+     * 
+     * @return int
+     */
+    public function getRelatedProductIDForVariant(int $productID) : int
+    {
+        $related = $this->Products()->byID($productID);
+        if (!($related instanceof Product)
+         || !$related->exists()
+        ) {
+            $variantData = $this->getProductVariantData();
+            if (in_array($productID, $variantData)) {
+                $productID = (int) array_search($productID, $variantData);
+            }
+        }
+        return $productID;
+    }
+    
+    /**
      * Returns the Text as DBHTMLText.
      * 
      * @return DBHTMLText
@@ -907,6 +983,16 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns the picked product variant data.
+     * 
+     * @return array
+     */
+    public function getProductVariantData() : array
+    {
+        return (array) Tools::Session()->get(self::SESSION_KEY_PRODUCT_VARIANTS . ".{$this->ID}");
+    }
+    
+    /**
      * Returns whether this has only short options.
      * 
      * @return bool
@@ -934,6 +1020,23 @@ class StepOption extends DataObject
     public function IsProductView() : bool
     {
         return $this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW;
+    }
+    
+    /**
+     * Stores the picked variant data in session.
+     * 
+     * @param int $productID Related product ID
+     * @param int $variantID Product variant ID
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\StepOption
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 23.05.2019
+     */
+    public function pickVariant(int $productID, int $variantID) : StepOption
+    {
+        self::pickVariantBy($this->ID, $productID, $variantID);
+        return $this;
     }
     
     /**
@@ -969,6 +1072,18 @@ class StepOption extends DataObject
                 foreach ($products as $product) {
                     if ($this->getProductSelectValue($product->ID) === 1) {
                         $this->addCartData($cartData, $this->getProductQuantityValue($product->ID), $product);
+                    }
+                    if ($product->hasMethod('hasVariants')
+                     && $product->hasVariants()
+                    ) {
+                        foreach ($product->getVariants() as $variant) {
+                            if ($variant->ID === $product->ID) {
+                                continue;
+                            }
+                            if ($this->getProductSelectValue($variant->ID) === 1) {
+                                $this->addCartData($cartData, $this->getProductQuantityValue($variant->ID), $variant);
+                            }
+                        }
                     }
                 }
             }
@@ -1011,6 +1126,18 @@ class StepOption extends DataObject
             foreach ($products as $product) {
                 if ($this->getProductSelectValue($product->ID) === 1) {
                     $this->addCartData($cartData, $this->getProductQuantityValue($product->ID), $product);
+                }
+                if ($product->hasMethod('hasVariants')
+                 && $product->hasVariants()
+                ) {
+                    foreach ($product->getVariants() as $variant) {
+                        if ($variant->ID === $product->ID) {
+                            continue;
+                        }
+                        if ($this->getProductSelectValue($variant->ID) === 1) {
+                            $this->addCartData($cartData, $this->getProductQuantityValue($variant->ID), $variant);
+                        }
+                    }
                 }
             }
         }

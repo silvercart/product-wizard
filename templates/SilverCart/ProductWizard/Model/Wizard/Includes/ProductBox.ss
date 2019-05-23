@@ -1,6 +1,12 @@
 <div class="card rounded-0 w-100 shadow wizard-option wizard-option-product {$CurrentOption.IsOptionalClass} {$CurrentOption.ProductViewIsReadonlyClass} {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}">
 <% if $CurrentOption.IsProductView %>
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
+    <% if $hasVariants %>
+        <% loop $Variants %>
+    <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
+    <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
+        <% end_loop %>
+    <% end_if %>
 <% end_if %>
     <div class="card-header rounded-0 bg-blue text-white px-10 py-6 wizard-option-picker">{$CurrentOption.Title}</div>
     <div class="card-body pt-0 pb-10 px-10 p-relative">
@@ -16,7 +22,7 @@
             </button>
             <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-variant-dropdown-{$CurrentOption.ID}">
                 <% loop $Variants %>
-                <a class="dropdown-item" href="javascript:;" data-product-id="{$ID}">{$Title}</a>
+                <a class="dropdown-item variant-picker" href="javascript:;" data-variant-id="{$ID}" data-product-id="{$Up.CurrentOption.getRelatedProductIDForVariant($Up.ID)}" data-option-id="{$Up.CurrentOption.ID}">{$Title}</a>
                 <% end_loop %>
             </div>
         </div>
@@ -40,15 +46,17 @@
         <% with $CurrentOption %>
         <p class="mb-0 text-center pick-button-label">{$Text}</p>
         <div class="dropdown <% if $ProductQuantityValue > $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-quantity-{$ID}">
-            <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="product-quantity-dropdown-{$ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {$ProductQuantityDropdownValues.CurrentValue.Quantity} {$ProductQuantityDropdownValues.CurrentValue.Title}
+            <% with $getProductQuantityDropdownValues($Up.ID) %>
+            <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="product-quantity-dropdown-{$Up.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {$CurrentValue.Quantity} {$CurrentValue.Title}
             </button>
-            <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$ID}">
-                <% loop $ProductQuantityDropdownValues.Values %>
+            <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$Up.ID}">
+                <% loop $Values %>
                 <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
                 <% end_loop %>
-                <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$ID}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$ProductQuantityDropdownMax maxTitle=$ProductQuantityPlural %></a>
+                <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$Up.ID}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$Up.ProductQuantityDropdownMax maxTitle=$Up.ProductQuantityPlural %></a>
             </div>
+            <% end_with %>
         </div>
         <div class="spinner-field clearfix text-nowrap <% if $ProductQuantityValue <= $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-more-quantity-{$ID}">
             <input type="text" name="StepOptions[{$ID}][{$Up.ID}][Quantity]" value="{$getProductQuantityValue($Up.ID)}" class="pick-more-quantity-field" data-option-id="{$ID}" data-product-id="{$Up.ID}" />

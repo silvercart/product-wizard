@@ -127,6 +127,7 @@
     height: 42px;
     overflow: hidden;
 }
+.wizard-option.loading::after,
 #ProductWizardCartSummary.loading::after {
     content: '';
     display: block;

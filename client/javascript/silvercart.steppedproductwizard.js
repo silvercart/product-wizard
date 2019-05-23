@@ -2,6 +2,20 @@ var $          = $          ? $          : jQuery;
 var silvercart = silvercart ? silvercart : [];
 
 silvercart.ProductWizard = [];
+silvercart.ProductWizard.Base = (function () {
+    var property = {},
+        selector = {},
+        private = {},
+        public = {
+            getBaseControllerURL: function() {
+                var parts = document.location.href.split('/');
+                parts.pop();
+                parts.pop();
+                return parts.join('/') + '/';
+            }
+        };
+    return public;
+});
 silvercart.ProductWizard.CartSummary = (function () {
     var property = {},
         selector = {
@@ -12,10 +26,7 @@ silvercart.ProductWizard.CartSummary = (function () {
         },
         private = {
             getBaseControllerURL: function() {
-                var parts = document.location.href.split('/');
-                parts.pop();
-                parts.pop();
-                return parts.join('/') + '/';
+                return silvercart.ProductWizard.Base().getBaseControllerURL();
             },
             renderSteps: function(steps) {
                 $.each(steps, function(stepID, stepPositions) {
@@ -173,9 +184,13 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
             selectProductButton: "#product-wizard-step .select-product",
-            submitButton: "form[name='ProductWizardStepForm'] button[type='submit']"
+            submitButton: "form[name='ProductWizardStepForm'] button[type='submit']",
+            variantPicker: ".wizard-option .variant-picker"
         },
         private = {
+            getBaseControllerURL: function() {
+                return silvercart.ProductWizard.Base().getBaseControllerURL();
+            },
             validateFields: function() {
                 var valid = true;
                 $('input', property.optionSetSelector).each(function() {
@@ -307,6 +322,25 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
             },
+            pickVariant: function() {
+                var productID     = $(this).data('product-id'),
+                    variantID     = $(this).data('variant-id'),
+                    optionID      = $(this).data('option-id'),
+                    option        = $('#wizard-option-' + optionID);
+                option.addClass('loading');
+                $.post(
+                        private.getBaseControllerURL() + 'pickVariant',
+                        {
+                            'OptionID':   optionID,
+                            'ProductID':  productID,
+                            'VariantID':  variantID
+                        },
+                        function(data) {
+                            //option.removeClass('loading');
+                            option.replaceWith(data);
+                        }
+                );
+            },
             equalizeWizardOptionHeadings: function() {
                 $('.wizard-option .card-header').each(function() {
                     if ($(this).outerHeight() < 55) {
@@ -326,14 +360,15 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 private.equalizeWizardOptionHeadings();
                 property.cartSummary = silvercart.ProductWizard.CartSummary();
                 property.cartSummary.init();
-                $(selector.selectProductButton).on('click', private.pickOptionByModal);
-                $('input', selector.stepForm).on('keyup', private.resetValidationTooltipByInput);
-                $(selector.optionPicker).on('click', private.pickOptionByPicker);
-                $(selector.pickQuantity).on('click', private.pickQuantity);
-                $(selector.pickMoreQuantity).on('click', private.pickMoreQuantity);
+                $(document).on('click', selector.selectProductButton, private.pickOptionByModal);
+                $(document).on('keyup', selector.stepForm + ' input', private.resetValidationTooltipByInput);
+                $(document).on('click', selector.optionPicker, private.pickOptionByPicker);
+                $(document).on('click', selector.pickQuantity, private.pickQuantity);
+                $(document).on('click', selector.pickMoreQuantity, private.pickMoreQuantity);
                 $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
-                $(selector.radioOption).on('change', private.pickRadioOption);
+                $(document).on('change', selector.radioOption, private.pickRadioOption);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
+                $(document).on('click', selector.variantPicker, private.pickVariant);
                 $(document).on('click', selector.submitButton, private.validateFields);
             }
         };
@@ -403,10 +438,10 @@ silvercart.ProductWizard.OptionsWithInfo = (function () {
                 if ($(selector.container).length === 0) {
                     return;
                 }
-                $(selector.choosableOption).on('click', private.chooseOption);
-                $(selector.infoOnHover).on('mouseover', private.showOptionInformation);
+                $(document).on('click', selector.choosableOption, private.chooseOption);
+                $(document).on('mouseover', selector.infoOnHover, private.showOptionInformation);
                 $(document).on('click', selector.showOriginalOptionInformation, private.showOriginalOptionInformation);
-                $(selector.stepForm).on('submit', private.doStepOptionValidation);
+                $(document).on('submit', selector.stepForm, private.doStepOptionValidation);
             }
         };
     return public;

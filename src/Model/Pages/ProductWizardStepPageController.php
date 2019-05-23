@@ -4,6 +4,7 @@ namespace SilverCart\ProductWizard\Model\Pages;
 
 use PageController;
 use SilverCart\ProductWizard\Model\Wizard\Step;
+use SilverCart\ProductWizard\Model\Wizard\StepOption;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
@@ -29,6 +30,7 @@ class ProductWizardStepPageController extends PageController
         'createOffer',
         'getCartSummaryData',
         'deleteOptionData',
+        'pickVariant',
         'postOptionData',
         'postPlainOptionData',
     ];
@@ -151,6 +153,34 @@ class ProductWizardStepPageController extends PageController
     public function deleteOptionData(HTTPRequest $request) : string
     {
         return $this->handlePostedOptionData($request);
+    }
+    
+    /**
+     * Action to pick a product variant.
+     * 
+     * @param HTTPRequest $request Request
+     * 
+     * @return DBHTMLText
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 23.05.2019
+     */
+    public function pickVariant(HTTPRequest $request) : DBHTMLText
+    {
+        $result = DBHTMLText::create();
+        if ($request->isPOST()) {
+            $optionID   = $request->postVar('OptionID');
+            $productID  = $request->postVar('ProductID');
+            $variantID  = $request->postVar('VariantID');
+            $option     = StepOption::get()->byID($optionID);
+            if ($option instanceof StepOption
+             && $option->exists()
+            ) {
+                StepOption::pickVariantBy($optionID, $productID, $variantID);
+                $result = $option->forTemplate();
+            }
+        }
+        return $result;
     }
     
     /**
