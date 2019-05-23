@@ -946,33 +946,35 @@ class StepOption extends DataObject
      */
     public function executeCartTransformation() : StepOption
     {
-        $cartData = [];
-        $quantity = 0;
-        $relation = $this->getProductRelation();
-        if ($this->OptionType === self::OPTION_TYPE_NUMBER
-         && (int) $this->getValue() > 0
-        ) {
-            $products = $relation->getProducts();
-            $product  = array_shift($products);
-            $quantity = (int) $this->getValue();
-            $this->addCartData($cartData, $quantity, $product);
-        } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
-            $products = $relation->getProducts();
-            if (array_key_exists($this->getValue(), $products)) {
-                $product  = $products[$this->getValue()];
-                $quantity = $relation->getQuantity();
+        if ($this->isVisible()) {
+            $cartData = [];
+            $quantity = 0;
+            $relation = $this->getProductRelation();
+            if ($this->OptionType === self::OPTION_TYPE_NUMBER
+             && (int) $this->getValue() > 0
+            ) {
+                $products = $relation->getProducts();
+                $product  = array_shift($products);
+                $quantity = (int) $this->getValue();
                 $this->addCartData($cartData, $quantity, $product);
-            }
-        } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
-            $products = $this->Products();
-            foreach ($products as $product) {
-                if ($this->getProductSelectValue($product->ID) === 1) {
-                    $this->addCartData($cartData, $this->getProductQuantityValue($product->ID), $product);
+            } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
+                $products = $relation->getProducts();
+                if (array_key_exists($this->getValue(), $products)) {
+                    $product  = $products[$this->getValue()];
+                    $quantity = $relation->getQuantity();
+                    $this->addCartData($cartData, $quantity, $product);
+                }
+            } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
+                $products = $this->Products();
+                foreach ($products as $product) {
+                    if ($this->getProductSelectValue($product->ID) === 1) {
+                        $this->addCartData($cartData, $this->getProductQuantityValue($product->ID), $product);
+                    }
                 }
             }
-        }
-        foreach ($cartData as $cartPositionData) {
-            ShoppingCart::addProduct($cartPositionData, true);
+            foreach ($cartData as $cartPositionData) {
+                ShoppingCart::addProduct($cartPositionData, true);
+            }
         }
         return $this;
     }
