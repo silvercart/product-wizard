@@ -177,6 +177,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             container: "#ProductWizardStepOptionsWithProgress",
             option: ".wizard-option",
             optionPicker: ".wizard-option-picker",
+            optionPickerBtnChoose: ".wizard-option-picker.btn-choose",
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
             pickMoreQuantityField: ".pick-more-quantity-field",
@@ -230,6 +231,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     option        = $('#wizard-option-' + optionID);
                 if (option.hasClass('not-picked')) {
                     private.pickOption(option);
+                    private.switchBtnChooseLabel(option);
                 }
             },
             pickOptionByPicker: function() {
@@ -243,6 +245,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     }
                 }
                 private.pickOption(option);
+                private.switchBtnChooseLabel(option);
             },
             pickOption: function(option) {
                 if (!option.hasClass('pickable')) {
@@ -340,6 +343,26 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                             option.replaceWith(data);
                         }
                 );
+            },
+            switchBtnChooseLabel: function(option) {
+                var btnChoose = $(selector.optionPickerBtnChoose, option);
+                private.switchBtnLabel(btnChoose);
+                var modal = $('#modal-product-' + option.data('product-id'));
+                var btnChooseModal = $('a.select-product', modal);
+                private.switchBtnLabel(btnChooseModal);
+            },
+            switchBtnLabel: function(btn) {
+                if (typeof btn.data('alternate-label') !== 'undefined') {
+                    var alternateLabel = btn.data('alternate-label');
+                    if (typeof btn.data('alternate-icon') !== 'undefined'
+                     && btn.data('alternate-icon') !== ''
+                    ) {
+                        alternateLabel = '<span class="fa fa-' + btn.data('alternate-icon') + '"></span> ' + alternateLabel;
+                        btn.data('alternate-icon', '');
+                    }
+                    btn.data('alternate-label', btn.html());
+                    btn.html(alternateLabel);
+                }
             },
             equalizeWizardOptionHeadings: function() {
                 $('.wizard-option .card-header').each(function() {

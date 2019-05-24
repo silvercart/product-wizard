@@ -37,7 +37,11 @@
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-gray" data-dismiss="modal"><%t ProductWizard.Close 'Close' %></button>
             <% if $CurrentOption.IsOptional %>
-                <a href="javascript:;" class="btn btn-primary select-product" data-option-id="{$CurrentOptionID}" data-product-id="{$ID}" data-dismiss="modal"><%t ProductWizard.Choose 'Choose' %></a>
+                <% if $CurrentOption.getProductIsSelected($ID) %>
+                <a href="javascript:;" class="btn btn-primary select-product" data-option-id="{$CurrentOptionID}" data-product-id="{$ID}" data-dismiss="modal" data-alternate-label="<%t ProductWizard.Choose 'Choose' %>"><span class="fa fa-check"></span> <%t ProductWizard.Chosen 'Chosen' %></a>
+                <% else %>
+                <a href="javascript:;" class="btn btn-primary select-product" data-option-id="{$CurrentOptionID}" data-product-id="{$ID}" data-dismiss="modal" data-alternate-label="<%t ProductWizard.Chosen 'Chosen' %>" data-alternate-icon="check"><%t ProductWizard.Choose 'Choose' %></a>
+                <% end_if %>
             <% end_if %>
             </div>
         </div>

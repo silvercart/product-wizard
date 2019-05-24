@@ -903,6 +903,18 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns whether the product (with the given $productID) is selected.
+     * 
+     * @param int $productID Product ID
+     * 
+     * @return bool
+     */
+    public function getProductIsSelected(int $productID) : bool
+    {
+        return $this->getProductSelectValue($productID) === 1;
+    }
+    
+    /**
      * Returns the CSS class for the options's pickable status (IsOptional).
      * 
      * @return string

@@ -2,6 +2,7 @@ de:
     ProductWizard:
         Choose: "Auswählen"
         ChooseShort: "Ausw."
+        Chosen: "Ausgewählt"
         Close: "Schließen"
         GoToCart: "Zum Warenkorb"
         GoToWizard: "Zum Konfigurator"

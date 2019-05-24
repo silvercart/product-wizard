@@ -66,7 +66,11 @@
     <% else_if $CurrentOption.IsOptional %>
         <hr>
         <p class="mb-0 text-center pick-button-label">{$CurrentOption.Text}</p>
-        <button class="btn btn-primary btn-block wizard-option-picker" type="button" ><%t ProductWizard.Choose 'Choose' %></button>
+        <% if $CurrentOption.getProductIsSelected($ID) %>
+        <button class="btn btn-primary btn-block wizard-option-picker btn-choose" type="button" data-alternate-label="<%t ProductWizard.Choose 'Choose' %>"><span class="fa fa-check"></span> <%t ProductWizard.Chosen 'Chosen' %></button>
+        <% else %>
+        <button class="btn btn-primary btn-block wizard-option-picker btn-choose" type="button" data-alternate-label="<%t ProductWizard.Chosen 'Chosen' %>" data-alternate-icon="check"><%t ProductWizard.Choose 'Choose' %></button>
+        <% end_if %>
         <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
     <% else %>
         <hr>
