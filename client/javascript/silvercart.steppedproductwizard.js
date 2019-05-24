@@ -311,7 +311,13 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     property.cartSummary.postOptionData(optionID, productID, quantity);
                 },300);
             },
-            pickRadioOptionByPicker: function() {
+            pickRadioOptionByPicker: function(e) {
+                var target = $(e.target);
+                if (target.data('toggle') === 'modal'
+                 || target.parent('a').data('toggle') === 'modal'
+                ) {
+                    return;
+                }
                 $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]').removeClass('checked');
                 $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]').addClass('checked');
                 var visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]:visible', selector.stepForm),
