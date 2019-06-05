@@ -7,6 +7,7 @@ use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
 use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
+use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
@@ -103,6 +104,8 @@ class StepOption extends DataObject
         'DefaultValue'               => 'Varchar(256)',
         'Options'                    => DBText::class,
         'ButtonTitle'                => DBVarchar::class,
+        'ButtonTargetLink'           => DBVarchar::class,
+        'ButtonTargetType'           => 'Enum(",blank","blank")',
         'DisplayConditionType'       => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation'  => 'Enum(",And,Or","")',
         'ProductRelationData'        => DBText::class,
@@ -121,6 +124,7 @@ class StepOption extends DataObject
      * @var array
      */
     private static $has_one = [
+        'ButtonTargetFile'  => File::class,
         'RedirectionLinkTo' => SiteTree::class,
         'Step'              => Step::class,
         'StepOptionSet'     => StepOptionSet::class,
@@ -271,8 +275,21 @@ class StepOption extends DataObject
             } else {
                 $fields->dataFieldByName('Content')->setRows(3);
             }
-            if ($this->OptionType !== self::OPTION_TYPE_BUTTON) {
+            if ($this->OptionType === self::OPTION_TYPE_BUTTON) {
+                $fields->dataFieldByName('ButtonTargetFile')->setDescription($this->fieldLabel('ButtonTargetFileDesc'));
+                $fields->dataFieldByName('ButtonTargetLink')->setDescription($this->fieldLabel('ButtonTargetLinkDesc'));
+                $targetTypes = [];
+                foreach ($this->dbObject('ButtonTargetType')->enumValues() as $enumValue) {
+                    $i18nKey = empty($enumValue) ? 'Empty' : ucfirst($enumValue);
+                    $targetTypes[$enumValue] = _t(self::class . ".ButtonTargetType{$i18nKey}", $i18nKey);
+                }
+                $fields->dataFieldByName('ButtonTargetType')
+                        ->setSource($targetTypes);
+            } else {
                 $fields->removeByName('ButtonTitle');
+                $fields->removeByName('ButtonTargetFile');
+                $fields->removeByName('ButtonTargetLink');
+                $fields->removeByName('ButtonTargetType');
             }
             $this->addFieldsForOptionTypeNumber($fields);
             $this->addFieldsForOptionTypeRadio($fields);
@@ -491,6 +508,34 @@ class StepOption extends DataObject
             return $linkTo->regularLink();
         }
         return $linkTo->Link();
+    }
+    
+    /**
+     * Returns the target link for a button option.
+     * 
+     * @return string
+     */
+    public function getButtonTarget() : string
+    {
+        $target = $this->ButtonTargetLink;
+        if ($this->ButtonTargetFile()->exists()) {
+            $target = $this->ButtonTargetFile()->Link();
+        }
+        return (string) $target;
+    }
+    
+    /**
+     * Returns the link target type for a button option.
+     * 
+     * @return string
+     */
+    public function getButtonTargetTypeAttr() : DBHTMLText
+    {
+        $targetType = DBHTMLText::create();
+        if (!empty($this->ButtonTargetType)) {
+            $targetType->setValue(" target=\"{$this->ButtonTargetType}\" ");
+        }
+        return $targetType;
     }
     
     /**

@@ -4,6 +4,6 @@
         <div class="card-text mt-10 mb-6">{$Content}</div>
         <hr>
         <p class="mb-0 text-center">{$Text}</p>
-        <a href="#" class="btn btn-secondary btn-block">{$ButtonTitle}</a>
+        <a href="{$ButtonTarget}" class="btn btn-secondary btn-block" {$ButtonTargetTypeAttr}>{$ButtonTitle}</a>
     </div>
 </div>
