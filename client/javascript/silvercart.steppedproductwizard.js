@@ -347,6 +347,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         function(data) {
                             //option.removeClass('loading');
                             option.replaceWith(data);
+                            silvercart.theme.initFancybox();
                         }
                 );
             },
