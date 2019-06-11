@@ -14,7 +14,7 @@
                         <div class="my-1">
                             <% loop $getImages %>
                                 <% if not $First %>
-                            <a class="fancybox d-inline-block border rounded p-1" href="{$Image.Link}" data-fancybox-group="modal-product-{$Product.ID}-image-group" title="{$Product.Title}"><img src="{$Image.Pad(50,50).URL}" alt="{$Product.Title}" /></a>
+                            <a class="fancybox d-inline-block border rounded p-1" href="{$Image.Link}" data-fancybox-group="modal-product-{$Up.ID}-image-group" title="{$Product.Title}"><img src="{$Image.Pad(50,50).URL}" alt="{$Product.Title}" /></a>
                                 <% end_if %>
                             <% end_loop %>
                         </div>
