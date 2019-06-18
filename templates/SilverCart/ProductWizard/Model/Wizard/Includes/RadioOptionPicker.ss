@@ -22,7 +22,11 @@
     <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6" data-option-id="{$StepOption.ID}"></span>
     <% if $Product %>
         <% with $Product %>
+            <% if not $isInProductChain && $ChainedProductPriceLabel %>
+        <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$ChainedProductPriceLabel} {$PriceNice}</a>
+            <% else %>
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
+            <% end_if %>
         <% end_with %>
     <% else_if $LongDescription %>
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><%t ProductWizard.free 'free' %></a>
