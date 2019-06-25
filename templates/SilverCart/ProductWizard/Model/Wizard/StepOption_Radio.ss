@@ -24,7 +24,7 @@
     <% end_if %>
     <% loop $OptionList %>
         <% if $Up.hasCustomQuantity($Value) %>
-        <div class="product-quantity-picker <% if not $IsChecked %>d-none<% end_if %> pos-{$Value}" data-option-value-id="{$Up.ID}-{$Value}" data-product-id="{$Product.ID}">
+        <div class="product-quantity-picker <% if not $IsChecked %>d-none<% end_if %> pos-{$Value}" data-option-value-id="{$Up.ID}-{$Value}" data-option-value="{$Value}" data-product-id="{$Product.ID}">
             <hr>
             <p class="mb-0 text-center pick-button-label">{$Up.getRadioOptionQuantityDropdownText($Value)}</p>
             <div class="dropdown <% if $Up.getProductQuantityValue($Value) >= $Up.getRadioQuantityDropdownMax($Value) %>d-none<% end_if %>" id="pick-quantity-{$StepOption.ID}-{$Value}">
