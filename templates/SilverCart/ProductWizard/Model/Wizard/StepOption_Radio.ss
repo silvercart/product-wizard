@@ -1,4 +1,4 @@
-<div class="card rounded-0 w-100 shadow wizard-option pickable {$IsRadioCheckedClass}">
+<div class="card rounded-0 w-100 shadow wizard-option pickable {$IsRadioCheckedClass}" data-option-id="{$ID}">
     <div class="card-header rounded-0 bg-blue text-white px-10 py-6">{$Title}</div>
     <% loop $OptionList %>
         <input class="d-none" type="radio" name="StepOptions[{$StepOption.ID}]" data-option-id="{$StepOption.ID}" id="StepOptions-{$StepOption.ID}-{$Value}" value="{$Value}" {$Checked} required="required">
@@ -22,6 +22,32 @@
         <p class="mb-0 text-center">{$Text}</p>
         <a href="#" class="btn btn-secondary btn-block">{$ButtonTitle}</a>
     <% end_if %>
+    <% loop $OptionList %>
+        <% if $Up.hasCustomQuantity($Value) %>
+        <div class="product-quantity-picker <% if not $IsChecked %>d-none<% end_if %> pos-{$Value}" data-option-value-id="{$Up.ID}-{$Value}" data-product-id="{$Product.ID}">
+            <hr>
+            <p class="mb-0 text-center pick-button-label">{$Up.getRadioOptionQuantityDropdownText($Value)}</p>
+            <div class="dropdown <% if $Up.getProductQuantityValue($Value) >= $Up.getRadioQuantityDropdownMax($Value) %>d-none<% end_if %>" id="pick-quantity-{$StepOption.ID}-{$Value}">
+                <% with $Up.getRadioOptionQuantityDropdownValues($Value) %>
+                <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="product-quantity-dropdown-{$Up.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {$CurrentValue.Quantity} {$CurrentValue.Title}
+                </button>
+                <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$Up.ID}">
+                    <% loop $Values %>
+                    <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
+                    <% end_loop %>
+                    <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$Up.ID}" data-option-value="{$Up.Value}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$Up.ProductQuantityDropdownMax maxTitle=$Up.ProductQuantityPlural %></a>
+                </div>
+                <% end_with %>
+            </div>
+            <div class="spinner-field clearfix text-nowrap <% if $Up.getProductQuantityValue($Value) < $Up.getRadioQuantityDropdownMax($Value) %>d-none<% end_if %>" id="pick-more-quantity-{$Up.ID}-{$Value}">
+                <input type="text" name="StepOptions[Quantity][{$Up.ID}][{$Value}]" value="{$Up.getProductQuantityValue($Value)}" class="pick-more-quantity-field" data-option-id="{$Up.ID}" data-product-id="{$Product.ID}" />
+                <a href="javascript:;" style="width: calc(100% - 70px);" class="btn btn-xs btn-primary select-product" data-option-id="{$Up.ID}" data-product-id="{$Product.ID}"><span class="d-inline d-md-none d-lg-inline"><%t ProductWizard.Choose 'Choose' %></span><span class="d-none d-md-inline d-lg-none fa fa-check"></span></a>
+            </div>
+        </div>
+        <% end_if %>
+    <% end_loop %>
+    
     </div>
 </div>
 <% loop $OptionList %>

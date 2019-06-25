@@ -18,11 +18,23 @@ use SilverCart\Model\Product\Product;
 class OptionProductRelation
 {
     /**
+     * Related StepOption.
+     *
+     * @var StepOption
+     */
+    protected $relatedOption = null;
+    /**
      * Quantity to add to cart.
      *
      * @var int
      */
     protected $quantity = 0;
+    /**
+     * Maximum quantity to add to cart.
+     *
+     * @var int
+     */
+    protected $maximumQuantity = 0;
     /**
      * Minimum quantity to add to cart.
      *
@@ -59,53 +71,87 @@ class OptionProductRelation
      * @var string[]
      */
     protected $longDescriptions = [];
+    /**
+     * Key value pair of option index and useCustomQuantity property.
+     *
+     * @var bool[]
+     */
+    protected $useCustomQuantities = [];
+    /**
+     * Key value pair of option index and useCustomQuantity dropdown maximum.
+     *
+     * @var int[]
+     */
+    protected $useCustomQuantityDropdownMaxima = [];
+    /**
+     * Key value pair of option index and useCustomQuantity plural title.
+     *
+     * @var string[]
+     */
+    protected $useCustomQuantityPlurals = [];
+    /**
+     * Key value pair of option index and useCustomQuantity singular title.
+     *
+     * @var string[]
+     */
+    protected $useCustomQuantitySingulars = [];
+    /**
+     * Key value pair of option index and useCustomQuantity info text.
+     *
+     * @var string[]
+     */
+    protected $useCustomQuantityTexts = [];
     
     /**
      * Creates a new instance of OptionProductRelation by the given array $data.
      * 
-     * @param array $data Relation data
+     * @param array      $data          Relation data
+     * @param StepOption $relatedOption Related StepOption
      * 
      * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 26.02.2019
      */
-    public static function createByArray(array $data) : OptionProductRelation
+    public static function createByArray(array $data, StepOption $relatedOption) : OptionProductRelation
     {
-        return new OptionProductRelation($data);
+        return new OptionProductRelation($data, $relatedOption);
     }
 
     /**
      * Creates a new instance of OptionProductRelation by the given $serializedData.
      * 
-     * @param string $serializedData Serialized relation data
+     * @param string     $serializedData Serialized relation data
+     * @param StepOption $relatedOption  Related StepOption
      * 
      * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 26.02.2019
      */
-    public static function createByString(string $serializedData) : OptionProductRelation
+    public static function createByString(string $serializedData, StepOption $relatedOption) : OptionProductRelation
     {
         $data = unserialize($serializedData);
         if (!is_array($data)) {
             $data = [];
         }
-        return self::createByArray($data);
+        return self::createByArray($data, $relatedOption);
     }
 
     /**
      * Constructor.
      * 
-     * @param array $data Relation data
+     * @param array      $data          Relation data
+     * @param StepOption $relatedOption Related StepOption
      * 
      * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 26.02.2019
      */
-    public function __construct(array $data)
+    public function __construct(array $data, StepOption $relatedOption)
     {
+        $this->relatedOption = $relatedOption;
         if (is_array($data)) {
             if (array_key_exists('MinimumQuantity', $data)) {
                 $this->setMinimumQuantity((int) $data['MinimumQuantity']);
@@ -129,6 +175,21 @@ class OptionProductRelation
             if (array_key_exists('LongDescriptions', $data)) {
                 $this->setLongDescriptions((array) $data['LongDescriptions']);
             }
+            if (array_key_exists('UseCustomQuantities', $data)) {
+                $this->setUseCustomQuantities((array) $data['UseCustomQuantities']);
+            }
+            if (array_key_exists('UseCustomQuantityDropdownMaxima', $data)) {
+                $this->setUseCustomQuantityDropdownMaxima((array) $data['UseCustomQuantityDropdownMaxima']);
+            }
+            if (array_key_exists('UseCustomQuantityPlurals', $data)) {
+                $this->setUseCustomQuantityPlurals((array) $data['UseCustomQuantityPlurals']);
+            }
+            if (array_key_exists('UseCustomQuantitySingulars', $data)) {
+                $this->setUseCustomQuantitySingulars((array) $data['UseCustomQuantitySingulars']);
+            }
+            if (array_key_exists('UseCustomQuantityTexts', $data)) {
+                $this->setUseCustomQuantityTexts((array) $data['UseCustomQuantityTexts']);
+            }
         }
     }
     
@@ -143,11 +204,16 @@ class OptionProductRelation
     public function serialize() : string
     {
         $data = [
-            'MinimumQuantity'       => $this->getMinimumQuantity(),
-            'DynamicQuantityOption' => $this->getDynamicQuantityOption()->ID,
-            'Products'              => $this->getProductsMap(),
-            'Descriptions'          => $this->getDescriptions(),
-            'LongDescriptions'      => $this->getLongDescriptions(),
+            'MinimumQuantity'                 => $this->getMinimumQuantity(),
+            'DynamicQuantityOption'           => $this->getDynamicQuantityOption()->ID,
+            'Products'                        => $this->getProductsMap(),
+            'Descriptions'                    => $this->getDescriptions(),
+            'LongDescriptions'                => $this->getLongDescriptions(),
+            'UseCustomQuantities'             => $this->getUseCustomQuantities(),
+            'UseCustomQuantityDropdownMaxima' => $this->getUseCustomQuantityDropdownMaxima(),
+            'UseCustomQuantityPlurals'        => $this->getUseCustomQuantityPlurals(),
+            'UseCustomQuantitySingulars'      => $this->getUseCustomQuantitySingulars(),
+            'UseCustomQuantityTexts'          => $this->getUseCustomQuantityTexts(),
         ];
         return serialize($data);
     }
@@ -155,12 +221,58 @@ class OptionProductRelation
     /**
      * Returns the quantity.
      * 
+     * @param int $optionIndex Optional option index
+     * 
      * @return int
      */
-    public function getQuantity() : int
+    public function getQuantity(int $optionIndex = null) : int
     {
         if ($this->quantity === 0) {
             $this->quantity = $this->getMinimumQuantity();
+            $option         = $this->getDynamicQuantityOption();
+            if (is_null($optionIndex)) {
+                $optionIndex = $this->getRelatedOption()->getValue();
+            }
+            $useCustomQuantity = $this->getUseCustomQuantity($optionIndex);
+            if ($option instanceof StepOption
+             && $option->exists()
+            ) {
+                if ($useCustomQuantity) {
+                    $maximumQuantity = $this->getMaximumQuantity();
+                    $quantity        = 1;
+                    if ($quantity <= $maximumQuantity) {
+                        $this->quantity = $quantity;
+                    } else {
+                        $this->quantity = $maximumQuantity;
+                    }
+                } else {
+                    $value = $option->getValue();
+                    if (is_array($value)
+                     && !empty($value)
+                    ) {
+                        $firstChoice = array_shift($value);
+                        $quantity    = (int) $firstChoice['Quantity'];
+                    } else {
+                        $quantity = (int) $value;
+                    }
+                    if ($quantity > $this->quantity) {
+                        $this->quantity = $quantity;
+                    }
+                }
+            }
+        }
+        return $this->quantity;
+    }
+
+    /**
+     * Returns the minimum quantity.
+     * 
+     * @return int
+     */
+    public function getMaximumQuantity() : int
+    {
+        if ($this->maximumQuantity === 0) {
+            $this->maximumQuantity = $this->getMinimumQuantity();
             $option = $this->getDynamicQuantityOption();
             if ($option instanceof StepOption
              && $option->exists()
@@ -174,12 +286,12 @@ class OptionProductRelation
                 } else {
                     $quantity = (int) $value;
                 }
-                if ($quantity > $this->quantity) {
-                    $this->quantity = $quantity;
+                if ($quantity > $this->maximumQuantity) {
+                    $this->maximumQuantity = $quantity;
                 }
             }
         }
-        return $this->quantity;
+        return $this->maximumQuantity;
     }
 
     /**
@@ -236,6 +348,16 @@ class OptionProductRelation
     }
 
     /**
+     * Returns the related StepOption.
+     * 
+     * @return StepOption
+     */
+    public function getRelatedOption() : StepOption
+    {
+        return $this->relatedOption;
+    }
+
+    /**
      * Returns the related products.
      * 
      * @return Product[]
@@ -263,6 +385,84 @@ class OptionProductRelation
             $map[$optionID] = $ID;
         }
         return $map;
+    }
+
+    /**
+     * Returns the related useCustomQuantity properties.
+     * 
+     * @return bool[]
+     */
+    public function getUseCustomQuantities() : array
+    {
+        return (array) $this->useCustomQuantities;
+    }
+
+    /**
+     * Returns the related useCustomQuantity property for the given $optionIndex.
+     * 
+     * @return bool
+     */
+    public function getUseCustomQuantity(int $optionIndex) : bool
+    {
+        $use = false;
+        if (array_key_exists($optionIndex, $this->useCustomQuantities)) {
+            $use = (bool) $this->useCustomQuantities[$optionIndex];
+        }
+        return $use;
+    }
+
+    /**
+     * Returns the related useCustomQuantity dropdown maxima.
+     * 
+     * @return int[]
+     */
+    public function getUseCustomQuantityDropdownMaxima() : array
+    {
+        return (array) $this->useCustomQuantityDropdownMaxima;
+    }
+
+    /**
+     * Returns the related useCustomQuantity plural titles.
+     * 
+     * @return string[]
+     */
+    public function getUseCustomQuantityPlurals() : array
+    {
+        return (array) $this->useCustomQuantityPlurals;
+    }
+
+    /**
+     * Returns the related useCustomQuantity singular titles.
+     * 
+     * @return string[]
+     */
+    public function getUseCustomQuantitySingulars() : array
+    {
+        return (array) $this->useCustomQuantitySingulars;
+    }
+
+    /**
+     * Returns the related useCustomQuantity ibfo texts.
+     * 
+     * @return string[]
+     */
+    public function getUseCustomQuantityText(int $optionIndex) : string
+    {
+        $text = '';
+        if (array_key_exists($optionIndex, $this->useCustomQuantityTexts)) {
+            $text = (string) $this->useCustomQuantityTexts[$optionIndex];
+        }
+        return $text;
+    }
+
+    /**
+     * Returns the related useCustomQuantity ibfo texts.
+     * 
+     * @return string[]
+     */
+    public function getUseCustomQuantityTexts() : array
+    {
+        return (array) $this->useCustomQuantityTexts;
     }
 
     /**
@@ -344,6 +544,19 @@ class OptionProductRelation
     }
 
     /**
+     * Sets the related StepOption.
+     * 
+     * @param StepOption $relatedOption Long descriptions
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setRelatedOption(StepOption $relatedOption) : OptionProductRelation
+    {
+        $this->relatedOption = $relatedOption;
+        return $this;
+    }
+
+    /**
      * Sets the related products.
      * 
      * @param array $products Products
@@ -353,6 +566,61 @@ class OptionProductRelation
     public function setProducts(array $products) : OptionProductRelation
     {
         $this->products = $products;
+        return $this;
+    }
+
+    /**
+     * Sets the related useCustomQuantity properties.
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setUseCustomQuantities(array $useCustomQuantities) : OptionProductRelation
+    {
+        $this->useCustomQuantities = $useCustomQuantities;
+        return $this;
+    }
+
+    /**
+     * Sets the related useCustomQuantity dropdown maxima.
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setUseCustomQuantityDropdownMaxima(array $useCustomQuantityDropdownMaxima) : OptionProductRelation
+    {
+        $this->useCustomQuantityDropdownMaxima = $useCustomQuantityDropdownMaxima;
+        return $this;
+    }
+
+    /**
+     * Sets the related useCustomQuantity plural titles.
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setUseCustomQuantityPlurals(array $useCustomQuantityPlurals) : OptionProductRelation
+    {
+        $this->useCustomQuantityPlurals = $useCustomQuantityPlurals;
+        return $this;
+    }
+
+    /**
+     * Sets the related useCustomQuantity singular titles.
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setUseCustomQuantitySingulars(array $useCustomQuantitySingulars) : OptionProductRelation
+    {
+        $this->useCustomQuantitySingulars = $useCustomQuantitySingulars;
+        return $this;
+    }
+
+    /**
+     * Sets the related useCustomQuantity info texts.
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setUseCustomQuantityTexts(array $useCustomQuantityTexts) : OptionProductRelation
+    {
+        $this->useCustomQuantityTexts = $useCustomQuantityTexts;
         return $this;
     }
 }

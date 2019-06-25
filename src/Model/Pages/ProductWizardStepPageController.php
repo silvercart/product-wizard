@@ -247,12 +247,24 @@ class ProductWizardStepPageController extends PageController
             $optionID   = $request->postVar('OptionID');
             $productID  = $request->postVar('ProductID');
             $quantity   = $request->postVar('Quantity');
-            $this->prepareStoredVars($storedVars, $optionID, $productID);
-            if (is_numeric($quantity)) {
-                $storedVars['StepOptions'][$optionID][$productID]['Select']   = $quantity > 0 ? '1' : '0';
-                $storedVars['StepOptions'][$optionID][$productID]['Quantity'] = $quantity;
-            } else {
-                $storedVars['StepOptions'][$optionID][$productID]['Select'] = '0';
+            $option     = StepOption::get()->byID($optionID);
+            if ($option instanceof StepOption) {
+                $this->prepareStoredVars($storedVars, $optionID, $productID, $option);
+                if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+                    if (is_numeric($quantity)) {
+                        $storedVars['StepOptions'][$optionID][$productID]['Select']   = $quantity > 0 ? '1' : '0';
+                        $storedVars['StepOptions'][$optionID][$productID]['Quantity'] = $quantity;
+                    } else {
+                        $storedVars['StepOptions'][$optionID][$productID]['Select'] = '0';
+                    }
+                } elseif ($option->OptionType === StepOption::OPTION_TYPE_RADIO) {
+                    $pickedOption = $storedVars['StepOptions'][$optionID];
+                    if (is_numeric($quantity)) {
+                        $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = $quantity;
+                    } else {
+                        $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = '0';
+                    }
+                }
             }
             $page->setPostVarsFor($storedVars, $step);
         }
@@ -262,28 +274,46 @@ class ProductWizardStepPageController extends PageController
     /**
      * Prepars the given $storedVars to fit with the given $optionID and $productID.
      * 
-     * @param array &$storedVars Session stored vars
-     * @param int   $optionID    Option ID
-     * @param int   $productID   Product ID
+     * @param array      &$storedVars Session stored vars
+     * @param int        $optionID    Option ID
+     * @param int        $productID   Product ID
+     * @param StepOption $option      Option
      * 
      * @return \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 02.04.2019
      */
-    protected function prepareStoredVars(array &$storedVars, int $optionID, int $productID) : ProductWizardStepPageController
+    protected function prepareStoredVars(array &$storedVars, int $optionID, int $productID, StepOption $option) : ProductWizardStepPageController
     {
-        if (!is_array($storedVars)) {
-            $storedVars = [];
-        }
-        if (!array_key_exists('StepOptions', $storedVars)) {
-            $storedVars['StepOptions'] = [];
-        }
-        if (!array_key_exists($optionID, $storedVars['StepOptions'])) {
-            $storedVars['StepOptions'][$optionID] = [];
-        }
-        if (!array_key_exists($productID, $storedVars['StepOptions'][$optionID])) {
-            $storedVars['StepOptions'][$optionID][$productID] = [];
+        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+            if (!is_array($storedVars)) {
+                $storedVars = [];
+            }
+            if (!array_key_exists('StepOptions', $storedVars)) {
+                $storedVars['StepOptions'] = [];
+            }
+            if (!array_key_exists($optionID, $storedVars['StepOptions'])
+             || !is_array($storedVars['StepOptions'][$optionID])
+            ) {
+                $storedVars['StepOptions'][$optionID] = [];
+            }
+            if (!array_key_exists($productID, $storedVars['StepOptions'][$optionID])) {
+                $storedVars['StepOptions'][$optionID][$productID] = [];
+            }
+        } elseif ($option->OptionType === StepOption::OPTION_TYPE_RADIO) {
+            if (!is_array($storedVars)) {
+                $storedVars = [];
+            }
+            if (!array_key_exists('StepOptions', $storedVars)) {
+                $storedVars['StepOptions'] = [];
+            }
+            if (!array_key_exists('Quantity', $storedVars['StepOptions'])) {
+                $storedVars['StepOptions']['Quantity'] = [];
+            }
+            if (!array_key_exists($optionID, $storedVars['StepOptions']['Quantity'])) {
+                $storedVars['StepOptions']['Quantity'][$optionID] = [];
+            }
         }
         return $this;
     }

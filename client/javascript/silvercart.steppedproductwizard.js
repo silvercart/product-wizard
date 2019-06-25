@@ -181,6 +181,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
             pickMoreQuantityField: ".pick-more-quantity-field",
+            productQuantityPicker: ".product-quantity-picker",
             radioOption: "#product-wizard-step-options input[type='radio']",
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
@@ -281,7 +282,8 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickQuantity: function() {
                 var quantity      = $(this).data('quantity'),
                     option        = $(this).closest(selector.option),
-                    productID     = option.data('product-id'),
+                    picker        = $(this).closest(selector.productQuantityPicker),
+                    productID     = picker.length === 0 ? option.data('product-id') : picker.data('product-id'),
                     optionID      = option.data('option-id'),
                     quantityField = $('input[name="StepOptions[' + optionID + '][' + productID + '][Quantity]"]');
                 quantityField.val(quantity);
@@ -298,9 +300,15 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 property.cartSummary.postOptionData(optionID, productID, quantity);
             },
             pickMoreQuantity: function() {
-                var optionID = $(this).data('option-id');
-                $('#pick-quantity-' + optionID).hide();
-                $('#pick-more-quantity-' + optionID).removeClass('d-none').show();
+                var optionID    = $(this).data('option-id'),
+                    optionValue = $(this).data('option-value');
+                if (typeof optionValue === 'undefined') {
+                    $('#pick-quantity-' + optionID).hide();
+                    $('#pick-more-quantity-' + optionID).removeClass('d-none').show();
+                } else {
+                    $('#pick-quantity-' + optionID + '-' + optionValue).hide();
+                    $('#pick-more-quantity-' + optionID + '-' + optionValue).removeClass('d-none').show();
+                }
             },
             pickMoreQuantityFieldChanged: function() {
                 clearTimeout(property.spinnerTimeout);
@@ -318,15 +326,22 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 ) {
                     return;
                 }
-                $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]').removeClass('checked');
-                $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]').addClass('checked');
-                var visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"]:visible', selector.stepForm),
-                    pickedOption   = $(selector.radioOptionPicker + '[data-option-id="' + $(this).data('option-id') + '"][data-value="' + $(this).data('value') + '"]', selector.stepForm);
+                var optionID    = $(this).data('option-id'),
+                    optionValue = $(this).data('value');
+                $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]').removeClass('checked');
+                $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').addClass('checked');
+                var visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]:visible', selector.stepForm),
+                    pickedOption   = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]', selector.stepForm);
                 if (!pickedOption.is(':visible')) {
                     visibleOptions.last().css('cssText', 'display: none !important;');
                     pickedOption.css('cssText', 'display: block !important;');
                 }
                 pickedOption.closest(selector.option).removeClass('validation-error').removeClass('not-picked').addClass('picked');
+                var quantityPicker = $(selector.productQuantityPicker + '[data-option-value-id="' + optionID + '-' + optionValue + '"]');
+                $(selector.productQuantityPicker, pickedOption.closest(selector.option)).addClass('d-none');
+                if (quantityPicker.length > 0) {
+                    quantityPicker.removeClass('d-none');
+                }
             },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));

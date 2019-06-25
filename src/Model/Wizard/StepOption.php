@@ -11,6 +11,7 @@ use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
@@ -318,12 +319,17 @@ class StepOption extends DataObject
             $optionList = $this->getOptionList();
             if ($optionList->exists()) {
                 $fields->findOrMakeTab('Root.Advanced', $this->fieldLabel('Advanced'));
-                $productsSource         = Product::get()->map()->toArray();
-                $products               = $this->getProductRelation()->getProductsMap();
-                $minQuantityValue       = $this->getProductRelation()->getMinimumQuantity();
-                $dynQuantityOptionValue = $this->getProductRelation()->getDynamicQuantityOption()->ID;
-                $descriptions           = $this->getProductRelation()->getDescriptions();
-                $longDescriptions       = $this->getProductRelation()->getLongDescriptions();
+                $productsSource                  = Product::get()->map()->toArray();
+                $products                        = $this->getProductRelation()->getProductsMap();
+                $minQuantityValue                = $this->getProductRelation()->getMinimumQuantity();
+                $dynQuantityOptionValue          = $this->getProductRelation()->getDynamicQuantityOption()->ID;
+                $descriptions                    = $this->getProductRelation()->getDescriptions();
+                $longDescriptions                = $this->getProductRelation()->getLongDescriptions();
+                $useCustomQuantities             = $this->getProductRelation()->getUseCustomQuantities();
+                $useCustomQuantityDropdownMaxima = $this->getProductRelation()->getUseCustomQuantityDropdownMaxima();
+                $useCustomQuantityPlurals        = $this->getProductRelation()->getUseCustomQuantityPlurals();
+                $useCustomQuantitySingulars      = $this->getProductRelation()->getUseCustomQuantitySingulars();
+                $useCustomQuantityTexts          = $this->getProductRelation()->getUseCustomQuantityTexts();
                 $fields->addFieldToTab('Root.Advanced', TextField::create('OptionProductRelation[MinimumQuantity]', $this->fieldLabel('ProductMinQuantity'), $minQuantityValue)->setDescription($this->fieldLabel('ProductMinQuantityDesc')));
                 $fields->addFieldToTab('Root.Advanced', GroupedDropdownField::create('OptionProductRelation[DynamicQuantityOption]', $this->fieldLabel('ProductDynQuantityStepOptionID'), $this->getGroupedContextOptions(), $dynQuantityOptionValue)->setEmptyString('')->setDescription($this->fieldLabel('ProductDynQuantityStepOptionIDDesc')));
                 foreach ($optionList as $option) {
@@ -357,9 +363,49 @@ class StepOption extends DataObject
                     if (array_key_exists($option->Value, $longDescriptions)) {
                         $longDescValue = $longDescriptions[$option->Value];
                     }
+                    $useCustomQuantityValue = false;
+                    $useCustomQuantityTitle = _t(self::class . '.OptionUseCustomQuantityTitle', 'Use custom quantity for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $useCustomQuantities)) {
+                        $useCustomQuantityValue = $useCustomQuantities[$option->Value];
+                    }
+                    $useCustomQuantityDropdownMaximumValue = '';
+                    $useCustomQuantityDropdownMaximumTitle = _t(self::class . '.OptionUseCustomQuantityDropdownMaximumTitle', 'Dropdown maximum quantity for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $useCustomQuantityDropdownMaxima)) {
+                        $useCustomQuantityDropdownMaximumValue = $useCustomQuantityDropdownMaxima[$option->Value];
+                    }
+                    $useCustomQuantityPluralValue = '';
+                    $useCustomQuantityPluralTitle = _t(self::class . '.OptionUseCustomQuantityPluralTitle', 'Plural quantity unit for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $useCustomQuantityPlurals)) {
+                        $useCustomQuantityPluralValue = $useCustomQuantityPlurals[$option->Value];
+                    }
+                    $useCustomQuantitySingularValue = '';
+                    $useCustomQuantitySingularTitle = _t(self::class . '.OptionUseCustomQuantitySingularTitle', 'Singular quantity unit for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $useCustomQuantitySingulars)) {
+                        $useCustomQuantitySingularValue = $useCustomQuantitySingulars[$option->Value];
+                    }
+                    $useCustomQuantityTextValue = '';
+                    $useCustomQuantityTextTitle = _t(self::class . '.OptionUseCustomQuantityTextTitle', 'Info text quantity picker for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $useCustomQuantityTexts)) {
+                        $useCustomQuantityTextValue = $useCustomQuantityTexts[$option->Value];
+                    }
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[Descriptions][{$option->Value}]", $descTitle, $descValue)->setDescription($descDescription));
                     $fields->addFieldToTab('Root.Advanced', HTMLEditorField::create("OptionProductRelation[LongDescriptions][{$option->Value}]", $longDescTitle, $longDescValue)->setDescription($longDescDescription)->setRows(3));
                     $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
+                    $fields->addFieldToTab('Root.Advanced', CheckboxField::create("OptionProductRelation[UseCustomQuantities][{$option->Value}]", $useCustomQuantityTitle, $useCustomQuantityValue));
+                    $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantityDropdownMaxima][{$option->Value}]", $useCustomQuantityDropdownMaximumTitle, $useCustomQuantityDropdownMaximumValue));
+                    $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantitySingulars][{$option->Value}]", $useCustomQuantitySingularTitle, $useCustomQuantitySingularValue));
+                    $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantityPlurals][{$option->Value}]", $useCustomQuantityPluralTitle, $useCustomQuantityPluralValue));
+                    $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantityTexts][{$option->Value}]", $useCustomQuantityTextTitle, $useCustomQuantityTextValue));
                 }
             }
         }
@@ -439,7 +485,7 @@ class StepOption extends DataObject
         parent::onBeforeWrite();
         $this->onBeforeWriteDisplayCondition();
         if (array_key_exists('OptionProductRelation', $_POST)) {
-            $relation = OptionProductRelation::createByArray($_POST['OptionProductRelation']);
+            $relation = OptionProductRelation::createByArray($_POST['OptionProductRelation'], $this);
             $this->ProductRelationData = $relation->serialize();
         }
         if (array_key_exists('ProductPriceLabel', $_POST)) {
@@ -583,6 +629,194 @@ class StepOption extends DataObject
     }
     
     /**
+     * Returns whether this (radio) option has a custom quantity for the given
+     * option index.
+     * 
+     * @param int $optionIndex Option Index
+     * 
+     * @return bool
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 18.06.2019
+     */
+    public function hasCustomQuantity(int $optionIndex) : bool
+    {
+        $hasCustomQuantity   = false;
+        $useCustomQuantities = $this->getProductRelation()->getUseCustomQuantities();
+        if (array_key_exists($optionIndex, $useCustomQuantities)) {
+            $hasCustomQuantity = (bool) $useCustomQuantities[$optionIndex];
+        }
+        return $hasCustomQuantity;
+    }
+    
+    /**
+     * Returns the maximum dropdown value for a radio option.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return int
+     */
+    public function getRadioQuantityDropdownMax(int $optionIndex) : int
+    {
+        $max    = 5;
+        $maxima = $this->getProductRelation()->getUseCustomQuantityDropdownMaxima();
+        if (array_key_exists($optionIndex, $maxima)) {
+            $max = (int) $maxima[$optionIndex];
+        }
+        return $max;
+    }
+    
+    /**
+     * Returns the dropdown info text for a radio option.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return string
+     */
+    public function getRadioOptionQuantityDropdownText(int $optionIndex) : string
+    {
+        return $this->getProductRelation()->getUseCustomQuantityText($optionIndex);
+    }
+    
+    /**
+     * Returns the maximum quantity value for a radio option.
+     * 
+     * @return int
+     */
+    public function getRadioMaximumQuantity() : int
+    {
+        return $this->getProductRelation()->getMaximumQuantity();
+    }
+    
+    /**
+     * Returns the singular title for a radio option's quantity picker.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return string
+     */
+    public function getRadioQuantitySingular(int $optionIndex) : string
+    {
+        $singular  = '';
+        $singulars = $this->getProductRelation()->getUseCustomQuantitySingulars();
+        if (array_key_exists($optionIndex, $singulars)) {
+            $singular = (string) $singulars[$optionIndex];
+        }
+        return $singular;
+    }
+    
+    /**
+     * Returns the plural title for a radio option's quantity picker.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return string
+     */
+    public function getRadioQuantityPlural(int $optionIndex) : string
+    {
+        $plural  = '';
+        $plurals = $this->getProductRelation()->getUseCustomQuantityPlurals();
+        if (array_key_exists($optionIndex, $plurals)) {
+            $plural = (string) $plurals[$optionIndex];
+        }
+        return $plural;
+    }
+    
+    /**
+     * Returns the product quantity for a radio option.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return int
+     */
+    public function getRadioQuantity(int $optionIndex) : int
+    {
+        $quantity = 0;
+        if ($this->hasCustomQuantity($optionIndex)) {
+            $quantity = $this->getRadioOptionQuantity($optionIndex);
+        } else {
+            $relation = $this->getProductRelation();
+            $quantity = $relation->getQuantity();
+        }
+        return $quantity;
+    }
+    
+    /**
+     * Returns the quantity dropdown values for a custom quantity radio option.
+     * 
+     * @param int $optionIndex Radio option index
+     * 
+     * @return ArrayData
+     */
+    public function getRadioOptionQuantityDropdownValues(int $optionIndex) : ArrayData
+    {
+        $currentQuantity = 1;
+        $current         = ArrayData::create();
+        $values          = ArrayList::create();
+        if ($this->OptionType === self::OPTION_TYPE_RADIO) {
+            $currentQuantity = $this->getRadioQuantity($optionIndex);
+            for ($x = 1; $x <= $this->getRadioQuantityDropdownMax($optionIndex); $x++) {
+                if ($x === 1) {
+                    $title = $this->getRadioQuantitySingular($optionIndex);
+                } else {
+                    $title = $this->getRadioQuantityPlural($optionIndex);
+                }
+                $item = ArrayData::create([
+                    'Title'    => $title,
+                    'Quantity' => $x,
+                ]);
+                if ($x === $currentQuantity) {
+                    $current = $item;
+                }
+                $values->push($item);
+            }
+        }
+        return ArrayData::create([
+            'CurrentValue' => $current,
+            'Values'       => $values,
+        ]);
+    }
+    
+    /**
+     * Returns the quantity for this radio option with the given $optionIndex. If
+     * no $optionIndex is given, the currently set value will be taken out of
+     * session.
+     * 
+     * @return int
+     */
+    public function getRadioOptionQuantity(int $optionIndex = null) : int
+    {
+        $quantity = 1;
+        $step     = null;
+        if (is_null($optionIndex)) {
+            $optionIndex = $this->getValue();
+        }
+        if ($this->Step()->exists()) {
+            $step = $this->Step();
+        } elseif ($this->StepOptionSet()->Step()->exists()) {
+            $step = $this->StepOptionSet()->Step();
+        }
+        if ($step instanceof Step) {
+            $page     = $step->ProductWizardStepPage();
+            $postVars = $page->getPostVarsFor($step);
+            if (array_key_exists('StepOptions', $postVars)
+             && is_array($postVars['StepOptions'])
+             && array_key_exists('Quantity', $postVars['StepOptions'])
+             && is_array($postVars['StepOptions']['Quantity'])
+             && array_key_exists($this->ID, $postVars['StepOptions']['Quantity'])
+             && is_array($postVars['StepOptions']['Quantity'][$this->ID])
+             && array_key_exists($optionIndex, $postVars['StepOptions']['Quantity'][$this->ID])
+            ) {
+                $quantity = $postVars['StepOptions']['Quantity'][$this->ID][$optionIndex];
+            }
+        }
+        if ($quantity > $this->getRadioMaximumQuantity()) {
+            $quantity = $this->getRadioMaximumQuantity();
+        }
+        return $quantity;
+    }
+    
+    /**
      * Returns the dropdown values as ArrayData to render in a template.
      * 
      * @return ArrayData
@@ -624,7 +858,7 @@ class StepOption extends DataObject
      */
     public function getProductRelation() : OptionProductRelation
     {
-        return OptionProductRelation::createByString((string) $this->ProductRelationData);
+        return OptionProductRelation::createByString((string) $this->ProductRelationData, $this);
     }
     
     /**
@@ -821,6 +1055,7 @@ class StepOption extends DataObject
                     'StepOption'    => $this,
                     'Value'         => $key,
                     'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
+                    'IsChecked'     => $plainValue !== '' && $intValue === $key ? true : false,
                     'Title'         => trim($option),
                     'Product'       => $product,
                     'Description'   => $description,
@@ -1014,27 +1249,43 @@ class StepOption extends DataObject
      * Returns the chosen product quantity for the related product with the given 
      * $productID.
      * 
-     * @param int $productID Product ID
+     * @param int $index Product ID / radio option index
      * 
      * @return int
      */
-    public function getProductQuantityValue(int $productID = 0) : int
+    public function getProductQuantityValue(int $index = null) : int
     {
-        if ($productID === 0) {
-            $first = $this->Products()->first();
-            if ($first instanceof Product) {
-                $productID = $first->ID;
-            }
-        }
         $postedValues = (array) $this->getValue();
         $value        = 1;
         if ($this->IsOptional) {
             $value = 0;
         }
-        if (array_key_exists($productID, $postedValues)
-         && array_key_exists('Quantity', $postedValues[$productID])
-        ) {
-            $value = (int) $postedValues[$productID]['Quantity'];
+        switch ($this->OptionType) {
+            case self::OPTION_TYPE_PRODUCT_VIEW:
+                $productID = $index;
+                if (is_null($productID)) {
+                    $productID = 0;
+                    $first = $this->Products()->first();
+                    if ($first instanceof Product) {
+                        $productID = $first->ID;
+                    }
+                }
+                if (array_key_exists($productID, $postedValues)
+                 && array_key_exists('Quantity', $postedValues[$productID])
+                ) {
+                    $value = (int) $postedValues[$productID]['Quantity'];
+                }
+                break;
+            case self::OPTION_TYPE_RADIO:
+                $optionIndex = $index;
+                if (is_null($optionIndex)) {
+                    $optionIndex = $this->getValue();
+                }
+                $value = (int) $this->getRadioQuantity($optionIndex);
+                break;
+            default:
+                $value = 0;
+                break;
         }
         return (int) $value;
     }
@@ -1121,7 +1372,7 @@ class StepOption extends DataObject
                 $products = $relation->getProducts();
                 if (array_key_exists($this->getValue(), $products)) {
                     $product  = $products[$this->getValue()];
-                    $quantity = $relation->getQuantity();
+                    $quantity = $this->getRadioQuantity($this->getValue());
                     $this->addCartData($cartData, $quantity, $product);
                 }
             } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
@@ -1175,7 +1426,7 @@ class StepOption extends DataObject
             $products = $relation->getProducts();
             if (array_key_exists($this->getValue(), $products)) {
                 $product  = $products[$this->getValue()];
-                $quantity = $relation->getQuantity();
+                $quantity = $this->getRadioQuantity($this->getValue());
                 $this->addCartData($cartData, $quantity, $product);
             }
         } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
