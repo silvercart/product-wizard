@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="d-flex col-xs-12 col-sm-4 col-md-6">
-            <div>
-                <div class="info-box mt-15 mb-20">
+            <div class="w-100">
+                <div class="info-box mt-15 mb-20 w-100">
                     <h2 class="info-box-heading mr-20" data-original="{$InfoBoxTitle.ATT}">{$InfoBoxTitle}</h2>
                     <div class="info-box-content text-lg" data-original="{$InfoBoxContent.ATT}">{$InfoBoxContent}</div>
                 </div>
