@@ -36,9 +36,9 @@
                     <% loop $Values %>
                     <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
                     <% end_loop %>
-                    <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$Up.ID}" data-option-value="{$Up.Value}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$Up.ProductQuantityDropdownMax maxTitle=$Up.ProductQuantityPlural %></a>
-                </div>
                 <% end_with %>
+                    <a class="dropdown-item pick-more-quantity" href="javascript:;" data-option-id="{$Up.ID}" data-option-value="{$Value}"><%t SilverCart\ProductWizard\Model\Wizard\StepOption.moreThanMax 'more than {max} {maxTitle}...' max=$Up.ProductQuantityDropdownMax maxTitle=$Up.ProductQuantityPlural %></a>
+                </div>
             </div>
             <div class="spinner-field clearfix text-nowrap <% if $Up.getProductQuantityValue($Value) < $Up.getRadioQuantityDropdownMax($Value) %>d-none<% end_if %>" id="pick-more-quantity-{$Up.ID}-{$Value}">
                 <input type="text" name="StepOptions[Quantity][{$Up.ID}][{$Value}]" value="{$Up.getProductQuantityValue($Value)}" class="pick-more-quantity-field" data-option-id="{$Up.ID}" data-product-id="{$Product.ID}" />
