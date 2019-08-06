@@ -1,5 +1,10 @@
 <form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithProgress">
     <div class="row" id="product-wizard-step">
+    <% if $InfoBoxContent %>
+        <div class="col-12">
+            <div class="bg-gray-light pt-20 pr-20 pl-30 pb-1 mb-20 p-relative"><span class="fa fa-info-circle p-absolute l-12 t-22"></span> {$InfoBoxContent}</div>
+        </div>
+    <% end_if %>
         <div class="col-12 col-sm-6 col-md-8 col-xl-9">
             <div class="row" id="product-wizard-step-options">
             <% if $VisibleStepOptions.exists %>

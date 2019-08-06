@@ -175,7 +175,6 @@ class Step extends DataObject
                 }
                 $fields->removeByName('ProductWizardStepPageID');
                 if ($this->Template === self::TEMPLATE_OPTIONS_WITH_PROGRESS) {
-                    $fields->removeByName('InfoBoxContent');
                     $fields->removeByName('DescriptionTitle');
                     $fields->removeByName('DescriptionContent');
                 }
