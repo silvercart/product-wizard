@@ -22,7 +22,15 @@
                     </div>
                     <div class="col-6">
                         <div class="mb-2 text-right">
+                        <% if not $isInProductChain && $ChainedProductPriceLabel %>
+                            <span class="text-lg font-weight-normal lh-15"><small>{$ChainedProductPriceLabel}</small> {$PriceNice}</span>
+                        <% else_if $isInProductChain && $ChainedProductPriceLabel %>
                             <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
+                        <% else_if $CurrentOption.getProductPriceLabel($ID) %>
+                            <span class="text-lg font-weight-normal lh-15"><small>{$CurrentOption.getProductPriceLabel($ID)}</small> {$PriceNice}</span>
+                        <% else %>
+                            <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
+                        <% end_if %>
                         <% if $PriceIsLowerThanMsr %>
                             <span class="text-line-through text-gray">{$MSRPrice.Nice}</span>
                         <% end_if %>
