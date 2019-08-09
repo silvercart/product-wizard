@@ -194,6 +194,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 return silvercart.ProductWizard.Base().getBaseControllerURL();
             },
             validateFields: function() {
+                $('.alert-submit-button-error-message').remove();
                 var valid = true;
                 $('input', property.optionSetSelector).each(function() {
                     if (typeof $(this).attr('required') !== 'undefined') {
@@ -210,6 +211,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         }
                     }
                 });
+                if (!valid) {
+                    var error = ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptions', 'Please choose an option for every offer.');
+                    $(selector.submitButton).before('<div class="alert alert-danger alert-submit-button-error-message"><span class="fa fa-exclamation-circle"></span> ' + error + '</div>');
+                }
                 return valid;
             },
             resetValidationTooltip: function(input) {
@@ -349,6 +354,9 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             },
             pickRadioOption: function() {
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
+                if ($('.alert-submit-button-error-message').length > 0) {
+                    private.validateFields();
+                }
             },
             pickVariant: function() {
                 var productID     = $(this).data('product-id'),
