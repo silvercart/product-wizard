@@ -1,0 +1,154 @@
+en:
+    ProductWizard:
+        Choose: Choose
+        ChooseShort: Sel.
+        Chosen: Selected
+        Close: Close
+        free: free
+        GoToCart: 'Go to cart'
+        GoToWizard: 'To the configurator'
+        MoreInformation: 'further information'
+        Overview: Overview
+        RedirectionInProgress: 'You will be redirected to the shopping cart in a few seconds. If, contrary to expectations, you are not forwarded, please click on the following button.'
+        RedirectionInProgress2: 'You will be forwarded to the configurator in a few seconds. If, contrary to expectations, you are not forwarded, please click on the following button.'
+        ShowAdditionalOptions: 'Show more options'
+    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+        DESCRIPTION: 'Page that provides a step-based product configurator.'
+        PLURALNAME: 'Product configurators (step-based)'
+        SINGULARNAME: 'Product configurator (step-based)'
+        Back: Back
+        BackTo: 'Back to {step}'
+        Step: Step
+        Steps: Steps
+        YourChoices: 'Your selection'
+        YourStep: 'Your {step}'
+    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+        PLURALNAME: 'Display conditions'
+        SINGULARNAME: 'Display condition'
+        ParentStepOption: 'Parents option'
+        StepOptionID: Option
+        StepOptionSet: 'Option set'
+        TargetValue: Value
+        Type: Type
+        TypeIsEqual: corresponds
+        TypeIsNotEqual: 'does not correspond'
+        TypeIsGreaterThan: 'is greater than'
+        TypeIsLighterThan: 'is smaller than'
+        TypeIsGreaterThanOrEqual: 'is equal to or greater than'
+        TypeIsLighterThanOrEqual: 'is equal to or less than'
+    SilverCart\ProductWizard\Model\Wizard\Step:
+        PLURALNAME: 'Configurator steps'
+        SINGULARNAME: 'Configurator step'
+        ButtonTitle: 'Button text'
+        ButtonTitleDesc: 'If you leave this field empty, "Next" will be used.'
+        Continue: Continue
+        DescriptionTitle: 'Description Title'
+        DescriptionTitleDesc: 'Optional title displayed above the description.'
+        DescriptionContent: Description
+        DescriptionContentDesc: 'Descriptive content displayed above the selection options.'
+        DisplayConditions: 'display conditions'
+        DisplayConditionText: 'This option set when meeting {operation} the following conditions {type}'
+        DisplayConditionType: Action
+        DisplayConditionTypeShow: show
+        DisplayConditionTypeHide: hide
+        DisplayConditionOperation: 'Boolean link'
+        DisplayConditionOperationAnd: all
+        DisplayConditionOperationOr: one
+        FontAwesomeIcon: 'FontAwesome Icon Class'
+        FontAwesomeIconDesc: 'CSS class for a FontAwesome icon. Is displayed in the step navigation.'
+        InfoBoxTitle: 'Title of the Info Box'
+        InfoBoxTitleDesc: 'Title that is displayed in the info box when you enter the step.'
+        InfoBoxContent: 'Contents of the Info Box'
+        InfoBoxContentDesc: 'Content that is displayed in the info box when the step is entered.'
+        ShowInStepNavigation: 'Display in step Navigation'
+        Sort: 'Sort order'
+        Step: Step
+        StepOptions: Options
+        StepOptionSets: 'Option sets'
+        Title: Title
+    SilverCart\ProductWizard\Model\Wizard\StepOption:
+        PLURALNAME: 'Configurator Step Options'
+        SINGULARNAME: 'Configurator Step Option'
+        Advanced: Extended
+        ButtonTargetFile: 'Button target file'
+        ButtonTargetFileDesc: 'File to be opened when the button is clicked.'
+        ButtonTargetLink: 'Button target link'
+        ButtonTargetLinkDesc: 'Link to be opened when clicking on the button. If a button target file is specified, it will be used instead.'
+        ButtonTargetType: 'Open link in'
+        ButtonTargetTypeBlank: 'new window'
+        ButtonTargetTypeEmpty: 'same window'
+        ButtonTitle: 'Button text'
+        Content: 'Text content'
+        DefaultValue: 'Default value'
+        DefaultValueDesc: 'Value that is used as the default for this option.'
+        DisplayConditions: 'Display conditions'
+        DisplayConditionText: 'This option set when meeting {operation} the following conditions {type}'
+        DisplayConditionType: Action
+        DisplayConditionTypeShow: show
+        DisplayConditionTypeHide: hide
+        DisplayConditionOperation: 'Boolean link'
+        DisplayConditionOperationAnd: all
+        DisplayConditionOperationOr: one
+        IsOptional: 'Is optional'
+        IsPreselected: 'Is preselected'
+        moreThanMax: 'more than {max} {maxTitle}...'
+        NumberProductRelationTitle: 'Articles for this option'
+        NumberProductRelationDesc: 'This item will be added to the shopping cart with the quantity specified in this option.'
+        OptionProductRelation: 'Linked articles'
+        OptionProductRelationTitle: 'Article for Option {option}'
+        OptionProductRelationDesc: 'Add this item to the shopping cart when the "{option}" option is selected.'
+        OptionDescriptionTitle: 'Description for Option {option}'
+        OptionDescriptionDesc: 'Displayed as the description for the {option} option.'
+        OptionLongDescriptionTitle: 'Long description for option {option}'
+        OptionLongDescriptionDesc: 'Appears as a long description in a pop-up dialog for the option {option}. If an article is specified, the article information is displayed instead.'
+        Options: Options
+        OptionsDesc: 'List of possible options available in the multiple-choice field. Please specify one option per line.'
+        OptionType: 'Type of input'
+        OptionTypeBinaryQuestion: 'yes-no question'
+        OptionTypeLabel: Label
+        OptionTypeNumber: Number
+        OptionTypeProductView: Products
+        OptionTypeRadio: 'Multiple Choice'
+        OptionTypeRedirection: Forwarding
+        OptionTypeTextArea: 'Text input (multiline)'
+        OptionTypeTextField: 'text input'
+        OptionTypeRedirectionHeader: 'This option will redirect customers to another page.'
+        OptionUseCustomQuantityTitle: 'Use freely selectable quantity for option {option}'
+        OptionUseCustomQuantityDropdownMaximumTitle: 'Maximum number in dropdown for option {option}'
+        OptionUseCustomQuantityPluralTitle: 'Unit of measure Plural for option {option}'
+        OptionUseCustomQuantitySingularTitle: 'Unit of measure Singular for option {option}'
+        OptionUseCustomQuantityTextTitle: 'Info text quantity selection for {option}'
+        ProductDynQuantityStepOptionID: 'Quantity by option'
+        ProductDynQuantityStepOptionIDDesc: 'The user input of this option is used as the quantity for the shopping cart. If no entry is made or the option is skipped, the minimum number is used.'
+        ProductMinQuantity: 'Minimum quantity'
+        ProductMinQuantityDesc: 'Minimum quantity that is to be placed in the shopping basket.'
+        ProductPriceLabel: 'Price label'
+        ProductPriceLabelDesc: 'This optional label will be displayed in front of the price, if available.'
+        ProductPriceLabelFor: 'Price label for {product}'
+        ProductQuantityDropdownMax: 'Maximum number in dropdown'
+        ProductQuantityDropdownMaxDesc: 'The maximum number that can be selected in the dropdown. If the customer needs more, he can make this selection manually.'
+        ProductQuantityPlural: 'Unit of measure Plural'
+        ProductQuantityPluralDesc: 'The unit of measure to be displayed when the quantity 0 or >1 is selected.'
+        ProductQuantitySingular: 'Unit of measure Singular'
+        ProductQuantitySingularDesc: 'The unit of measure to be displayed when you select quantity 1.'
+        ProductViewIsReadonly: 'Do not allow user input'
+        Sort: 'Sort order'
+        Step: Step
+        Text: Text
+        TextDesc: 'Text to be displayed in the lower part of the selection box (for example, above the selection button/dropdown).'
+        Title: Title
+    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+        PLURALNAME: 'Configurator Step Option Sets'
+        SINGULARNAME: 'Configurator Step Option Set'
+        DisplayConditions: 'Display conditions'
+        DisplayConditionText: 'This option set when meeting {operation} the following conditions {type}'
+        DisplayConditionType: Action
+        DisplayConditionTypeShow: show
+        DisplayConditionTypeHide: hide
+        DisplayConditionOperation: 'Boolean link'
+        DisplayConditionOperationAnd: all
+        DisplayConditionOperationOr: one
+        Sort: 'Sort order'
+        Step: Step
+        StepOptions: Options
+        Title: Title
