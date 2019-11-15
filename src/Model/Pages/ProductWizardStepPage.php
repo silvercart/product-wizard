@@ -52,14 +52,16 @@ class ProductWizardStepPage extends Page
     /**
      * Returns the current step ID from Session.
      * 
+     * @param int $pageID Page ID to get data for
+     * 
      * @return int
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 15.02.2019
      */
-    public static function getCurrentStepIDFromSession() : int
+    public static function getCurrentStepIDFromSession(int $pageID) : int
     {
-        return (int) Tools::Session()->get(self::SESSION_KEY_CURRENT_STEP);
+        return (int) Tools::Session()->get(self::SESSION_KEY_CURRENT_STEP . ".{$pageID}");
     }
     
     /**
@@ -100,6 +102,7 @@ class ProductWizardStepPage extends Page
     /**
      * Returns the current step ID from Session.
      * 
+     * @param int $pageID Page ID to set
      * @param int $stepID Step ID to set
      * 
      * @return void
@@ -107,9 +110,9 @@ class ProductWizardStepPage extends Page
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 29.03.2019
      */
-    public static function setCurrentStepIDToSession(int $stepID) : void
+    public static function setCurrentStepIDToSession(int $pageID, int $stepID) : void
     {
-        Tools::Session()->set(self::SESSION_KEY_CURRENT_STEP, $stepID);
+        Tools::Session()->set(self::SESSION_KEY_CURRENT_STEP . ".{$pageID}", $stepID);
         Tools::saveSession();
     }
     
@@ -388,7 +391,7 @@ class ProductWizardStepPage extends Page
     public function setCurrentStep(Step $step) : ProductWizardStepPage
     {
         $this->currentStep = $step;
-        self::setCurrentStepIDToSession($step->ID);
+        self::setCurrentStepIDToSession($this->ID, $step->ID);
         return $this;
     }
     
@@ -485,7 +488,7 @@ class ProductWizardStepPage extends Page
      */
     public function initCurrentStep() : ProductWizardStepPage
     {
-        $idBySession = self::getCurrentStepIDFromSession();
+        $idBySession = self::getCurrentStepIDFromSession($this->ID);
         $currentStep = Step::get()->byID($idBySession);
         if (!($currentStep instanceof Step)
          || !$currentStep->exists()
@@ -522,7 +525,7 @@ class ProductWizardStepPage extends Page
      */
     public function resetCurrentStep() : ProductWizardStepPage
     {
-        self::setCurrentStepIDToSession(0);
+        self::setCurrentStepIDToSession($this->ID, 0);
         return $this;
     }
     
