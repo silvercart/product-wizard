@@ -1,0 +1,154 @@
+nl_BE:
+    ProductWizard:
+        Choose: Selecteren
+        ChooseShort: Selecteer
+        Chosen: Geselecteerd
+        Close: Afsluiten
+        free: gratis
+        GoToCart: 'Naar de winkelwagen'
+        GoToWizard: 'Naar de configurator'
+        MoreInformation: 'Meer informatie'
+        Overview: Overzicht
+        RedirectionInProgress: 'U wordt binnen enkele seconden naar de winkelwagen doorgestuurd. Als, tegen de verwachting in, u toch niet doorgestuurd wordt, klik dan op de volgende knop.'
+        RedirectionInProgress2: 'U wordt binnen enkele seconden naar de configurator doorgestuurd. Als, tegen de verwachting in, u toch niet doorgestuurd wordt, klik dan op de volgende knop.'
+        ShowAdditionalOptions: 'Meer opties tonen'
+    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+        DESCRIPTION: 'Pagina met een stapsgewijze productconfigurator.'
+        PLURALNAME: 'Productconfigurator (stapsgewijs)'
+        SINGULARNAME: 'Productconfigurator (stapsgewijs)'
+        Back: Terug
+        BackTo: 'Terug naar {step}'
+        Step: Stap
+        Steps: Stappen
+        YourChoices: 'Uw selectie'
+        YourStep: 'Uw {step}'
+    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+        PLURALNAME: Weergavevoorwaarden
+        SINGULARNAME: Weergavevoorwaarde
+        ParentStepOption: 'Bovenliggende optie'
+        StepOptionID: Optie
+        StepOptionSet: Optieset
+        TargetValue: Waarde
+        Type: Type
+        TypeIsEqual: 'komt overeen'
+        TypeIsNotEqual: 'komt niet overeen'
+        TypeIsGreaterThan: 'is groter dan'
+        TypeIsLighterThan: 'is kleiner dan'
+        TypeIsGreaterThanOrEqual: 'komt overeen met of is groter dan'
+        TypeIsLighterThanOrEqual: 'komt overeen met of is kleiner dan'
+    SilverCart\ProductWizard\Model\Wizard\Step:
+        PLURALNAME: Configurator-stappen
+        SINGULARNAME: Configurator-stap
+        ButtonTitle: Tekstknop
+        ButtonTitleDesc: 'Als u dat veld leeg laat, wordt "Volgende" gebruikt.'
+        Continue: Verder
+        DescriptionTitle: 'Titel beschrijving'
+        DescriptionTitleDesc: 'Optionele titel die boven de beschrijving verschijnt.'
+        DescriptionContent: Beschrijving
+        DescriptionContentDesc: 'Beschrijvende inhoud die boven de selectieopties wordt weergegeven.'
+        DisplayConditions: Weergavevoorwaarden
+        DisplayConditionText: 'Deze optie wordt ingesteld {operation} als aan de volgende voorwaarden {type} is voldaan.'
+        DisplayConditionType: Actie
+        DisplayConditionTypeShow: weergeven
+        DisplayConditionTypeHide: verbergen
+        DisplayConditionOperation: 'Booleaanse operatie'
+        DisplayConditionOperationAnd: alle
+        DisplayConditionOperationOr: een
+        FontAwesomeIcon: 'FontAwesome -icoon Klasse'
+        FontAwesomeIconDesc: 'CSS-klasse voor een FontAwesome-icoon. Wordt weergegeven in de stapnavigatie.'
+        InfoBoxTitle: 'Titel van het infovak'
+        InfoBoxTitleDesc: 'Titel die wordt weergegeven in het infovak bij het invoeren van de stap.'
+        InfoBoxContent: 'Inhoud van het infovak'
+        InfoBoxContentDesc: 'Inhoud die wordt weergegeven in het infovak bij het invoeren van de stap.'
+        ShowInStepNavigation: 'Weergeven in stapnavigatie'
+        Sort: Sorteervolgorde
+        Step: Stap
+        StepOptions: Opties
+        StepOptionSets: Optiesets
+        Title: Titel
+    SilverCart\ProductWizard\Model\Wizard\StepOption:
+        PLURALNAME: Configurator-Stap-Opties
+        SINGULARNAME: Configurator-Stap-Optie
+        Advanced: Uitgebreid
+        ButtonTargetFile: 'Knop doelbestand'
+        ButtonTargetFileDesc: 'Bestand dat moet worden geopend wanneer op de knop wordt geklikt.'
+        ButtonTargetLink: 'Knop doellink'
+        ButtonTargetLinkDesc: 'Link die moet worden geopend als op de knop wordt geklikt. Als een knop voor het doelbestand werd gespecificeerd, wordt die in plaats daarvan gebruikt.'
+        ButtonTargetType: 'Link openen in'
+        ButtonTargetTypeBlank: 'Nieuw venster'
+        ButtonTargetTypeEmpty: 'Hetzelfde venster'
+        ButtonTitle: Knoptekst
+        Content: Tekstinhoud
+        DefaultValue: Standaardwaarde
+        DefaultValueDesc: 'Waarde die wordt gebruikt als standaardinstelling voor deze optie.'
+        DisplayConditions: Weergavevoorwaarden
+        DisplayConditionText: 'Deze optieset wordt ingesteld {operation} als aan de volgende voorwaarden {type} is voldaan.'
+        DisplayConditionType: Actie
+        DisplayConditionTypeShow: weergeven
+        DisplayConditionTypeHide: verbergen
+        DisplayConditionOperation: 'Booleaanse operatie'
+        DisplayConditionOperationAnd: alle
+        DisplayConditionOperationOr: een
+        IsOptional: 'Is optioneel'
+        IsPreselected: 'Is voorgeselecteerd'
+        moreThanMax: 'meer dan {max} {maxTitle} ...'
+        NumberProductRelationTitle: 'Artikelen voor deze optie'
+        NumberProductRelationDesc: 'Dit artikel wordt aan de winkelwagen toegevoegd met de hoeveelheid die door deze optie is gespecificeerd.'
+        OptionProductRelation: 'Gekoppelde artikelen'
+        OptionProductRelationTitle: 'Artikel voor optie {option}'
+        OptionProductRelationDesc: 'Voeg dit artikel toe aan de winkelwagen als de optie " {option} " wordt geselecteerd.'
+        OptionDescriptionTitle: 'Beschrijving voor optie {option}'
+        OptionDescriptionDesc: 'Verschijnt als beschrijving voor de optie "{option} ".'
+        OptionLongDescriptionTitle: 'Lange beschrijving voor optie {option}'
+        OptionLongDescriptionDesc: 'Verschijnt als lange beschrijving in een pop-upvenster voor de optie "{option}". Als een artikel is gespecificeerd, wordt de artikelinformatie in plaats daarvan weergegeven.'
+        Options: Opties
+        OptionsDesc: 'Lijst met mogelijke opties om uit te kiezen in het meerkeuzeveld. Geef één optie per regel op.'
+        OptionType: 'Type van invoer'
+        OptionTypeBinaryQuestion: Ja-nee-vraag
+        OptionTypeLabel: Label
+        OptionTypeNumber: Nummer
+        OptionTypeProductView: Producten
+        OptionTypeRadio: Meerkeuze
+        OptionTypeRedirection: Doorsturen
+        OptionTypeTextArea: 'Tekstinvoer (meerdere regels)'
+        OptionTypeTextField: Tekstinvoer
+        OptionTypeRedirectionHeader: 'Met deze optie worden klanten doorverwezen naar een andere pagina.'
+        OptionUseCustomQuantityTitle: 'Gebruik vrij te kiezen hoeveelheid voor optie {option}'
+        OptionUseCustomQuantityDropdownMaximumTitle: 'Maximumaantal in de vervolgkeuzelijst voor optie {option}'
+        OptionUseCustomQuantityPluralTitle: 'Eenheid van hoeveelheid meervoud voor optie {option}'
+        OptionUseCustomQuantitySingularTitle: 'Eenheid van hoeveelheid enkelvoud voor optie {option}'
+        OptionUseCustomQuantityTextTitle: 'Infotekst Selectie van hoeveelheid voor {option}'
+        ProductDynQuantityStepOptionID: 'Hoeveelheid volgens optie'
+        ProductDynQuantityStepOptionIDDesc: 'De gebruikersinvoer van deze optie wordt gebruikt als hoeveelheid voor de winkelwagen. Als er geen invoer wordt gedaan of als de optie wordt overgeslagen, wordt de minimale hoeveelheid gebruikt.'
+        ProductMinQuantity: 'Minimale hoeveelheid'
+        ProductMinQuantityDesc: 'Minimale hoeveelheid toe te voegen aan de winkelwagen.'
+        ProductPriceLabel: Prijslabel
+        ProductPriceLabelDesc: 'Dit optionele label gaat, indien gespecificeerd, vooraf aan de prijs.'
+        ProductPriceLabelFor: 'Prijslabel voor {product}'
+        ProductQuantityDropdownMax: 'Maximumaantal in vervolgkeuzelijst'
+        ProductQuantityDropdownMaxDesc: 'Het maximumaantal dat kan worden geselecteerd in de vervolgkeuzelijst. Als de klant meer nodig heeft, dan kan hij of zij deze selectie handmatig doen.'
+        ProductQuantityPlural: 'Eenheid van hoeveelheid meervoud'
+        ProductQuantityPluralDesc: 'De eenheid van hoeveelheid die wordt weergegeven bij het selecteren van de hoeveelheid 0 of > 1.'
+        ProductQuantitySingular: 'Eenheid van hoeveelheid enkelvoud'
+        ProductQuantitySingularDesc: 'De eenheid van hoeveelheid die wordt weergegeven bij het selecteren van hoeveelheid 1.'
+        ProductViewIsReadonly: 'Gebruikersinvoer niet toestaan'
+        Sort: Sorteervolgorde
+        Step: Stap
+        Text: Tekst
+        TextDesc: 'Tekst die moet worden weergegeven in het onderste deel van het selectievak (bijvoorbeeld boven de selectieknop/keuzelijst).'
+        Title: Titel
+    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+        PLURALNAME: Configurator-Stap-Optie-Sets
+        SINGULARNAME: Configurator-Stap-Optie-Set
+        DisplayConditions: Weergavevoorwaarden
+        DisplayConditionText: 'Deze optieset wordt ingesteld als aan de volgende voorwaarden {operation} wordt voldaan {type}'
+        DisplayConditionType: Actie
+        DisplayConditionTypeShow: weergeven
+        DisplayConditionTypeHide: Verbergen
+        DisplayConditionOperation: 'Booleaanse operatie'
+        DisplayConditionOperationAnd: Alle
+        DisplayConditionOperationOr: een
+        Sort: Sorteervolgorde
+        Step: Stap
+        StepOptions: Opties
+        Title: Titel
