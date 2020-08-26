@@ -143,7 +143,7 @@ it:
         DisplayConditions: 'Condizioni di visualizzazione'
         DisplayConditionText: 'Questo set opzioni {operation} è presente quando vengono soddisfatte le seguenti condizioni {type}'
         DisplayConditionType: Azione
-        DisplayConditionTypeShow: "visualizza\n"
+        DisplayConditionTypeShow: "visualizza"
         DisplayConditionTypeHide: Nascondi
         DisplayConditionOperation: 'Collegamento booleano'
         DisplayConditionOperationAnd: tutti
