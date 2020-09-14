@@ -234,8 +234,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickOptionByModal: function() {
                 var productID     = $(this).data('product-id'),
                     optionID      = $(this).data('option-id'),
-                    option        = $('#wizard-option-' + optionID);
+                    option        = $('#wizard-option-' + optionID),
+                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
                 if (option.hasClass('not-picked')) {
+                    quantityField.val('1');
                     private.pickOption(option);
                     private.switchBtnChooseLabel(option);
                 }
