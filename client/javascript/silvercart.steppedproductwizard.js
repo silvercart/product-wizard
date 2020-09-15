@@ -56,7 +56,7 @@ silvercart.ProductWizard.CartSummary = (function () {
                     var row  = document.createElement('tr'),
                         col1 = document.createElement('td'),
                         col2 = document.createElement('td');
-                    $(col1).addClass('text-muted align-top line-height-1 pb-5px pr-5px');
+                    $(col1).addClass('text-muted align-top line-height-1 pb-5px pr-5px word-break-word');
                     $(col2).addClass('text-muted align-top line-height-1 pb-5px text-right text-nowrap');
                     $(col1).html(position.productQuantity + 'x ' + position.productTitle);
                     if (typeof position.priceTotalConsequential === 'object') {
