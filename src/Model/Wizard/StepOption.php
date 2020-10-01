@@ -5,7 +5,10 @@ namespace SilverCart\ProductWizard\Model\Wizard;
 use SilverCart\Dev\Tools;
 use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
+use SilverCart\Model\Order\ShoppingCartPosition;
 use SilverCart\Model\Product\Product;
+use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
+use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
 use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\RedirectorPage;
@@ -84,6 +87,12 @@ class StepOption extends DataObject
      * @var ArrayList
      */
     protected $optionList = null;
+    /**
+     * The (by step / step option set) related ProductWizardStepPage.
+     *
+     * @var ProductWizardStepPage
+     */
+    protected $productWizardStepPage = null;
     /**
      * DB table name.
      *
@@ -1350,13 +1359,14 @@ class StepOption extends DataObject
     /**
      * Executes the shopping cart transformation for this option.
      * 
-     * @return StepOption
+     * @return array
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 27.02.2019
      */
-    public function executeCartTransformation() : StepOption
+    public function executeCartTransformation() : array
     {
+        $positionIDs = [];
         if ($this->isVisible()) {
             $cartData = [];
             $quantity = 0;
@@ -1395,11 +1405,49 @@ class StepOption extends DataObject
                     }
                 }
             }
-            foreach ($cartData as $cartPositionData) {
-                ShoppingCart::addProduct($cartPositionData, true);
+            $wizard      = $this->ProductWizardStepPage();
+            if ($wizard instanceof ProductWizardStepPage) {
+                foreach ($cartData as $cartPositionData) {
+                    $position = ProductWizardShoppingCartPosition::getWizardPosition($cartPositionData, $wizard);
+                    if ($position instanceof ShoppingCartPosition) {
+                        $position->Quantity = $cartPositionData['productQuantity'];
+                        $position->write();
+                        $positionIDs[] = $position->ID;
+                    } else {
+                        $position = ShoppingCart::addProduct($cartPositionData, true);
+                        if ($position instanceof ShoppingCartPosition) {
+                            $position->ProductWizardID = $wizard->ID;
+                            $position->write();
+                            $positionIDs[] = $position->ID;
+                        }
+                    }
+                }
             }
         }
-        return $this;
+        return $positionIDs;
+    }
+    
+    /**
+     * Returns the (by step / step option set) related ProductWizardStepPage.
+     * 
+     * @return ProductWizardStepPage|null
+     */
+    public function ProductWizardStepPage() : ?ProductWizardStepPage
+    {
+        if ($this->productWizardStepPage === null) {
+            $step = null;
+            $page = null;
+            if ($this->Step()->exists()) {
+                $step = $this->Step();
+            } elseif ($this->StepOptionSet()->Step()->exists()) {
+                $step = $this->StepOptionSet()->Step();
+            }
+            if ($step instanceof Step) {
+                $page = $step->ProductWizardStepPage();
+            }
+            $this->productWizardStepPage = $page;
+        }
+        return $this->productWizardStepPage;
     }
     
     /**

@@ -1,6 +1,12 @@
 ---
 name: silvercart-productwizard-extensions
 ---
+SilverCart\Model\Order\Order:
+    extensions:
+        - SilverCart\ProductWizard\Extensions\Model\Order\OrderExtension
+SilverCart\Model\Order\ShoppingCartPosition:
+    extensions:
+        - SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension
 SilverCart\Model\Product\Product:
     extensions:
         - SilverCart\ProductWizard\Extensions\Model\Product\ProductExtension

@@ -60,6 +60,8 @@ de:
         InfoBoxTitleDesc: 'Titel, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
         InfoBoxContent: 'Inhalt der Info-Box'
         InfoBoxContentDesc: 'Inhalt, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
+        RedirectTo: 'Weiterleiten auf'
+        RedirectToDesc: 'Seite, auf die weitergeleitet werden soll, sobald dieser Schritt erreicht wird. Alle Artikel, die bis zu diesem Schritt ausgewählt wurden, werden in den Warenkorb gelegt.'
         ShowInStepNavigation: 'In Step-Navigation anzeigen'
         Sort: Sortierreihenfolge
         Step: Schritt

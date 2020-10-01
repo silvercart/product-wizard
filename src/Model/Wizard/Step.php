@@ -4,8 +4,10 @@ namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -22,6 +24,26 @@ use SilverStripe\View\Requirements;
  * @since 15.02.2019
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
+ * 
+ * @property string $Title                     Title
+ * @property string $DescriptionTitle          Description Title
+ * @property string $DescriptionContent        Description Content
+ * @property string $InfoBoxTitle              Info Box Title
+ * @property string $InfoBoxContent            Info Box Content
+ * @property string $FontAwesomeIcon           Font Awesome Icon
+ * @property string $ButtonTitle               Button Title
+ * @property bool   $ShowInStepNavigation      Show In Step Navigation
+ * @property string $Template                  Template
+ * @property int    $Sort                      Sort
+ * @property string $DisplayConditionType      Display Condition Type
+ * @property string $DisplayConditionOperation Display Condition Operation
+ * 
+ * @method ProductWizardStepPage ProductWizardStepPage() Returns the related ProductWizardStepPage
+ * @method SiteTree              RedirectTo()            Returns the related RedirectTo page
+ * 
+ * @method \SilverStripe\ORM\HasManyList StepOptions()       Returns the related StepOptions.
+ * @method \SilverStripe\ORM\HasManyList StepOptionSets()    Returns the related StepOptionSets.
+ * @method \SilverStripe\ORM\HasManyList DisplayConditions() Returns the related DisplayConditions.
  */
 class Step extends DataObject
 {
@@ -34,6 +56,7 @@ class Step extends DataObject
     const SKIP_TYPE_PARENT_YES         = 'ParentYes';
     const TEMPLATE_OPTIONS_WITH_PROGRESS = 'OptionsWithProgress';
     const TEMPLATE_OPTIONS_WITH_INFO     = 'OptionsWithInfo';
+    const TEMPLATE_REDIRECTION           = 'Redirection';
     
     /**
      * FontAwesome CSS file source.
@@ -61,7 +84,7 @@ class Step extends DataObject
         'FontAwesomeIcon'      => 'Varchar(25)',
         'ButtonTitle'          => DBVarchar::class,
         'ShowInStepNavigation' => 'Boolean(0)',
-        'Template'             => 'Enum("OptionsWithProgress,OptionsWithInfo","OptionsWithProgress")',
+        'Template'             => 'Enum("OptionsWithProgress,OptionsWithInfo,Redirection","OptionsWithProgress")',
         'Sort'                 => DBInt::class,
         'DisplayConditionType'       => 'Enum(",Show,Hide","")',
         'DisplayConditionOperation'  => 'Enum(",And,Or","")',
@@ -73,6 +96,7 @@ class Step extends DataObject
      */
     private static $has_one = [
         'ProductWizardStepPage' => ProductWizardStepPage::class,
+        'RedirectTo'            => SiteTree::class,
     ];
     /**
      * Has many relations.
@@ -177,6 +201,20 @@ class Step extends DataObject
                 if ($this->Template === self::TEMPLATE_OPTIONS_WITH_PROGRESS) {
                     $fields->removeByName('DescriptionTitle');
                     $fields->removeByName('DescriptionContent');
+                    $fields->removeByName('RedirectToID');
+                } elseif ($this->Template === self::TEMPLATE_REDIRECTION) {
+                    $fields->removeByName('ButtonTitle');
+                    $fields->removeByName('DescriptionTitle');
+                    $fields->removeByName('DescriptionContent');
+                    $fields->removeByName('InfoBoxTitle');
+                    $fields->removeByName('InfoBoxContent');
+                    $fields->removeByName('StepOptions');
+                    $fields->removeByName('RedirectToID');
+                    $redirectToField = TreeDropdownField::create('RedirectToID', $this->owner->fieldLabel('RedirectTo'), SiteTree::class)
+                            ->setDescription($this->owner->fieldLabel('RedirectToDesc'));
+                    $fields->addFieldToTab('Root.Main', $redirectToField);
+                } else {
+                    $fields->removeByName('RedirectToID');
                 }
             }
             $this->addDisplayConditionalCMSFields($fields);

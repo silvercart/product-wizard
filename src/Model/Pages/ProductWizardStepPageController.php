@@ -3,6 +3,7 @@
 namespace SilverCart\ProductWizard\Model\Pages;
 
 use PageController;
+use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
 use SilverCart\ProductWizard\Model\Wizard\Step;
 use SilverCart\ProductWizard\Model\Wizard\StepOption;
 use SilverStripe\Control\HTTPRequest;
@@ -88,7 +89,15 @@ class ProductWizardStepPageController extends PageController
             $this->data()->addCompletedStep($step);
             $this->redirect($step->NextLink());
         }
-        $this->data()->setCurrentStep($step);
+        if ($step->Template === Step::TEMPLATE_REDIRECTION
+         && $step->RedirectTo()->exists()
+         && $this->redirectedTo() === false
+        ) {
+            $this->transformToCart();
+            $this->redirect($step->RedirectTo()->Link());
+        } else {
+            $this->data()->setCurrentStep($step);
+        }
         return $this->render();
     }
     
@@ -105,23 +114,36 @@ class ProductWizardStepPageController extends PageController
      */
     public function createOffer(HTTPRequest $request) : DBHTMLText
     {
+        $this->transformToCart();
+        $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
+        return $this->render();
+    }
+    
+    /**
+     * Executes the cart transformation.
+     * 
+     * @return void
+     */
+    public function transformToCart() : void
+    {
+        $positionIDs = [];
         foreach ($this->data()->Steps() as $step) {
+            if (!$step->isVisible()) {
+                continue;
+            }
             if ($step->StepOptionSets()->exists()) {
                 foreach ($step->StepOptionSets() as $optionSet) {
                     foreach ($optionSet->StepOptions() as $option) {
-                        $option->executeCartTransformation();
+                        $positionIDs = array_merge($positionIDs, $option->executeCartTransformation());
                     }
                 }
             } else {
                 foreach ($step->StepOptions() as $option) {
-                    $option->executeCartTransformation();
+                    $positionIDs = array_merge($positionIDs, $option->executeCartTransformation());
                 }
             }
         }
-        $this->data()->resetPostVars();
-        $this->data()->resetCurrentStep();
-        $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
-        return $this->render();
+        ProductWizardShoppingCartPosition::deleteWizardPositions($this->data(), $positionIDs);
     }
     
     /**
