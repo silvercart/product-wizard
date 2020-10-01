@@ -94,7 +94,10 @@ class ProductWizardStepPageController extends PageController
          && $this->redirectedTo() === false
         ) {
             $this->transformToCart();
-            $this->redirect($step->RedirectTo()->Link());
+            $this->redirect("{$step->RedirectTo()->Link()}?{$this->data()->config()->http_get_var_name}={$this->ID}");
+            if ($step->RedirectTo()->hasMethod('ShowProductWizardStepNavigation')) {
+                $this->data()->setCurrentStep($step);
+            }
         } else {
             $this->data()->setCurrentStep($step);
         }

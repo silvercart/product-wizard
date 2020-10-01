@@ -206,7 +206,6 @@ class Step extends DataObject
                     $fields->removeByName('ButtonTitle');
                     $fields->removeByName('DescriptionTitle');
                     $fields->removeByName('DescriptionContent');
-                    $fields->removeByName('InfoBoxTitle');
                     $fields->removeByName('InfoBoxContent');
                     $fields->removeByName('StepOptions');
                     $fields->removeByName('RedirectToID');
@@ -330,6 +329,22 @@ class Step extends DataObject
         $next = $this->ProductWizardStepPage()->Steps()->where("Sort > {$this->Sort}")->first();
         if (!($next instanceof Step)) {
             $next = self::singleton();
+        }
+        return $next;
+    }
+    
+    /**
+     * Returns the next visible step.
+     * 
+     * @return Step
+     */
+    public function getNextVisibleStep() : Step
+    {
+        $next = $this->getNextStep();
+        while ($next instanceof Step
+            && !$next->isVisible()
+        ) {
+            $next = $next->getNextStep();
         }
         return $next;
     }

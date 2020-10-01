@@ -153,6 +153,13 @@ class ProductWizardStepPage extends Page
     private static $has_many = [
         'Steps' => Step::class,
     ];
+    /**
+     * The HTTP get var name to use for wizard rdirection pages.
+     * Default: pwp (Product Wizard Page)
+     *
+     * @var string
+     */
+    private static $http_get_var_name = 'pwp';
     
     /**
      * Returns the field labels.
@@ -415,12 +422,14 @@ class ProductWizardStepPage extends Page
     /**
      * Returns the navigation progress as percentage.
      * 
+     * @var Step $current Optional step context
+     * 
      * @return float
      */
-    public function getNavigationStepProgressPercentage() : float
+    public function getNavigationStepProgressPercentage(Step $current = null) : float
     {
         $percentage   = 0;
-        $current      = $this->getCurrentStep();
+        $current      = $current === null ? $this->getCurrentStep() : $current;
         $steps        = $this->getNavigationSteps();
         $total        = $steps->count();
         $completedIDs = $this->getCompletedStepIDs();
