@@ -118,7 +118,9 @@ class ProductWizardStepPageController extends PageController
     public function createOffer(HTTPRequest $request) : DBHTMLText
     {
         $this->transformToCart();
-        $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
+        if (!$this->redirectedTo()) {
+            $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
+        }
         return $this->render();
     }
     
