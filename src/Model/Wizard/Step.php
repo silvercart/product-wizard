@@ -7,6 +7,8 @@ use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ArrayList;
@@ -197,6 +199,10 @@ class Step extends DataObject
                 } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
                     $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
+                $fields->dataFieldByName('StepOptions')->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
+                $fields->dataFieldByName('StepOptions')->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
+                $fields->dataFieldByName('DisplayConditions')->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
+                $fields->dataFieldByName('DisplayConditions')->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
                 $fields->removeByName('ProductWizardStepPageID');
                 if ($this->Template === self::TEMPLATE_OPTIONS_WITH_PROGRESS) {
                     $fields->removeByName('DescriptionTitle');

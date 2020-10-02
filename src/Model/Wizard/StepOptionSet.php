@@ -3,6 +3,8 @@
 namespace SilverCart\ProductWizard\Model\Wizard;
 
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
+use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -104,6 +106,10 @@ class StepOptionSet extends DataObject
                     $stepOptionsConfig->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
                 }
                 $fields->removeByName('ProductWizardStepPageID');
+                $fields->dataFieldByName('StepOptions')->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
+                $fields->dataFieldByName('StepOptions')->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
+                $fields->dataFieldByName('DisplayConditions')->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
+                $fields->dataFieldByName('DisplayConditions')->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
             }
             $this->addDisplayConditionalCMSFields($fields);
         });
