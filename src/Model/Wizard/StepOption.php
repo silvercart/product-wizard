@@ -1553,7 +1553,9 @@ class StepOption extends DataObject
             ],
         ];
         if ($product->hasMethod('getBillingPeriodNice')) {
-            if ($product->HasConsequentialCosts) {
+            if ($product->HasConsequentialCosts
+             && $product->BillingPeriod !== $product->BillingPeriodConsequentialCosts
+            ) {
                 $priceSingleConsequential = $product->getPriceConsequentialCosts();
                 $priceTotalConsequential  = DBMoney::create()->setCurrency($priceSingleConsequential->getCurrency())->setAmount($priceSingleConsequential->getAmount() * $quantity);
                 $data = array_merge($data, [
@@ -1567,10 +1569,10 @@ class StepOption extends DataObject
                         'Currency' => $priceTotalConsequential->getCurrency(),
                         'Nice'     => $priceTotalConsequential->Nice(),
                     ],
-                    'BillingPeriod'                  => Product::singleton()->BillingPeriod,
-                    'BillingPeriodNice'              => Product::singleton()->getBillingPeriodNice(),
-                    'BillingPeriodConsequential'     => $product->BillingPeriod,
-                    'BillingPeriodConsequentialNice' => $product->getBillingPeriodNice(),
+                    'BillingPeriod'                  => $product->BillingPeriod,
+                    'BillingPeriodNice'              => $product->getBillingPeriodNice(),
+                    'BillingPeriodConsequential'     => $product->BillingPeriodConsequentialCosts,
+                    'BillingPeriodConsequentialNice' => $product->getBillingPeriodConsequentialCostsNice(),
                 ]);
             } else {
                 $data = array_merge($data, [

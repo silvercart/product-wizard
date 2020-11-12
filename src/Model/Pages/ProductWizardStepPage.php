@@ -275,7 +275,9 @@ class ProductWizardStepPage extends Page
                         $billingPeriod  = $positionData['BillingPeriodNice'];
                         $billingPeriods = [$billingPeriod];
                         $prices         = [$billingPeriod => $positionData['priceTotal']];
-                        if (array_key_exists('BillingPeriodConsequential', $positionData)) {
+                        if (array_key_exists('BillingPeriodConsequential', $positionData)
+                         && !in_array($positionData['BillingPeriodConsequentialNice'], $billingPeriods)
+                        ) {
                             $billingPeriod    = $positionData['BillingPeriodConsequentialNice'];
                             $billingPeriods[] = $billingPeriod;
                             $prices[$billingPeriod] = $positionData['priceTotalConsequential'];
