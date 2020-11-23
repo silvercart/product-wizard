@@ -66,6 +66,8 @@ en:
         StepOptions: Options
         StepOptionSets: 'Option sets'
         Title: Title
+        RedirectTo: 'Forward to'
+        RedirectToDesc: 'Page to be redirected to when this step is reached. All items selected up to this step will be added to the shopping cart.'
     SilverCart\ProductWizard\Model\Wizard\StepOption:
         PLURALNAME: 'Configurator Step Options'
         SINGULARNAME: 'Configurator Step Option'

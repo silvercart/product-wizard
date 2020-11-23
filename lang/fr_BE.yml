@@ -66,6 +66,8 @@ fr_BE:
         StepOptions: Options
         StepOptionSets: 'Ensembles d''options'
         Title: Titre
+        RedirectTo: 'Rediriger vers'
+        RedirectToDesc: 'Page vers laquelle vous serez redirigé lorsque cette étape sera atteinte. Tous les articles sélectionnés jusqu''à cette étape seront ajoutés au panier.'
     SilverCart\ProductWizard\Model\Wizard\StepOption:
         PLURALNAME: 'Options d''étape du configurateur'
         SINGULARNAME: 'Option d''étape du configurateur'

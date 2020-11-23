@@ -66,6 +66,8 @@ it:
         StepOptions: Opzioni
         StepOptionSets: 'Set di opzioni'
         Title: Titolo
+        RedirectTo: 'Inoltrare a'
+        RedirectToDesc: 'Pagina a cui essere reindirizzati quando si raggiunge questo step. Tutti gli articoli selezionati fino a questo step saranno aggiunti al carrello.'
     SilverCart\ProductWizard\Model\Wizard\StepOption:
         PLURALNAME: 'Configuratore opzioni Step-Option'
         SINGULARNAME: 'Configuratore opzione Step-Option'
@@ -143,7 +145,7 @@ it:
         DisplayConditions: 'Condizioni di visualizzazione'
         DisplayConditionText: 'Questo set opzioni {operation} è presente quando vengono soddisfatte le seguenti condizioni {type}'
         DisplayConditionType: Azione
-        DisplayConditionTypeShow: "visualizza"
+        DisplayConditionTypeShow: visualizza
         DisplayConditionTypeHide: Nascondi
         DisplayConditionOperation: 'Collegamento booleano'
         DisplayConditionOperationAnd: tutti

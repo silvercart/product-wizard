@@ -66,6 +66,8 @@ nl_BE:
         StepOptions: Opties
         StepOptionSets: Optiesets
         Title: Titel
+        RedirectTo: 'Doorverwijzen naar'
+        RedirectToDesc: 'Pagina waarnaar moet worden doorgestuurd zodra deze stap is bereikt. Alle artikelen die tot aan deze stap werden geselecteerd, worden aan de winkelwagen toegevoegd.'
     SilverCart\ProductWizard\Model\Wizard\StepOption:
         PLURALNAME: Configurator-Stap-Opties
         SINGULARNAME: Configurator-Stap-Optie
