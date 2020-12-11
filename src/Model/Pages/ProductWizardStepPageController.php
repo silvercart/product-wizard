@@ -3,6 +3,8 @@
 namespace SilverCart\ProductWizard\Model\Pages;
 
 use PageController;
+use SilverCart\Model\Product\Product;
+use SilverCart\ProductServices\Model\Product\Service;
 use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
 use SilverCart\ProductWizard\Model\Wizard\Step;
 use SilverCart\ProductWizard\Model\Wizard\StepOption;
@@ -267,35 +269,137 @@ class ProductWizardStepPageController extends PageController
      */
     protected function handlePostedOptionData(HTTPRequest $request) : string
     {
+        $services        = [];
+        $serviceProducts = [];
         if ($request->isPOST()) {
             $page       = $this->data();
             $step       = $page->getCurrentStep();
             $storedVars = $page->getPostVarsFor($step);
             $optionID   = $request->postVar('OptionID');
             $productID  = $request->postVar('ProductID');
-            $quantity   = $request->postVar('Quantity');
+            $quantity   = (int) $request->postVar('Quantity');
             $option     = StepOption::get()->byID($optionID);
             if ($option instanceof StepOption) {
-                $this->prepareStoredVars($storedVars, $optionID, $productID, $option);
-                if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
-                    if (is_numeric($quantity)) {
-                        $storedVars['StepOptions'][$optionID][$productID]['Select']   = $quantity > 0 ? '1' : '0';
-                        $storedVars['StepOptions'][$optionID][$productID]['Quantity'] = $quantity;
-                    } else {
-                        $storedVars['StepOptions'][$optionID][$productID]['Select'] = '0';
-                    }
-                } elseif ($option->OptionType === StepOption::OPTION_TYPE_RADIO) {
-                    $pickedOption = $storedVars['StepOptions'][$optionID];
-                    if (is_numeric($quantity)) {
-                        $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = $quantity;
-                    } else {
-                        $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = '0';
-                    }
-                }
+                $services        = $this->handleServicesFor($step, $storedVars, $productID, $quantity);
+                $serviceProducts = $this->handleServiceProductsFor($step, $storedVars, $productID, $quantity);
+                $this->handleStoredVars($storedVars, $optionID, $productID, $option, $quantity);
             }
             $page->setPostVarsFor($storedVars, $step);
         }
-        return json_encode($this->data()->getCartSummary());
+        return json_encode($this->data()->getCartSummary()
+                + [
+                    'Services'        => $services,
+                    'ServiceProducts' => $serviceProducts,
+                ]);
+    }
+    
+    /**
+     * Handles services within the current step.
+     * 
+     * @param Step  $step        Step
+     * @param array &$storedVars Stored vars
+     * @param int   $productID   Product ID
+     * @param int   $quantity    Quantity
+     * 
+     * @return array
+     */
+    public function handleServicesFor(Step $step, array &$storedVars, int $productID, int $quantity) : array
+    {
+        $handledServices = [];
+        if (class_exists(Service::class)) {
+            $product = Product::get()->byID($productID);
+            if ($product instanceof Product
+             && $product->hasMethod('Services')
+             && $product->Services()->exists()
+            ) {
+                $serviceIDMap = $product->Services()->map('ID', 'ID')->toArray();
+                foreach ($step->StepOptions() as $serviceOption) {
+                    /* @var $serviceOption StepOption */
+                    $services = $serviceOption->Products()->filter('ID', $serviceIDMap);
+                    if ($services->exists()) {
+                        foreach ($services as $service) {
+                            /* @var $service Service */
+                            $serviceQuantity = $quantity;
+                            if (!$service->IsRequiredForEachServiceProduct) {
+                                $serviceQuantity = 1;
+                            }
+                            $handledServices[$service->ID] = $serviceQuantity;
+                            $this->handleStoredVars($storedVars, $serviceOption->ID, $service->ID, $serviceOption, $serviceQuantity);
+                        }
+                    }
+                }
+            }
+        }
+        return $handledServices;
+    }
+    
+    /**
+     * Handles service products within the current step.
+     * 
+     * @param Step  $step        Step
+     * @param array &$storedVars Stored vars
+     * @param int   $productID   Product ID
+     * @param int   $quantity    Quantity
+     * 
+     * @return array
+     */
+    public function handleServiceProductsFor(Step $step, array &$storedVars, int $productID, int $quantity) : array
+    {
+        $handledServices = [];
+        if (class_exists(Service::class)) {
+            $service = Service::get()->byID($productID);
+            if ($service instanceof Service
+             && $service->hasMethod('ServiceProducts')
+             && $service->ServiceProducts()->exists()
+            ) {
+                $serviceProductsIDMap = $service->ServiceProducts()->map('ID', 'ID')->toArray();
+                foreach ($step->StepOptions() as $serviceOption) {
+                    /* @var $serviceOption StepOption */
+                    $serviceProducts = $serviceOption->Products()->filter('ID', $serviceProductsIDMap);
+                    if ($serviceProducts->exists()) {
+                        foreach ($serviceProducts as $serviceProduct) {
+                            /* @var $serviceProduct Product */
+                            if ($service->IsRequiredForEachServiceProduct) {
+                                $handledServices[$serviceProduct->ID] = $quantity;
+                                $this->handleStoredVars($storedVars, $serviceOption->ID, $serviceProduct->ID, $serviceOption, $quantity);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $handledServices;
+    }
+    
+    /**
+     * Handles the session stored vars.
+     * 
+     * @param array      &$storedVars Stored vars
+     * @param int        $optionID    Option ID
+     * @param int        $productID   Product ID
+     * @param StepOption $option      Option
+     * @param int        $quantity    Quantity
+     * 
+     * @return void
+     */
+    public function handleStoredVars(array &$storedVars, int $optionID, int $productID, StepOption $option, int $quantity) : void
+    {
+        $this->prepareStoredVars($storedVars, $optionID, $productID, $option);
+        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+            if (is_numeric($quantity)) {
+                $storedVars['StepOptions'][$optionID][$productID]['Select']   = $quantity > 0 ? '1' : '0';
+                $storedVars['StepOptions'][$optionID][$productID]['Quantity'] = $quantity;
+            } else {
+                $storedVars['StepOptions'][$optionID][$productID]['Select'] = '0';
+            }
+        } elseif ($option->OptionType === StepOption::OPTION_TYPE_RADIO) {
+            $pickedOption = $storedVars['StepOptions'][$optionID];
+            if (is_numeric($quantity)) {
+                $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = $quantity;
+            } else {
+                $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption] = '0';
+            }
+        }
     }
     
     /**
