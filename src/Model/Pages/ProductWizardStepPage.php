@@ -506,7 +506,9 @@ class ProductWizardStepPage extends Page
         ) {
             $currentStep = $this->Steps()->first();
         }
-        $this->setCurrentStep($currentStep);
+        if ($currentStep instanceof Step) {
+            $this->setCurrentStep($currentStep);
+        }
         return $this;
     }
     
