@@ -202,13 +202,20 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
     var property = {
             optionSetSelector: false,
             cartSummary: false,
-            spinnerTimeout: false
+            spinnerTimeout: false,
+            behavior: {
+                enableAll:  'enable-all',
+                disableAll: 'disable-all',
+            },
+            skipPickRadioOption: false,
+            reenableDataStorage: [],
         },
         selector = {
             container: "#ProductWizardStepOptionsWithProgress",
             option: ".wizard-option",
             optionPicker: ".wizard-option-picker",
             optionPickerBtnChoose: ".wizard-option-picker.btn-choose",
+            optionProduct: '.wizard-option-product',
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
             pickMoreQuantityField: ".pick-more-quantity-field",
@@ -306,6 +313,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     } else if (skipAjax === false) {
                         property.cartSummary.postOptionData(optionID, productID, quantityField.val());
                     }
+                    var enableAllOption = $(selector.radioOptionPicker + '[data-behavior="' + property.behavior.enableAll + '"]');
+                    if (enableAllOption.length > 0) {
+                        enableAllOption.trigger('click');
+                    }
                 } else {
                     selectField.val('0');
                     option.addClass('not-picked');
@@ -315,6 +326,12 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         $('.dropdown-item.pick-quantity[data-quantity="0"]', option).trigger('click');
                     } else if (skipAjax === false) {
                         property.cartSummary.deleteOptionData(optionID, productID);
+                    }
+                    if ($(selector.optionProduct + '.picked').length === 0) {
+                        var disableAllOption = $(selector.radioOptionPicker + '[data-behavior="' + property.behavior.disableAll + '"]');
+                        if (disableAllOption.length > 0) {
+                            disableAllOption.trigger('click');
+                        }
                     }
                 }
             },
@@ -389,7 +406,53 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     quantityPicker.removeClass('d-none');
                 }
             },
-            pickRadioOption: function() {
+            pickRadioOption: function()
+            {
+                if (property.skipPickRadioOption) {
+                    property.skipPickRadioOption = false;
+                    return;
+                }
+                var optionBehavior = $(this).data('behavior');
+                if (optionBehavior === property.behavior.enableAll) {
+                    property.reenableDataStorage.forEach(function (data) {
+                        var optionProduct  = $(selector.optionProduct + '.not-picked[data-option-id="' + data.optionID + '"][data-product-id="' + data.productID + '"]'),
+                            selectField    = $('input[name="StepOptions[' + data.optionID + '][' + data.productID + '][Select]"]'),
+                            quantityField  = $('input[name="StepOptions[' + data.optionID + '][' + data.productID + '][Quantity]"]'),
+                            quantityPicker = $('.dropdown-item.pick-quantity[data-quantity="' + data.quantity + '"]', optionProduct);
+                        if (selectField.length > 0) {
+                            selectField.val(0);
+                        }
+                        if (quantityField.length > 0) {
+                            quantityField.val(data.quantity);
+                        }
+                        //property.skipPickRadioOption = true;
+                        if (quantityPicker.length > 0) {
+                            $(quantityPicker).trigger('click');
+                        } else {
+                            $(selector.optionPicker + '.card-header', optionProduct).trigger('click');
+                        }
+                    });
+                    property.reenableDataStorage = [];
+                } else if (optionBehavior === property.behavior.disableAll) {
+                    $(selector.optionProduct + '.picked').each(function() {
+                        var picker = $(selector.optionPicker + '.card-header', $(this));
+                        if (picker.length === 0) {
+                            return;
+                        }
+                        
+                        var productID     = $(this).data('product-id'),
+                            optionID      = $(this).data('option-id'),
+                            selectField   = $('input[name="StepOptions[' + optionID + '][' + productID + '][Select]"]'),
+                            quantityField = $('input[name="StepOptions[' + optionID + '][' + productID + '][Quantity]"]');
+                        var data = {};
+                        data['productID'] = productID;
+                        data['optionID']  = optionID;
+                        data['select']    = selectField.val();
+                        data['quantity']  = quantityField.val();
+                        property.reenableDataStorage.push(data);
+                        picker.trigger('click');
+                    });
+                }
                 property.cartSummary.postPlainOptionData($(this).attr('name'));
                 if ($('.alert-submit-button-error-message').length > 0) {
                     private.validateFields();

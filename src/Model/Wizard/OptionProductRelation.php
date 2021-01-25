@@ -17,6 +17,14 @@ use SilverCart\Model\Product\Product;
  */
 class OptionProductRelation
 {
+    const BEHAVIOR_DISABLE_ALL = 'disable-all';
+    const BEHAVIOR_ENABLE_ALL  = 'enable-all';
+    const BEHAVIOR_NONE        = '';
+    const BEHAVIORS = [
+        self::BEHAVIOR_NONE,
+        self::BEHAVIOR_ENABLE_ALL,
+        self::BEHAVIOR_DISABLE_ALL,
+    ];
     /**
      * Related StepOption.
      *
@@ -59,6 +67,12 @@ class OptionProductRelation
      * @var Product[]
      */
     protected $products = [];
+    /**
+     * Key value pair of option index and behavior.
+     *
+     * @var string[]
+     */
+    protected $behaviors = [];
     /**
      * Key value pair of option index and description.
      *
@@ -169,6 +183,9 @@ class OptionProductRelation
                 }
                 $this->setProducts($products);
             }
+            if (array_key_exists('Behaviors', $data)) {
+                $this->setBehaviors((array) $data['Behaviors']);
+            }
             if (array_key_exists('Descriptions', $data)) {
                 $this->setDescriptions((array) $data['Descriptions']);
             }
@@ -207,6 +224,7 @@ class OptionProductRelation
             'MinimumQuantity'                 => $this->getMinimumQuantity(),
             'DynamicQuantityOption'           => $this->getDynamicQuantityOption()->ID,
             'Products'                        => $this->getProductsMap(),
+            'Behaviors'                       => $this->getBehaviors(),
             'Descriptions'                    => $this->getDescriptions(),
             'LongDescriptions'                => $this->getLongDescriptions(),
             'UseCustomQuantities'             => $this->getUseCustomQuantities(),
@@ -312,6 +330,31 @@ class OptionProductRelation
     public function getQuantityByOption() : int
     {
         return $this->quantityByOption;
+    }
+
+    /**
+     * Returns the related behaviors.
+     * 
+     * @return string[]
+     */
+    public function getBehaviors() : array
+    {
+        return $this->behaviors;
+    }
+
+    /**
+     * Returns a map of option index and behavior.
+     * 
+     * @return array
+     */
+    public function getBehaviorsMap() : array
+    {
+        $map = [];
+        foreach (self::BEHAVIORS as $behavior) {
+            $i18nKey = strtoupper(empty($behavior) ? 'none' : $behavior);
+            $map[$behavior] = _t(self::class . ".Behavior-{$i18nKey}", $i18nKey);
+        }
+        return $map;
     }
 
     /**
@@ -501,6 +544,19 @@ class OptionProductRelation
     public function setQuantityByOption(int $quantityByOption) : OptionProductRelation
     {
         $this->quantityByOption = $quantityByOption;
+        return $this;
+    }
+
+    /**
+     * Sets the related behaviors.
+     * 
+     * @param array $behaviors Behaviors
+     * 
+     * @return \SilverCart\ProductWizard\Model\Wizard\OptionProductRelation
+     */
+    public function setBehaviors(array $behaviors) : OptionProductRelation
+    {
+        $this->behaviors = $behaviors;
         return $this;
     }
 

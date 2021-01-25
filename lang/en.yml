@@ -36,6 +36,10 @@ en:
         TypeIsLighterThan: 'is smaller than'
         TypeIsGreaterThanOrEqual: 'is equal to or greater than'
         TypeIsLighterThanOrEqual: 'is equal to or less than'
+    SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+        Behavior-DISABLE-ALL: 'Alle anderen Optionen deaktivieren'
+        Behavior-ENABLE-ALL: 'Alle anderen Optionen reaktivieren'
+        Behavior-NONE: 'Kein'
     SilverCart\ProductWizard\Model\Wizard\Step:
         PLURALNAME: 'Configurator steps'
         SINGULARNAME: 'Configurator step'
@@ -96,6 +100,8 @@ en:
         moreThanMax: 'more than {max} {maxTitle}...'
         NumberProductRelationTitle: 'Articles for this option'
         NumberProductRelationDesc: 'This item will be added to the shopping cart with the quantity specified in this option.'
+        OptionBehavior: 'Behavior'
+        OptionBehaviorTitle: 'Behavior for option {option}'
         OptionProductRelation: 'Linked articles'
         OptionProductRelationTitle: 'Article for Option {option}'
         OptionProductRelationDesc: 'Add this item to the shopping cart when the "{option}" option is selected.'

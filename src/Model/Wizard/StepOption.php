@@ -330,6 +330,8 @@ class StepOption extends DataObject
                 $fields->findOrMakeTab('Root.Advanced', $this->fieldLabel('Advanced'));
                 $productsSource                  = Product::get()->map()->toArray();
                 $products                        = $this->getProductRelation()->getProductsMap();
+                $behaviorSource                  = $this->getProductRelation()->getBehaviorsMap();
+                $behaviors                       = $this->getProductRelation()->getBehaviors();
                 $minQuantityValue                = $this->getProductRelation()->getMinimumQuantity();
                 $dynQuantityOptionValue          = $this->getProductRelation()->getDynamicQuantityOption()->ID;
                 $descriptions                    = $this->getProductRelation()->getDescriptions();
@@ -407,6 +409,13 @@ class StepOption extends DataObject
                     if (array_key_exists($option->Value, $useCustomQuantityTexts)) {
                         $useCustomQuantityTextValue = $useCustomQuantityTexts[$option->Value];
                     }
+                    $behaviorValue  = '';
+                    $behaviorTitle  = _t(self::class . '.OptionBehaviorTitle', 'Behavior for option {option}', [
+                        'option' => (int) $option->Value + 1,
+                    ]);
+                    if (array_key_exists($option->Value, $behaviors)) {
+                        $behaviorValue = $behaviors[$option->Value];
+                    }
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[Descriptions][{$option->Value}]", $descTitle, $descValue)->setDescription($descDescription));
                     $fields->addFieldToTab('Root.Advanced', HTMLEditorField::create("OptionProductRelation[LongDescriptions][{$option->Value}]", $longDescTitle, $longDescValue)->setDescription($longDescDescription)->setRows(3));
                     $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
@@ -415,6 +424,7 @@ class StepOption extends DataObject
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantitySingulars][{$option->Value}]", $useCustomQuantitySingularTitle, $useCustomQuantitySingularValue));
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantityPlurals][{$option->Value}]", $useCustomQuantityPluralTitle, $useCustomQuantityPluralValue));
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[UseCustomQuantityTexts][{$option->Value}]", $useCustomQuantityTextTitle, $useCustomQuantityTextValue));
+                    $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Behaviors][{$option->Value}]", $behaviorTitle, $behaviorSource, $behaviorValue));
                 }
             }
         }
@@ -1040,23 +1050,25 @@ class StepOption extends DataObject
             $plainValue = $this->getValue();
             $intValue   = (int) $plainValue;
             $products   = $this->getProductRelation()->getProducts();
+            $behaviors  = $this->getProductRelation()->getBehaviors();
             $descriptions = $this->getProductRelation()->getDescriptions();
             $longDescriptions = $this->getProductRelation()->getLongDescriptions();
             foreach ($options as $key => $option) {
+                $product         = null;
+                $behavior        = null;
+                $description     = null;
+                $longDescription = null;
                 if (array_key_exists($key, $products)) {
                     $product  = $products[$key];
-                } else {
-                    $product = null;
+                }
+                if (array_key_exists($key, $behaviors)) {
+                    $behavior = $behaviors[$key];
                 }
                 if (array_key_exists($key, $descriptions)) {
                     $description = $descriptions[$key];
-                } else {
-                    $description = null;
                 }
                 if (array_key_exists($key, $longDescriptions)) {
                     $longDescription = $longDescriptions[$key];
-                } else {
-                    $longDescription = null;
                 }
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
@@ -1067,6 +1079,7 @@ class StepOption extends DataObject
                     'IsChecked'     => $plainValue !== '' && $intValue === $key ? true : false,
                     'Title'         => trim($option),
                     'Product'       => $product,
+                    'Behavior'      => $behavior,
                     'Description'   => $description,
                     'LongDescription' => DBHTMLText::create()->setValue($longDescription),
                 ]);
