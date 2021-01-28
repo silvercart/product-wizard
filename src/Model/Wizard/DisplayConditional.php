@@ -2,6 +2,8 @@
 
 namespace SilverCart\ProductWizard\Model\Wizard;
 
+use SilverCart\Model\Customer\Customer;
+use SilverStripe\Control\Controller;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\LiteralField;
@@ -104,6 +106,12 @@ trait DisplayConditional
      */
     public function isVisible() : bool
     {
+        if (Customer::is_admin()
+         && strpos(Controller::curr()->getRequest()->getURL(), 'admin/') === 0
+        ) {
+            //admin access, always visible
+            return true;
+        }
         $isVisible  = true;
         $isMatching = true;
         $conditions = $this->DisplayConditions();
