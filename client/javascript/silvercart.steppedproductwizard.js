@@ -572,7 +572,7 @@ silvercart.ProductWizard.OptionsWithInfo = (function () {
             showOptionInformation: function() {
                 if ($(selector.showOriginalOptionInformation).length === 0) {
                     var buttonCloseID = selector.showOriginalOptionInformation.replace('#', ''),
-                        buttonClose = '<a href="javascript:;" class="text-lg p-absolute t-15 r-20" id="' + buttonCloseID + '"><span class="fa fa-times-circle"></span></a>';
+                        buttonClose = '<a href="javascript:;" class="text-lg p-absolute t-15 r-20 d-none" id="' + buttonCloseID + '"><span class="fa fa-times-circle"></span></a>';
                     $(selector.infoBox).append(buttonClose);
                 }
                 $(selector.infoBoxHeading).removeClass('text-danger');
@@ -597,6 +597,7 @@ silvercart.ProductWizard.OptionsWithInfo = (function () {
                 }
                 $(document).on('click', selector.choosableOption, private.chooseOption);
                 $(document).on('mouseover', selector.infoOnHover, private.showOptionInformation);
+                $(document).on('mouseout', selector.infoOnHover, private.showOriginalOptionInformation);
                 $(document).on('click', selector.showOriginalOptionInformation, private.showOriginalOptionInformation);
                 $(document).on('submit', selector.stepForm, private.doStepOptionValidation);
             }
