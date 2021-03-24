@@ -20,9 +20,9 @@
             <button class="btn btn-light btn-block dropdown-toggle px-6" type="button" id="product-variant-dropdown-{$CurrentOption.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="text-truncate d-inline-block mb--8" style="max-width: calc(100% - 14px);">{$Title}</span>
             </button>
-            <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-variant-dropdown-{$CurrentOption.ID}">
+            <div class="dropdown-menu w-100 rounded-0 bg-white mt--1" aria-labelledby="product-variant-dropdown-{$CurrentOption.ID}">
                 <% loop $Variants %>
-                <a class="dropdown-item variant-picker" href="javascript:;" data-variant-id="{$ID}" data-product-id="{$Up.CurrentOption.getRelatedProductIDForVariant($Up.ID)}" data-option-id="{$Up.CurrentOption.ID}">{$Title}</a>
+                <a class="dropdown-item text-hyphens-auto text-wrap variant-picker" href="javascript:;" data-variant-id="{$ID}" data-product-id="{$Up.CurrentOption.getRelatedProductIDForVariant($Up.ID)}" data-option-id="{$Up.CurrentOption.ID}">{$Title}</a>
                 <% end_loop %>
             </div>
         </div>
@@ -41,6 +41,8 @@
             <a class="price h3" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
         <% end_if %>
         </div>
+        <div class="py-60"></div>
+        <div class="p-absolute l-0 b-0 w-100 p-2">
     <% if not $CurrentOption.getProductViewIsReadonly %>
         <hr>
         <% with $CurrentOption %>
@@ -77,6 +79,7 @@
         <p class="mb-0 text-center">{$CurrentOption.Text}</p>
         <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
     <% end_if %>
+        </div>
     </div>
 </div>
 <% include SilverCart\ProductWizard\Model\Wizard\ProductDetailModal %>

@@ -112,19 +112,19 @@
     border-color: #e3000f !important;
 }
 .wizard-option .product-description-sm {
-    height: 3em;
+    height: 4em;
     overflow: hidden;
 }
 .wizard-option .product-description-md {
-    height: 4.5em;
+    height: 5.5em;
     overflow: hidden;
 }
 .wizard-option .product-description-lg {
-    height: 6em;
+    height: 7em;
     overflow: hidden;
 }
 .wizard-option .pick-button-label {
-    height: 42px;
+    height: 63px;
     overflow: hidden;
 }
 .wizard-option.loading::after,

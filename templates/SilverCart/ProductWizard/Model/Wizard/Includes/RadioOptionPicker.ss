@@ -1,4 +1,4 @@
-<label class="d-block cursor-pointer border rounded mt-10 mb-0 p-10 p-relative clearfix radio-option-picker {$Checked}" data-option-id="{$StepOption.ID}" data-value="{$Value}" data-behavior="{$Behavior}" for="StepOptions-{$StepOption.ID}-{$Value}">
+<label class="d-block cursor-pointer border rounded mt-10 mb-0 p-10 pb-15 p-relative clearfix radio-option-picker {$Checked}" data-option-id="{$StepOption.ID}" data-value="{$Value}" data-behavior="{$Behavior}" for="StepOptions-{$StepOption.ID}-{$Value}">
     <div class="label"><span class="font-weight-bold">{$Title}</span>
     <% if $Product %>
         <% with $Product %>
