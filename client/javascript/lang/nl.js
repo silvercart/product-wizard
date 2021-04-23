@@ -4,8 +4,9 @@ if (typeof (ss) === 'undefined' || typeof (ss.i18n) === 'undefined') {
     }
 } else {
     ss.i18n.addDictionary('nl', {
-        "SilverCart.ProductWizard.ERROR.PickOptionHeading": "Er heeft zich een fout voorgedaan",
-        "SilverCart.ProductWizard.ERROR.PickOptionContent": "Selecteer ten minste een optie voordat u verdergaat.",
-        "SilverCart.ProductWizard.ERROR.PickOptions": "Selecteer een optie voor elke aanbieding."
+        "SilverCart.ProductWizard.ERROR.PickOptionHeading": "Er is een fout opgetreden",
+        "SilverCart.ProductWizard.ERROR.PickOptionContent": "Kies minstens één optie om verder te gaan.",
+        "SilverCart.ProductWizard.ERROR.PickOptions": "Selecteer één optie per aanbod.",
+        "SilverCart.ProductWizard.ERROR.NoProductsYet": "U heeft nog geen artikelen geselecteerd."
     });
 }

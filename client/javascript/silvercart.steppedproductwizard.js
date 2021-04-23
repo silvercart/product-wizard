@@ -69,7 +69,7 @@ silvercart.ProductWizard.CartSummary = (function () {
                     if (stepPositions.length === 0) {
                         var row = document.createElement('tr'),
                             col = document.createElement('td');
-                        $(col).html('Sie haben noch keine Artikel ausgewählt.');
+                        $(col).html(ss.i18n._t('SilverCart.ProductWizard.ERROR.NoProductsYet', 'You have not selected any items yet.'));
                         $(row).append(col);
                         $(table).append(row);
                     } else {

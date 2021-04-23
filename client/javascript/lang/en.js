@@ -5,6 +5,7 @@ if (typeof (ss) == 'undefined' || typeof (ss.i18n) == 'undefined') {
     ss.i18n.addDictionary('en', {
         "SilverCart.ProductWizard.ERROR.PickOptionHeading": "An error has occurred",
         "SilverCart.ProductWizard.ERROR.PickOptionContent": "Please select at least one option to continue.",
-        "SilverCart.ProductWizard.ERROR.PickOptions": "Please select one option for each offer."
+        "SilverCart.ProductWizard.ERROR.PickOptions": "Please select one option for each offer.",
+        "SilverCart.ProductWizard.ERROR.NoProductsYet": "You have not selected any items yet."
     });
 }
