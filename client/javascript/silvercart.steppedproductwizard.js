@@ -275,7 +275,6 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     option        = $('#wizard-option-' + optionID),
                     quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
                 if (option.hasClass('not-picked')) {
-                    quantityField.val('1');
                     private.pickOption(option);
                     private.switchBtnChooseLabel(option);
                 }
@@ -419,9 +418,6 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                             selectField    = $('input[name="StepOptions[' + data.optionID + '][' + data.productID + '][Select]"]'),
                             quantityField  = $('input[name="StepOptions[' + data.optionID + '][' + data.productID + '][Quantity]"]'),
                             quantityPicker = $('.dropdown-item.pick-quantity[data-quantity="' + data.quantity + '"]', optionProduct);
-                        if (selectField.length > 0) {
-                            selectField.val(0);
-                        }
                         if (quantityField.length > 0) {
                             quantityField.val(data.quantity);
                         }
