@@ -323,6 +323,19 @@ class ProductWizardStepPageController extends PageController
                             if (!$service->IsRequiredForEachServiceProduct) {
                                 $serviceQuantity = 1;
                             }
+                            if ($service->ServiceProducts()->count() > 0) {
+                                foreach ($service->ServiceProducts() as $serviceProduct) {
+                                    if ((int) $serviceProduct->ID === (int) $product->ID) {
+                                        continue;
+                                    }
+                                    foreach ($serviceProduct->ProductWizardStepOption() as $stepOption) {
+                                        if (!$stepOption->isVisible()) {
+                                            continue;
+                                        }
+                                        $serviceQuantity += $this->getStoredQuantity($stepOption->ID, $serviceProduct->ID, $stepOption);
+                                    }
+                                }
+                            }
                             $handledServices[$service->ID] = $serviceQuantity;
                             $this->handleStoredVars($storedVars, $serviceOption->ID, $service->ID, $serviceOption, $serviceQuantity);
                         }
@@ -346,6 +359,7 @@ class ProductWizardStepPageController extends PageController
     public function handleServiceProductsFor(Step $step, array &$storedVars, int $productID, int $quantity) : array
     {
         $handledServices = [];
+        $originalQuantiy = [];
         if (class_exists(Service::class)) {
             $service = Service::get()->byID($productID);
             if ($service instanceof Service
@@ -354,6 +368,9 @@ class ProductWizardStepPageController extends PageController
             ) {
                 $serviceProductsIDMap = $service->ServiceProducts()->map('ID', 'ID')->toArray();
                 foreach ($step->StepOptions() as $serviceOption) {
+                    if (!$serviceOption->isVisible()) {
+                        continue;
+                    }
                     /* @var $serviceOption StepOption */
                     $serviceProducts = $serviceOption->Products()->filter('ID', $serviceProductsIDMap);
                     if ($serviceProducts->exists()) {
@@ -361,6 +378,8 @@ class ProductWizardStepPageController extends PageController
                             /* @var $serviceProduct Product */
                             if ($service->IsRequiredForEachServiceProduct) {
                                 $handledServices[$serviceProduct->ID] = $quantity;
+                                $handledOptions[$serviceProduct->ID]  = $serviceOption;
+                                $originalQuantiy[$serviceProduct->ID] = $this->getStoredQuantity($serviceOption->ID, $serviceProduct->ID, $serviceOption);
                                 $this->handleStoredVars($storedVars, $serviceOption->ID, $serviceProduct->ID, $serviceOption, $quantity);
                             }
                         }
@@ -368,7 +387,59 @@ class ProductWizardStepPageController extends PageController
                 }
             }
         }
+        $handledCount = count($handledServices);
+        if ($handledCount > 1
+         && $quantity > 0
+        ) {
+            $avg    = floor($quantity / $handledCount);
+            $remain = $quantity - ($avg * $handledCount);
+            $index  = 1;
+            foreach ($handledServices as $serviceProductID => $quantity) {
+                $quantity                             = $index >= $handledCount ? $avg : $avg + $remain;
+                $handledServices[$serviceProductID] = $quantity;
+                $this->handleStoredVars($storedVars, $handledOptions[$serviceProductID]->ID, $serviceProductID, $handledOptions[$serviceProductID], $quantity);
+                $index++;
+            }
+        }
         return $handledServices;
+    }
+    
+    /**
+     * Returns the session stored quantity for the given $optionID, $productID 
+     * and $option context.
+     * 
+     * @param int        $optionID  Option ID
+     * @param int        $productID Product ID
+     * @param StepOption $option    Option
+     * 
+     * @return int
+     */
+    public function getStoredQuantity(int $optionID, int $productID, StepOption $option) : int
+    {
+        $quantity   = 0;
+        $page       = $this->data();
+        $step       = $page->getCurrentStep();
+        $storedVars = $page->getPostVarsFor($step);
+        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+            if (array_key_exists('StepOptions', $storedVars)
+             && array_key_exists($optionID, $storedVars['StepOptions'])
+             && array_key_exists($productID, $storedVars['StepOptions'][$optionID])
+             && array_key_exists('Quantity', $storedVars['StepOptions'][$optionID][$productID])
+            ) {
+                $quantity = $storedVars['StepOptions'][$optionID][$productID]['Quantity'];
+            }
+        } elseif ($option->OptionType === StepOption::OPTION_TYPE_RADIO) {
+            if (array_key_exists('StepOptions', $storedVars)
+             && array_key_exists($optionID, $storedVars['StepOptions'])
+             && array_key_exists('Quantity', $storedVars['StepOptions'])
+             && array_key_exists($optionID, $storedVars['StepOptions']['Quantity'])
+             && array_key_exists($pickedOption, $storedVars['StepOptions']['Quantity'][$optionID])
+            ) {
+                $pickedOption = $storedVars['StepOptions'][$optionID];
+                $quantity     = $storedVars['StepOptions']['Quantity'][$optionID][$pickedOption];
+            }
+        }
+        return (int) $quantity;
     }
     
     /**

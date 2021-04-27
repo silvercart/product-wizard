@@ -34,11 +34,15 @@ silvercart.ProductWizard.CartSummary = (function () {
                     var option = $(selector.wizardOptionProduct + '[data-product-id="' + serviceID + '"]');
                     if (option.length > 0) {
                         var optionID = option.data('option-id'),
-                            btnQty   = $('#pick-quantity-' + optionID + ' a[data-quantity="' + serviceQuantity + '"]');
+                            btnQty   = $('#pick-quantity-' + optionID + ' a[data-quantity="' + serviceQuantity + '"]'),
+                            inputQty = $('.pick-more-quantity-field[data-option-id="' + optionID + '"][data-product-id="' + serviceID + '"]');
                         if (btnQty.length > 0) {
                             btnQty.addClass('skip-ajax');
                             btnQty.trigger('click');
                             btnQty.removeClass('skip-ajax');
+                        } else if (inputQty.length > 0) {
+                            $('.pick-more-quantity[data-option-id="' + optionID + '"]').trigger('click');
+                            inputQty.val(serviceQuantity);
                         }
                     }
                 });
@@ -48,11 +52,15 @@ silvercart.ProductWizard.CartSummary = (function () {
                     var option = $(selector.wizardOptionProduct + '[data-product-id="' + serviceProductID + '"]');
                     if (option.length > 0) {
                         var optionID = option.data('option-id'),
-                            btnQty   = $('#pick-quantity-' + optionID + ' a[data-quantity="' + serviceProductQuantity + '"]');
+                            btnQty   = $('#pick-quantity-' + optionID + ' a[data-quantity="' + serviceProductQuantity + '"]'),
+                            inputQty = $('.pick-more-quantity-field[data-option-id="' + optionID + '"]');
                         if (btnQty.length > 0) {
                             btnQty.addClass('skip-ajax');
                             btnQty.trigger('click');
                             btnQty.removeClass('skip-ajax');
+                        } else if (inputQty.length > 0) {
+                            $('.pick-more-quantity[data-option-id="' + optionID + '"]').trigger('click');
+                            inputQty.val(serviceProductQuantity);
                         }
                     }
                 });
