@@ -49,7 +49,8 @@ silvercart.ProductWizard.CartSummary = (function () {
             },
             renderServiceProducts: function(serviceProducts) {
                 $.each(serviceProducts, function(serviceProductID, serviceProductQuantity) {
-                    var option = $(selector.wizardOptionProduct + '[data-product-id="' + serviceProductID + '"]');
+                    var option     = $(selector.wizardOptionProduct + '[data-product-id="' + serviceProductID + '"]'),
+                        serviceIDs = option.data('service-ids');
                     if (option.length > 0) {
                         var optionID = option.data('option-id'),
                             btnQty   = $('#pick-quantity-' + optionID + ' a[data-quantity="' + serviceProductQuantity + '"]'),
@@ -61,6 +62,11 @@ silvercart.ProductWizard.CartSummary = (function () {
                         } else if (inputQty.length > 0) {
                             $('.pick-more-quantity[data-option-id="' + optionID + '"]').trigger('click');
                             inputQty.val(serviceProductQuantity);
+                        }
+                        if (typeof serviceIDs === 'string'
+                         && serviceIDs.split(',').length > 1
+                        ) {
+                            public.postOptionData(optionID, serviceProductID, serviceProductQuantity)
                         }
                     }
                 });

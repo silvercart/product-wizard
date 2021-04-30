@@ -1,4 +1,4 @@
-<div class="card rounded-0 w-100 shadow wizard-option wizard-option-product {$CurrentOption.IsOptionalClass} {$CurrentOption.ProductViewIsReadonlyClass} {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}">
+<div class="card rounded-0 w-100 shadow wizard-option wizard-option-product {$CurrentOption.IsOptionalClass} {$CurrentOption.ProductViewIsReadonlyClass} {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}" data-service-ids="{$ServicesAsIDString}">
 <% if $CurrentOption.IsProductView %>
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
     <% if $hasVariants %>
