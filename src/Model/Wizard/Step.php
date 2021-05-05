@@ -362,7 +362,11 @@ class Step extends DataObject
      */
     public function getPreviousStep() : Step
     {
-        $prev = $this->ProductWizardStepPage()->Steps()->where("Sort < {$this->Sort}")->last();
+        $prev  = null;
+        $steps = $this->ProductWizardStepPage()->Steps();
+        if ($steps->hasMethod('where')) {
+            $prev = $this->ProductWizardStepPage()->Steps()->where("Sort < {$this->Sort}")->last();
+        }
         if (!($prev instanceof Step)) {
             $prev = self::singleton();
         } elseif (!$prev->isVisible()) {
