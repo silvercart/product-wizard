@@ -5,6 +5,7 @@ de:
         Chosen: Ausgewählt
         Close: Schließen
         free: kostenlos
+        more: mehr
         GoToCart: 'Zum Warenkorb'
         GoToWizard: 'Zum Konfigurator'
         MoreInformation: 'weitere Infos'
@@ -87,6 +88,7 @@ de:
         Content: Text-Inhalt
         DefaultValue: Standard-Wert
         DefaultValueDesc: 'Wert, der als Vorbelegung für diese Option verwendet wird.'
+        DisableLabelForFree: 'Label "kostenfrei" für Optionen ohne direkte Artikelverknüpfung deaktivieren'
         DisplayConditions: Anzeigebedingungen
         DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
         DisplayConditionType: Aktion

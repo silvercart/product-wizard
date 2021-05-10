@@ -28,9 +28,11 @@
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
             <% end_if %>
         <% end_with %>
-    <% else_if $LongDescription %>
+    <% else_if $LongDescription && not $StepOption.DisableLabelForFree %>
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><%t ProductWizard.free 'free' %></a>
-    <% else %>
+    <% else_if $LongDescription %>
+        <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><span class="fa fa-info-circle"></span> <%t ProductWizard.more 'more' %></a>
+    <% else_if not $StepOption.DisableLabelForFree %>
         <span class="p-absolute r-0 b-0 mr-5px text-muted"><%t ProductWizard.free 'free' %></span>
     <% end_if %>
 </label>

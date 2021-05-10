@@ -126,6 +126,7 @@ class StepOption extends DataObject
         'ProductPriceLabels'         => 'Text',
         'RedirectionType'            => 'Enum("Internal,External","Internal")',
         'RedirectionExternalURL'     => 'Varchar(2083)', // 2083 is the maximum length of a URL in Internet Explorer.
+        'DisableLabelForFree'        => 'Boolean(0)',
         'Sort'                       => DBInt::class,
     ];
     /**
@@ -323,6 +324,7 @@ class StepOption extends DataObject
     {
         if ($this->OptionType !== self::OPTION_TYPE_RADIO) {
             $fields->removeByName('Options');
+            $fields->removeByName('DisableLabelForFree');
         } else {
             $fields->dataFieldByName('Options')->setDescription($this->fieldLabel('OptionsDesc'));
             $optionList = $this->getOptionList();
