@@ -247,7 +247,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             },
             validateFields: function() {
                 $('.alert-submit-button-error-message').remove();
-                var valid = true;
+                var valid = true, pickedProducts = 0;
                 $('input', property.optionSetSelector).each(function() {
                     if (typeof $(this).attr('required') !== 'undefined') {
                         if ($(this).attr('type') === 'radio') {
@@ -261,11 +261,26 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                             $(this).tooltip({title: ss.i18n._t('Form.FIELD_MAY_NOT_BE_EMPTY', 'This field may not be empty.')});
                             $(this).tooltip('show');
                         }
+                    } else if ($(this).closest('.wizard-option').hasClass('wizard-option-product')
+                            && $(this).closest('.wizard-option').hasClass('picked')
+                    ) {
+                        pickedProducts++;
                     }
                 });
                 if (!valid) {
                     var error = ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOptions', 'Please choose an option for every offer.');
                     $(selector.submitButton).before('<div class="alert alert-danger alert-submit-button-error-message"><span class="fa fa-exclamation-circle"></span> ' + error + '</div>');
+                }
+                if (valid) {
+                    var enableAllOption = $(selector.radioOptionPicker + '[data-behavior="' + property.behavior.enableAll + '"]');
+                    if (enableAllOption.length > 0
+                     && enableAllOption.hasClass('checked')
+                     && pickedProducts === 0
+                    ) {
+                        var error = ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOneProductOption', 'Please choose at least one product.');
+                        $(selector.submitButton).before('<div class="alert alert-danger alert-submit-button-error-message"><span class="fa fa-exclamation-circle"></span> ' + error + '</div>');
+                        valid = false;
+                    }
                 }
                 return valid;
             },
