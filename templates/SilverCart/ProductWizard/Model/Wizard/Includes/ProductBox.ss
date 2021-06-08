@@ -11,7 +11,7 @@
     <div class="card-header rounded-0 bg-blue text-white px-10 py-6 wizard-option-picker">{$CurrentOption.Title}</div>
     <div class="card-body pt-0 pb-10 px-10 p-relative">
         <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6 wizard-option-picker"></span>
-        <a class="d-inline-block px-40" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" alt="{$Title}" src="{$ListImage.Pad(260,220).URL}" /></a>
+        <a class="d-inline-block px-40 py-4px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" alt="{$Title}" src="{$ListImage.Pad(260,220).URL}" /></a>
         <a class="h5 card-title d-inline-block mb-0 text-truncate mw-100" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}" title="{$Title.ATT}">{$Title}</a>
         <% if $hasVariants %>
         <p class="card-text text-muted mb-6 product-description-sm">{$ShortDescription.LimitCharactersToClosestWord(70)}</p>
@@ -49,10 +49,10 @@
         <p class="mb-0 text-center pick-button-label">{$Text}</p>
         <div class="dropdown <% if $ProductQuantityValue > $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-quantity-{$ID}">
             <% with $getProductQuantityDropdownValues($Up.ID) %>
-            <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="product-quantity-dropdown-{$Up.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-primary btn-block dropdown-toggle text-wrap" type="button" id="product-quantity-dropdown-{$Up.ID}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {$CurrentValue.Quantity} {$CurrentValue.Title}
             </button>
-            <div class="dropdown-menu w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$Up.ID}">
+            <div class="dropdown-menu min-w-100 rounded-0 mt--1" aria-labelledby="product-quantity-dropdown-{$Up.ID}">
                 <% loop $Values %>
                 <a class="dropdown-item pick-quantity" href="javascript:;" data-quantity="{$Quantity}">{$Quantity} {$Title}</a>
                 <% end_loop %>
