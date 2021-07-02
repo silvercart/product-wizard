@@ -122,7 +122,13 @@ class Step extends DataObject
      * @var string
      */
     private static $default_sort = 'Sort ASC';
-    
+    /**
+     * Next link
+     * 
+     * @var string|null
+     */
+    protected $nextLink = null;
+
     /**
      * 
      * @return bool
@@ -453,11 +459,25 @@ class Step extends DataObject
      */
     public function NextLink() : string
     {
-        $link = $this->PageLink('createOffer');
-        if ($this->getNextStep()->exists()) {
-            $link = $this->PageLink("step/{$this->getNextStep()->Sort}");
+        if ($this->nextLink === null) {
+            $link     = null;
+            $nextStep = $this->getNextStep();
+            while ($nextStep !== null
+                && $nextStep->exists()
+            ) {
+                if ($nextStep->isVisible()) {
+                    $link     = $this->PageLink("step/{$nextStep->Sort}");
+                    $nextStep = null;
+                    break;
+                }
+                $nextStep = $nextStep->getNextStep();
+            }
+            if ($link === null) {
+                $link = $this->PageLink('createOffer');
+            }
+            $this->nextLink = $link;
         }
-        return $link;
+        return $this->nextLink;
     }
     
     /**

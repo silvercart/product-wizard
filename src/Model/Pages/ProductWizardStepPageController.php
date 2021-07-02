@@ -9,6 +9,7 @@ use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtensio
 use SilverCart\ProductWizard\Model\Wizard\Step;
 use SilverCart\ProductWizard\Model\Wizard\StepOption;
 use SilverStripe\Control\HTTPRequest;
+use SilverStripe\Control\HTTPResponse;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
@@ -58,38 +59,31 @@ class ProductWizardStepPageController extends PageController
      * 
      * @param HTTPRequest $request Request
      * 
-     * @return DBHTMLText
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 15.02.2019
+     * @return HTTPResponse
      */
-    public function step(HTTPRequest $request) : DBHTMLText
+    public function step(HTTPRequest $request) : HTTPResponse
     {
         $stepSort = $request->param('ID');
         if (!is_numeric($stepSort)) {
-            $this->redirectBack();
-            return $this->render();
+            return $this->redirectBack();
         }
         $step = $this->data()->Steps()->filter('Sort', $stepSort)->first();
         if (!($step instanceof Step)
          || !$step->exists()
         ) {
-            $this->redirectBack();
-            return $this->render();
+            return $this->redirectBack();
         }
         if (!$step->canAccess()) {
-            $this->redirect($this->data()->getCurrentStep()->Link());
-            return $this->render();
+            return $this->redirect($this->data()->getCurrentStep()->Link());
         }
         if (!$step->isVisible()) {
-            $this->redirect($step->NextLink());
-            return $this->render();
+            return $this->redirect($step->NextLink());
         }
         if ($request->isPOST()) {
             $postVars = $request->postVars();
             $this->data()->setPostVarsFor($postVars, $step);
             $this->data()->addCompletedStep($step);
-            $this->redirect($step->NextLink());
+            return $this->redirect($step->NextLink());
         }
         if ($step->Template === Step::TEMPLATE_REDIRECTION
          && $step->RedirectTo()->exists()
@@ -103,7 +97,7 @@ class ProductWizardStepPageController extends PageController
         } else {
             $this->data()->setCurrentStep($step);
         }
-        return $this->render();
+        return HTTPResponse::create($this->render());
     }
     
     /**
