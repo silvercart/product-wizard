@@ -1,0 +1,156 @@
+da_DK:
+    ProductWizard:
+        Choose: Vælge
+        ChooseShort: Outw.
+        Chosen: Udvalgt
+        Close: Luk
+        free: gratis
+        GoToCart: 'Gå til indkøbskurv'
+        GoToWizard: 'Til konfiguratoren'
+        MoreInformation: 'mere info'
+        Overview: Oversigt
+        RedirectionInProgress: 'Du omdirigeres til indkøbskurven i løbet af få sekunder. Hvis du mod forventning ikke videresendes, skal du klikke på følgende knap.'
+        RedirectionInProgress2: 'Du videresendes til konfiguratoren om få sekunder. Hvis du mod forventning ikke bliver viderestillet, skal du klikke på følgende knap.'
+        ShowAdditionalOptions: 'Vis flere muligheder'
+    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+        DESCRIPTION: 'Websted, der tilbyder en trinvis produktkonfigurator.'
+        PLURALNAME: 'Produktkonfiguratorer (trinbaseret)'
+        SINGULARNAME: 'Produktkonfigurator (trinbaseret)'
+        Back: Tilbage
+        BackTo: 'Tilbage til {trin}'
+        Step: Trin
+        Steps: Trin
+        YourChoices: 'dit valg'
+        YourStep: 'Dit {skridt}'
+    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+        PLURALNAME: 'Vis betingelser'
+        SINGULARNAME: 'Display tilstand'
+        ParentStepOption: Forældremulighed
+        StepOptionID: Mulighed
+        StepOptionSet: Indstillingssæt
+        TargetValue: Værdi
+        Type: Type
+        TypeIsEqual: 'svarer til'
+        TypeIsNotEqual: 'svarer ikke til'
+        TypeIsGreaterThan: 'er større end'
+        TypeIsLighterThan: 'er mindre end'
+        TypeIsGreaterThanOrEqual: 'er lig med eller større end'
+        TypeIsLighterThanOrEqual: 'er lig med eller mindre end'
+    SilverCart\ProductWizard\Model\Wizard\Step:
+        PLURALNAME: 'Trin i konfiguratoren'
+        SINGULARNAME: 'Trin i konfiguratoren'
+        ButtonTitle: Knaptekst
+        ButtonTitleDesc: 'Hvis du lader dette felt være tomt, anvendes "Næste".'
+        Continue: Fortsæt
+        DescriptionTitle: 'Beskrivelse titel'
+        DescriptionTitleDesc: 'Valgfri titel, der vises over beskrivelsen.'
+        DescriptionContent: Beskrivelse
+        DescriptionContentDesc: 'Beskrivende indhold vises over valgmulighederne.'
+        DisplayConditions: 'Vis betingelser'
+        DisplayConditionText: 'Denne indstilling er indstillet, når {operation} af følgende betingelser {type} er opfyldt.'
+        DisplayConditionType: Handling
+        DisplayConditionTypeShow: Vis
+        DisplayConditionTypeHide: skjule
+        DisplayConditionOperation: 'Boolsk operation'
+        DisplayConditionOperationAnd: alle
+        DisplayConditionOperationOr: en
+        FontAwesomeIcon: FontAwesome-ikonklasse
+        FontAwesomeIconDesc: 'CSS -klasse til et FontAwesome -ikon. Vises i trinnavigationen.'
+        InfoBoxTitle: 'Titel på infoboksen'
+        InfoBoxTitleDesc: 'Titel, der vises i infoboksen, når du indtaster trinnet.'
+        InfoBoxContent: 'Indholdet af infoboksen'
+        InfoBoxContentDesc: 'Indhold, der vises i infoboksen, når du indtaster et trin.'
+        ShowInStepNavigation: 'Vis navigation i trin'
+        Sort: Sorteringsrækkefølge
+        Step: Trin
+        StepOptions: Indstillinger
+        StepOptionSets: 'Sæt af valgmuligheder'
+        Title: Titel
+        RedirectTo: 'Videresend til'
+        RedirectToDesc: 'Side, der skal omdirigeres til, når dette trin nås. Alle varer, der er valgt indtil dette trin, føjes til indkøbskurven.'
+    SilverCart\ProductWizard\Model\Wizard\StepOption:
+        PLURALNAME: 'Indstillinger for trin i konfiguratoren'
+        SINGULARNAME: 'Konfigurator trinmulighed'
+        Advanced: Udvidet
+        ButtonTargetFile: 'Målfil for knap'
+        ButtonTargetFileDesc: 'Fil, der skal åbnes, når der klikkes på knappen.'
+        ButtonTargetLink: 'Knap mållink'
+        ButtonTargetLinkDesc: 'Link, der skal åbnes, når der klikkes på knappen. Hvis der er angivet en knapmålfil, anvendes den i stedet.'
+        ButtonTargetType: 'Åbn link i'
+        ButtonTargetTypeBlank: 'nyt vindue'
+        ButtonTargetTypeEmpty: 'samme vindue'
+        ButtonTitle: 'Tekst på knappen'
+        Content: Tekstindhold
+        DefaultValue: Standardværdi
+        DefaultValueDesc: 'Værdi, der anvendes som standardværdi for denne indstilling.'
+        DisplayConditions: 'Vis betingelser'
+        DisplayConditionText: 'Denne indstilling er indstillet, når {operation} af følgende betingelser {type} er opfyldt.'
+        DisplayConditionType: Handling
+        DisplayConditionTypeShow: Vis
+        DisplayConditionTypeHide: skjule
+        DisplayConditionOperation: 'Boolsk operation'
+        DisplayConditionOperationAnd: alle
+        DisplayConditionOperationOr: en
+        IsOptional: 'Er valgfri'
+        IsPreselected: 'Er forvalgt'
+        moreThanMax: 'mere end {max} {maxTitle}...'
+        NumberProductRelationTitle: 'Artikler til denne mulighed'
+        NumberProductRelationDesc: 'Denne vare vil blive tilføjet til indkøbskurven med den mængde, der er angivet ved denne indstilling.'
+        OptionProductRelation: 'Linkede artikler'
+        OptionProductRelationTitle: 'Artikel for option {option}'
+        OptionProductRelationDesc: 'Tilføj denne vare til indkøbskurven, når "{option}"-muligheden er valgt.'
+        OptionDescriptionTitle: 'Beskrivelse for indstilling {option}'
+        OptionDescriptionDesc: 'Vises som en beskrivelse for "{option}"-indstillingen.'
+        OptionLongDescriptionTitle: 'Lang beskrivelse for valgmulighed {option}'
+        OptionLongDescriptionDesc: 'Vises som en lang beskrivelse i en popup-dialog for "{option}"-indstillingen. Hvis der er angivet et emne, vises emneoplysningerne i stedet.'
+        Options: Indstillinger
+        OptionsDesc: 'Liste over mulige valgmuligheder, der kan vælges i multiple choice-feltet. Angiv venligst én mulighed pr. linje.'
+        OptionType: 'Type af input'
+        OptionTypeBinaryQuestion: Ja-nej-spørgsmål
+        OptionTypeLabel: Etiket
+        OptionTypeNumber: Nummer
+        OptionTypeProductView: Produkter
+        OptionTypeRadio: 'flere valg'
+        OptionTypeRedirection: Videresendelse
+        OptionTypeTextArea: 'Indtastning af tekst (flere linjer)'
+        OptionTypeTextField: 'Indtastning af tekst'
+        OptionTypeRedirectionHeader: 'Denne mulighed omdirigerer kunderne til en anden side.'
+        OptionUseCustomQuantityTitle: 'Brug frit valgbar mængde til valgmulighed {option}'
+        OptionUseCustomQuantityDropdownMaximumTitle: 'Maksimalt antal i rullemenuen for option {option}'
+        OptionUseCustomQuantityPluralTitle: 'Måleenhed flertal for option {option}'
+        OptionUseCustomQuantitySingularTitle: 'Måleenhed ental for option {option}'
+        OptionUseCustomQuantityTextTitle: 'Info tekst mængde valg for {option}'
+        ProductDynQuantityStepOptionID: 'Mængde i henhold til valgmulighed'
+        ProductDynQuantityStepOptionIDDesc: 'Brugerens indtastning af denne indstilling bruges som mængde i indkøbskurven. Hvis der ikke foretages nogen indtastning, eller hvis indstillingen springes over, anvendes det mindste antal.'
+        ProductMinQuantity: 'Mindste mængde'
+        ProductMinQuantityDesc: 'Mindste antal, der skal lægges i indkøbskurven.'
+        ProductPriceLabel: Prismærke
+        ProductPriceLabelDesc: 'Denne valgfrie etiket indsættes foran prisen, når den er angivet.'
+        ProductPriceLabelFor: 'Prisskilt for {produkt}'
+        ProductQuantityDropdownMax: 'Maksimalt antal i rullelisten'
+        ProductQuantityDropdownMaxDesc: 'Det maksimale antal, der kan vælges i rullelisten. Hvis kunden har brug for flere, kan han/hun foretage dette valg manuelt.'
+        ProductQuantityPlural: 'Måleenhed Flertal'
+        ProductQuantityPluralDesc: 'Den måleenhed, der skal vises ved valg af mængde 0 eller >1.'
+        ProductQuantitySingular: 'Måleenhed singulær'
+        ProductQuantitySingularDesc: 'Måleenheden, der skal vises, når du vælger mængde 1.'
+        ProductViewIsReadonly: 'Tillad ikke brugerindtastning'
+        Sort: Sorteringsrækkefølge
+        Step: Trin
+        Text: Tekst
+        TextDesc: 'Tekst, der skal vises i den nederste del af valgfeltet (f.eks. over valgknappen/dropdown).'
+        Title: Titel
+    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+        PLURALNAME: 'Konfigurator trin valgmulighedssæt'
+        SINGULARNAME: 'Konfigurator trin indstillingssæt'
+        DisplayConditions: 'Vis betingelser'
+        DisplayConditionText: 'Denne indstilling er indstillet, når {operation} af følgende betingelser {type} er opfyldt.'
+        DisplayConditionType: Handling
+        DisplayConditionTypeShow: Vis
+        DisplayConditionTypeHide: skjule
+        DisplayConditionOperation: 'Boolsk link'
+        DisplayConditionOperationAnd: alle
+        DisplayConditionOperationOr: en
+        Sort: Sorteringsrækkefølge
+        Step: Trin
+        StepOptions: Indstillinger
+        Title: Titel
