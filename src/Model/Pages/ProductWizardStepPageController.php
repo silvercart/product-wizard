@@ -61,7 +61,7 @@ class ProductWizardStepPageController extends PageController
      * 
      * @return HTTPResponse
      */
-    public function step(HTTPRequest $request) : HTTPResponse
+    public function step(HTTPRequest $request) : ?HTTPResponse
     {
         $stepSort = $request->param('ID');
         if (!is_numeric($stepSort)) {
