@@ -337,7 +337,14 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     option.removeClass('not-picked');
                     quantityField.attr('required', 'required');
                     if (quantityField.val() === '0') {
-                        $('.dropdown-item.pick-quantity[data-quantity="1"]', option).trigger('click');
+                        if ($('.dropdown-item.pick-quantity[data-quantity="1"]', option).length > 0) {
+                            $('.dropdown-item.pick-quantity[data-quantity="1"]', option).trigger('click');
+                        } else {
+                            quantityField.val('1');
+                            if (skipAjax === false) {
+                                property.cartSummary.postOptionData(optionID, productID, quantityField.val());
+                            }
+                        }
                     } else if (skipAjax === false) {
                         property.cartSummary.postOptionData(optionID, productID, quantityField.val());
                     }
