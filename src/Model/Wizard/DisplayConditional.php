@@ -150,8 +150,8 @@ trait DisplayConditional
     {
         $summary = DBHTMLText::create();
         if ($this->DisplayConditions()->exists()) {
-            $type      = _t(self::class . ".DisplayConditionType{$this->DisplayConditionType}", $this->DisplayConditionType);
-            $operation = _t(self::class . ".DisplayConditionOperation{$this->DisplayConditionOperation}", $this->DisplayConditionOperation);
+            $type      = _t(self::class . ".DisplayConditionType{$this->DisplayConditionType}", empty($this->DisplayConditionType) ? '---' : $this->DisplayConditionType);
+            $operation = _t(self::class . ".DisplayConditionOperation{$this->DisplayConditionOperation}", empty($this->DisplayConditionOperation) ? '---' : $this->DisplayConditionOperation);
             $text      = _t(self::class . '.DisplayConditionText', '{type} this option-set when matching {operation} of the following conditions', [
                 'type'      => "<strong>{$type}</strong>",
                 'operation' => "<strong>{$operation}</strong>",
