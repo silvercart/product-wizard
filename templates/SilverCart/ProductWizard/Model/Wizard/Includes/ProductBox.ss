@@ -61,7 +61,7 @@
             <% end_with %>
         </div>
         <div class="spinner-field clearfix text-nowrap <% if $ProductQuantityValue <= $ProductQuantityDropdownMax %>d-none<% end_if %>" id="pick-more-quantity-{$ID}">
-            <input type="text" name="StepOptions[{$ID}][{$Up.ID}][Quantity]" value="{$getProductQuantityValue($Up.ID)}" class="pick-more-quantity-field" data-option-id="{$ID}" data-product-id="{$Up.ID}" />
+            <input type="text" name="StepOptions[{$ID}][{$Up.ID}][Quantity]" value="{$getProductQuantityValue($Up.ID)}" class="pick-more-quantity-field" data-option-id="{$ID}" data-min="<% if $IsOptional %>0<% else %>1<% end_if %>" data-product-id="{$Up.ID}" />
             <a href="javascript:;" style="width: calc(100% - 70px);" class="btn btn-xs btn-primary select-product" data-option-id="{$ID}" data-product-id="{$Up.ID}"><span class="d-inline d-md-none d-lg-inline"><%t ProductWizard.Choose 'Choose' %></span><span class="d-none d-md-inline d-lg-none fa fa-check"></span></a>
         </div>
         <% end_with %>
