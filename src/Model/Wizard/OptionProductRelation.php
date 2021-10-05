@@ -250,6 +250,9 @@ class OptionProductRelation
             $option         = $this->getDynamicQuantityOption();
             if (is_null($optionIndex)) {
                 $optionIndex = $this->getRelatedOption()->getValue();
+                if (is_array($optionIndex)) {
+                    $optionIndex = array_shift($optionIndex);
+                }
             }
             $useCustomQuantity = $this->getUseCustomQuantity($optionIndex);
             if ($option instanceof StepOption

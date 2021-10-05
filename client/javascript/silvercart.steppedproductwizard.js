@@ -178,11 +178,23 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
-            postPlainOptionData: function(radioOptionName) {
-                var radioOptionValue = $('input[name="' + radioOptionName + '"]:checked').val(),
-                    optionID         = $('input[name="' + radioOptionName + '"]:checked').data('option-id'),
-                    postData         = {};
-                postData[optionID]= radioOptionValue;
+            postPlainOptionData: function(radioOptionName, allowMultiple) {
+                if (allowMultiple) {
+                    console.log(radioOptionName);
+                    var optionID           = $('input[name="' + radioOptionName + '"]').data('option-id'),
+                        postData           = {};
+                        postData[optionID] = {};
+                    $('input[type="checkbox"][data-option-id="' + optionID + '"]').each(function() {
+                        if ($(this).is(':checked')) {
+                            postData[optionID][$(this).val()] = $(this).val();
+                        }
+                    });
+                } else {
+                    var radioOptionValue   = $('input[name="' + radioOptionName + '"]:checked').val(),
+                        optionID           = $('input[name="' + radioOptionName + '"]:checked').data('option-id'),
+                        postData           = {};
+                        postData[optionID] = radioOptionValue;
+                }
                 $(selector.container).addClass('loading');
                 $.post(
                         private.getBaseControllerURL() + 'postPlainOptionData',
@@ -235,6 +247,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             pickMoreQuantityField: ".pick-more-quantity-field",
             productQuantityPicker: ".product-quantity-picker",
             radioOption: "#product-wizard-step-options input[type='radio']",
+            radioMultipleOption: "#product-wizard-step-options input[type='checkbox']",
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
             selectProductButton: "#product-wizard-step .select-product",
@@ -424,21 +437,29 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 ) {
                     return;
                 }
-                var optionID    = $(this).data('option-id'),
-                    optionValue = $(this).data('value');
-                $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]').removeClass('checked');
-                $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').addClass('checked');
-                var visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]:visible', selector.stepForm),
+                var optionID       = $(this).data('option-id'),
+                    optionValue    = $(this).data('value'),
+                    visibleOptions = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]:visible', selector.stepForm),
                     pickedOption   = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]', selector.stepForm);
                 if (!pickedOption.is(':visible')) {
                     visibleOptions.last().css('cssText', 'display: none !important;');
                     pickedOption.css('cssText', 'display: block !important;');
                 }
-                pickedOption.closest(selector.option).removeClass('validation-error').removeClass('not-picked').addClass('picked');
-                var quantityPicker = $(selector.productQuantityPicker + '[data-option-value-id="' + optionID + '-' + optionValue + '"]');
-                $(selector.productQuantityPicker, pickedOption.closest(selector.option)).addClass('d-none');
-                if (quantityPicker.length > 0) {
-                    quantityPicker.removeClass('d-none');
+                if (pickedOption.closest(selector.option).hasClass('allow-multiple-choices')) {
+                    if ($(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').hasClass('checked')) {
+                        $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').removeClass('checked');
+                    } else {
+                        $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').addClass('checked');
+                    }
+                } else {
+                    $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"]').removeClass('checked');
+                    $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').addClass('checked');
+                    pickedOption.closest(selector.option).removeClass('validation-error').removeClass('not-picked').addClass('picked');
+                    var quantityPicker = $(selector.productQuantityPicker + '[data-option-value-id="' + optionID + '-' + optionValue + '"]');
+                    $(selector.productQuantityPicker, pickedOption.closest(selector.option)).addClass('d-none');
+                    if (quantityPicker.length > 0) {
+                        quantityPicker.removeClass('d-none');
+                    }
                 }
             },
             pickRadioOption: function()
@@ -485,7 +506,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         picker.trigger('click');
                     });
                 }
-                property.cartSummary.postPlainOptionData($(this).attr('name'));
+                property.cartSummary.postPlainOptionData($(this).attr('name'), $(this).closest(selector.option).hasClass('allow-multiple-choices'));
                 if ($('.alert-submit-button-error-message').length > 0) {
                     private.validateFields();
                 }
@@ -556,6 +577,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(document).on('click', selector.pickMoreQuantity, private.pickMoreQuantity);
                 $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
                 $(document).on('change', selector.radioOption, private.pickRadioOption);
+                $(document).on('change', selector.radioMultipleOption, private.pickRadioOption);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
                 $(document).on('click', selector.variantPicker, private.pickVariant);
                 $(document).on('click', selector.submitButton, private.validateFields);

@@ -127,6 +127,7 @@ class StepOption extends DataObject
         'RedirectionType'            => 'Enum("Internal,External","Internal")',
         'RedirectionExternalURL'     => 'Varchar(2083)', // 2083 is the maximum length of a URL in Internet Explorer.
         'DisableLabelForFree'        => 'Boolean(0)',
+        'AllowMultipleChoices'       => 'Boolean(0)',
         'Sort'                       => DBInt::class,
     ];
     /**
@@ -325,6 +326,7 @@ class StepOption extends DataObject
         if ($this->OptionType !== self::OPTION_TYPE_RADIO) {
             $fields->removeByName('Options');
             $fields->removeByName('DisableLabelForFree');
+            $fields->removeByName('AllowMultipleChoices');
         } else {
             $fields->dataFieldByName('Options')->setDescription($this->fieldLabel('OptionsDesc'));
             $optionList = $this->getOptionList();
@@ -1050,7 +1052,14 @@ class StepOption extends DataObject
             $options    = explode($this->config()->option_delimiter, $this->Options);
             $optionList = [];
             $plainValue = $this->getValue();
-            $intValue   = (int) $plainValue;
+            if (is_array($plainValue)) {
+                $intValues = [];
+                foreach ($plainValue as $value) {
+                    $intValues[] = (int) $value;
+                }
+            } else {
+                $intValues = [(int) $plainValue];
+            }
             $products   = $this->getProductRelation()->getProducts();
             $behaviors  = $this->getProductRelation()->getBehaviors();
             $descriptions = $this->getProductRelation()->getDescriptions();
@@ -1072,13 +1081,24 @@ class StepOption extends DataObject
                 if (array_key_exists($key, $longDescriptions)) {
                     $longDescription = $longDescriptions[$key];
                 }
+                $checked   = '';
+                $isChecked = false;
+                foreach ($intValues as $intValue) {
+                    if ($plainValue !== ''
+                     && $intValue === $key
+                    ) {
+                        $checked   = 'checked';
+                        $isChecked = true;
+                        break;
+                    }
+                }
                 $optionList[] = ArrayData::create([
                     'Step'          => $this->Step(),
                     'StepOptionSet' => $this->StepOptionSet(),
                     'StepOption'    => $this,
                     'Value'         => $key,
-                    'Checked'       => $plainValue !== '' && $intValue === $key ? 'checked' : '',
-                    'IsChecked'     => $plainValue !== '' && $intValue === $key ? true : false,
+                    'Checked'       => $checked,
+                    'IsChecked'     => $isChecked,
                     'Title'         => trim($option),
                     'Product'       => $product,
                     'Behavior'      => $behavior,
@@ -1111,6 +1131,16 @@ class StepOption extends DataObject
     public function getCheckedOption() : ?ArrayData
     {
         return $this->getOptionList()->filter('Checked', 'checked')->first();
+    }
+    
+    /**
+     * Returns the currently checked radio options.
+     * 
+     * @return ArrayList
+     */
+    public function getCheckedOptions() : ArrayList
+    {
+        return $this->getOptionList()->filter('Checked', 'checked');
     }
     
     /**
@@ -1191,6 +1221,16 @@ class StepOption extends DataObject
     public function IsRadioCheckedClass() : string
     {
         return $this->getValue() !== '' ? 'picked' : 'not-picked';
+    }
+    
+    /**
+     * Returns whether this option has a CSS class for multiple choice.
+     * 
+     * @return string
+     */
+    public function AllowMultipleChoicesClass() : string
+    {
+        return $this->AllowMultipleChoices ? 'allow-multiple-choices' : '';
     }
     
     /**
@@ -1487,10 +1527,17 @@ class StepOption extends DataObject
             $this->addCartData($cartData, $quantity, $product);
         } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
             $products = $relation->getProducts();
-            if (array_key_exists($this->getValue(), $products)) {
-                $product  = $products[$this->getValue()];
-                $quantity = $this->getRadioQuantity($this->getValue());
-                $this->addCartData($cartData, $quantity, $product);
+            if ($this->AllowMultipleChoices) {
+                $values = (array) $this->getValue();
+            } else {
+                $values = [$this->getValue()];
+            }
+            foreach ($values as $value) {
+                if (array_key_exists($value, $products)) {
+                    $product  = $products[$value];
+                    $quantity = $this->getRadioQuantity($value);
+                    $this->addCartData($cartData, $quantity, $product);
+                }
             }
         } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
             $products = $this->Products();
