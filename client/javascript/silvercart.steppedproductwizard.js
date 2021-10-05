@@ -180,7 +180,6 @@ silvercart.ProductWizard.CartSummary = (function () {
             },
             postPlainOptionData: function(radioOptionName, allowMultiple) {
                 if (allowMultiple) {
-                    console.log(radioOptionName);
                     var optionID           = $('input[name="' + radioOptionName + '"]').data('option-id'),
                         postData           = {};
                         postData[optionID] = {};
