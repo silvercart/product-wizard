@@ -27,7 +27,7 @@ da_DK:
         SINGULARNAME: 'Display tilstand'
         ParentStepOption: Forældremulighed
         StepOptionID: Mulighed
-        StepOptionSet: Indstillingssæt
+        StepOptionSet: Indstillinger
         TargetValue: Værdi
         Type: Type
         TypeIsEqual: 'svarer til'
@@ -74,8 +74,8 @@ da_DK:
         Advanced: Udvidet
         ButtonTargetFile: 'Målfil for knap'
         ButtonTargetFileDesc: 'Fil, der skal åbnes, når der klikkes på knappen.'
-        ButtonTargetLink: 'Knap mållink'
-        ButtonTargetLinkDesc: 'Link, der skal åbnes, når der klikkes på knappen. Hvis der er angivet en knapmålfil, anvendes den i stedet.'
+        ButtonTargetLink: 'Målfil for knap'
+        ButtonTargetLinkDesc: 'Link, der skal åbnes, når der klikkes på knappen. Hvis der er angivet en målfil, anvendes den i stedet.'
         ButtonTargetType: 'Åbn link i'
         ButtonTargetTypeBlank: 'nyt vindue'
         ButtonTargetTypeEmpty: 'samme vindue'
@@ -94,10 +94,10 @@ da_DK:
         IsOptional: 'Er valgfri'
         IsPreselected: 'Er forvalgt'
         moreThanMax: 'mere end {max} {maxTitle}...'
-        NumberProductRelationTitle: 'Artikler til denne mulighed'
+        NumberProductRelationTitle: 'Vare til denne mulighed'
         NumberProductRelationDesc: 'Denne vare vil blive tilføjet til indkøbskurven med den mængde, der er angivet ved denne indstilling.'
-        OptionProductRelation: 'Linkede artikler'
-        OptionProductRelationTitle: 'Artikel for option {option}'
+        OptionProductRelation: 'Linkede varer'
+        OptionProductRelationTitle: 'Vare til denne mulighed {option}'
         OptionProductRelationDesc: 'Tilføj denne vare til indkøbskurven, når "{option}"-muligheden er valgt.'
         OptionDescriptionTitle: 'Beskrivelse for indstilling {option}'
         OptionDescriptionDesc: 'Vises som en beskrivelse for "{option}"-indstillingen.'
