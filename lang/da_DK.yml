@@ -12,6 +12,7 @@ da_DK:
     RedirectionInProgress2: 'Du videresendes til konfiguratoren om få sekunder. Hvis du mod forventning ikke bliver viderestillet, skal du klikke på følgende knap.'
     ShowAdditionalOptions: 'Vis flere muligheder'
     free: gratis
+    more: mere
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Tilbage
     BackTo: 'Tilbage til {trin}'
@@ -36,6 +37,10 @@ da_DK:
     TypeIsLighterThan: 'er mindre end'
     TypeIsLighterThanOrEqual: 'er lig med eller mindre end'
     TypeIsNotEqual: 'svarer ikke til'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Deaktivere alle andre muligheder'
+    Behavior-ENABLE-ALL: 'Genaktiver alle andre muligheder'
+    Behavior-NONE: Nej
   SilverCart\ProductWizard\Model\Wizard\Step:
     ButtonTitle: Knaptekst
     ButtonTitleDesc: 'Hvis du lader dette felt være tomt, anvendes "Næste".'
@@ -70,6 +75,7 @@ da_DK:
     Title: Titel
   SilverCart\ProductWizard\Model\Wizard\StepOption:
     Advanced: Udvidet
+    AllowMultipleChoices: 'Tillad flere valg'
     ButtonTargetFile: 'Målfil for knap'
     ButtonTargetFileDesc: 'Fil, der skal åbnes, når der klikkes på knappen.'
     ButtonTargetLink: 'Målfil for knap'
@@ -81,6 +87,7 @@ da_DK:
     Content: Tekstindhold
     DefaultValue: Standardværdi
     DefaultValueDesc: 'Værdi, der anvendes som standardværdi for denne indstilling.'
+    DisableLabelForFree: 'Deaktiver etiketten "gratis" for muligheder uden direkte produkttilknytning'
     DisplayConditionOperation: 'Boolsk operation'
     DisplayConditionOperationAnd: alle
     DisplayConditionOperationOr: en
@@ -93,6 +100,8 @@ da_DK:
     IsPreselected: 'Er forvalgt'
     NumberProductRelationDesc: 'Denne vare vil blive tilføjet til indkøbskurven med den mængde, der er angivet ved denne indstilling.'
     NumberProductRelationTitle: 'Vare til denne mulighed'
+    OptionBehavior: Adfærd
+    OptionBehaviorTitle: 'Adfærd for indstilling {option}'
     OptionDescriptionDesc: 'Vises som en beskrivelse for "{option}"-indstillingen.'
     OptionDescriptionTitle: 'Beskrivelse for indstilling {option}'
     OptionLongDescriptionDesc: 'Vises som en lang beskrivelse i en popup-dialog for "{option}"-indstillingen. Hvis der er angivet et emne, vises emneoplysningerne i stedet.'

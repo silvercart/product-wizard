@@ -12,6 +12,7 @@ en:
     RedirectionInProgress2: 'You will be forwarded to the configurator in a few seconds. If, contrary to expectations, you are not forwarded, please click on the following button.'
     ShowAdditionalOptions: 'Show more options'
     free: free
+    more: more
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Back
     BackTo: 'Back to {step}'
@@ -74,6 +75,7 @@ en:
     Title: Title
   SilverCart\ProductWizard\Model\Wizard\StepOption:
     Advanced: Extended
+    AllowMultipleChoices: 'Allow multiple selection'
     ButtonTargetFile: 'Button target file'
     ButtonTargetFileDesc: 'File to be opened when the button is clicked.'
     ButtonTargetLink: 'Button target link'
@@ -85,6 +87,7 @@ en:
     Content: 'Text content'
     DefaultValue: 'Default value'
     DefaultValueDesc: 'Value that is used as the default for this option.'
+    DisableLabelForFree: 'Deactivate label "free of charge" for options without direct article linkage'
     DisplayConditionOperation: 'Boolean link'
     DisplayConditionOperationAnd: all
     DisplayConditionOperationOr: one

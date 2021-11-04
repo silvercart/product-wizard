@@ -12,6 +12,7 @@ nl:
     RedirectionInProgress2: 'U wordt binnen enkele seconden doorgestuurd naar de configurator. Als u, tegen de verwachting in, niet wordt doorverwezen, klik dan op de volgende knop.'
     ShowAdditionalOptions: 'Toon meer opties'
     free: Gratis
+    more: meer
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Terug
     BackTo: 'Terug naar {step}'
@@ -36,6 +37,10 @@ nl:
     TypeIsLighterThan: 'is kleiner dan'
     TypeIsLighterThanOrEqual: 'is gelijk aan of is minder dan'
     TypeIsNotEqual: 'komt niet overeen met'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Alle andere opties deactiveren'
+    Behavior-ENABLE-ALL: 'Alle andere opties heractiveren'
+    Behavior-NONE: Geen
   SilverCart\ProductWizard\Model\Wizard\Step:
     ButtonTitle: 'Knop tekst'
     ButtonTitleDesc: 'Als u dit veld leeg laat, wordt "Volgende" gebruikt.'
@@ -70,6 +75,7 @@ nl:
     Title: Titel
   SilverCart\ProductWizard\Model\Wizard\StepOption:
     Advanced: Uitgebreid
+    AllowMultipleChoices: 'Meervoudige selectie toestaan'
     ButtonTargetFile: 'Knop doelbestand'
     ButtonTargetFileDesc: 'Bestand dat moet worden geopend wanneer op de knop wordt geklikt.'
     ButtonTargetLink: 'Knop doel-link'
@@ -81,6 +87,7 @@ nl:
     Content: Tekstinhoud
     DefaultValue: Standaardwaarde
     DefaultValueDesc: 'Waarde die als standaard voor deze optie wordt gebruikt.'
+    DisableLabelForFree: 'Deactiveer label "gratis" voor opties zonder directe artikelkoppeling'
     DisplayConditionOperation: 'Booleaanse link'
     DisplayConditionOperationAnd: Alle
     DisplayConditionOperationOr: een
@@ -93,6 +100,8 @@ nl:
     IsPreselected: 'Is voorgeselecteerd'
     NumberProductRelationDesc: 'Dit artikel wordt toegevoegd aan het winkelmandje met de bij deze optie aangegeven hoeveelheid.'
     NumberProductRelationTitle: 'Artikelen voor deze optie'
+    OptionBehavior: Gedrag
+    OptionBehaviorTitle: 'Gedrag voor optie {option}'
     OptionDescriptionDesc: 'Weergegeven als een beschrijving voor de "{option}" optie.'
     OptionDescriptionTitle: 'Beschrijving voor optie {option}'
     OptionLongDescriptionDesc: 'Wordt weergegeven als een lange beschrijving in een pop-upvenster voor de optie " {option} ". Als een artikel is opgegeven, wordt in plaats daarvan de artikelinformatie weergegeven.'

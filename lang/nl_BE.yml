@@ -12,6 +12,7 @@ nl_BE:
     RedirectionInProgress2: 'U wordt binnen enkele seconden naar de configurator doorgestuurd. Als, tegen de verwachting in, u toch niet doorgestuurd wordt, klik dan op de volgende knop.'
     ShowAdditionalOptions: 'Meer opties tonen'
     free: gratis
+    more: meer
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Terug
     BackTo: 'Terug naar {step}'
@@ -36,8 +37,12 @@ nl_BE:
     TypeIsLighterThan: 'is kleiner dan'
     TypeIsLighterThanOrEqual: 'komt overeen met of is kleiner dan'
     TypeIsNotEqual: 'komt niet overeen'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Alle andere opties deactiveren'
+    Behavior-ENABLE-ALL: 'Alle andere opties heractiveren'
+    Behavior-NONE: Geen
   SilverCart\ProductWizard\Model\Wizard\Step:
-    ButtonTitle: Tekstknop
+    ButtonTitle: Knoptekst
     ButtonTitleDesc: 'Als u dat veld leeg laat, wordt "Volgende" gebruikt.'
     Continue: Verder
     DescriptionContent: Beschrijving
@@ -47,7 +52,7 @@ nl_BE:
     DisplayConditionOperation: 'Booleaanse operatie'
     DisplayConditionOperationAnd: alle
     DisplayConditionOperationOr: een
-    DisplayConditionText: 'Deze optie wordt ingesteld {operation} als aan de volgende voorwaarden {type} is voldaan.'
+    DisplayConditionText: 'Deze optieset wordt ingesteld als aan de volgende voorwaarden {operation} wordt voldaan {type}'
     DisplayConditionType: Actie
     DisplayConditionTypeHide: verbergen
     DisplayConditionTypeShow: weergeven
@@ -70,6 +75,7 @@ nl_BE:
     Title: Titel
   SilverCart\ProductWizard\Model\Wizard\StepOption:
     Advanced: Uitgebreid
+    AllowMultipleChoices: 'Meervoudige selectie toestaan'
     ButtonTargetFile: 'Knop doelbestand'
     ButtonTargetFileDesc: 'Bestand dat moet worden geopend wanneer op de knop wordt geklikt.'
     ButtonTargetLink: 'Knop doellink'
@@ -81,10 +87,11 @@ nl_BE:
     Content: Tekstinhoud
     DefaultValue: Standaardwaarde
     DefaultValueDesc: 'Waarde die wordt gebruikt als standaardinstelling voor deze optie.'
+    DisableLabelForFree: 'Deactiveer label "gratis" voor opties zonder directe artikelkoppeling'
     DisplayConditionOperation: 'Booleaanse operatie'
     DisplayConditionOperationAnd: alle
     DisplayConditionOperationOr: een
-    DisplayConditionText: 'Deze optieset wordt ingesteld {operation} als aan de volgende voorwaarden {type} is voldaan.'
+    DisplayConditionText: 'Deze optieset wordt ingesteld als aan de volgende voorwaarden {operation} wordt voldaan {type}'
     DisplayConditionType: Actie
     DisplayConditionTypeHide: verbergen
     DisplayConditionTypeShow: weergeven
@@ -93,6 +100,8 @@ nl_BE:
     IsPreselected: 'Is voorgeselecteerd'
     NumberProductRelationDesc: 'Dit artikel wordt aan de winkelwagen toegevoegd met de hoeveelheid die door deze optie is gespecificeerd.'
     NumberProductRelationTitle: 'Artikelen voor deze optie'
+    OptionBehavior: Gedrag
+    OptionBehaviorTitle: 'Gedrag voor optie {option}'
     OptionDescriptionDesc: 'Verschijnt als beschrijving voor de optie "{option} ".'
     OptionDescriptionTitle: 'Beschrijving voor optie {option}'
     OptionLongDescriptionDesc: 'Verschijnt als lange beschrijving in een pop-upvenster voor de optie "{option}". Als een artikel is gespecificeerd, wordt de artikelinformatie in plaats daarvan weergegeven.'
@@ -141,11 +150,11 @@ nl_BE:
     moreThanMax: 'meer dan {max} {maxTitle} ...'
   SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
     DisplayConditionOperation: 'Booleaanse operatie'
-    DisplayConditionOperationAnd: Alle
+    DisplayConditionOperationAnd: alle
     DisplayConditionOperationOr: een
     DisplayConditionText: 'Deze optieset wordt ingesteld als aan de volgende voorwaarden {operation} wordt voldaan {type}'
     DisplayConditionType: Actie
-    DisplayConditionTypeHide: Verbergen
+    DisplayConditionTypeHide: verbergen
     DisplayConditionTypeShow: weergeven
     DisplayConditions: Weergavevoorwaarden
     PLURALNAME: Configurator-Stap-Optie-Sets
