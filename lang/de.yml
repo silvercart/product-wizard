@@ -1,165 +1,165 @@
 de:
-    ProductWizard:
-        Choose: Auswählen
-        ChooseShort: Ausw.
-        Chosen: Ausgewählt
-        Close: Schließen
-        free: kostenlos
-        more: mehr
-        GoToCart: 'Zum Warenkorb'
-        GoToWizard: 'Zum Konfigurator'
-        MoreInformation: 'weitere Infos'
-        Overview: Übersicht
-        RedirectionInProgress: 'Sie werden in wenigen Sekunden zum Warenkorb weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button.'
-        RedirectionInProgress2: 'Sie werden in wenigen Sekunden zum Konfigurator weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button.'
-        ShowAdditionalOptions: 'Weitere Optionen anzeigen'
-    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
-        DESCRIPTION: 'Seite, die einen auf Schritten basierten Produkt-Konfigurator bereitstellt.'
-        PLURALNAME: 'Produkt-Konfiguratoren (Schritt-basiert)'
-        SINGULARNAME: 'Produkt-Konfigurator (Schritt-basiert)'
-        Back: Zurück
-        BackTo: 'Zurück zu {step}'
-        Step: Schritt
-        Steps: Schritte
-        YourChoices: 'Ihre Auswahl'
-        YourStep: 'Ihre {step}'
-    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
-        PLURALNAME: Anzeigebedingungen
-        SINGULARNAME: Anzeigebedingung
-        ParentStepOption: Eltern-Option
-        StepOptionID: Option
-        StepOptionSet: Option-Set
-        TargetValue: Wert
-        Type: Art
-        TypeIsEqual: entspricht
-        TypeIsNotEqual: 'entspricht nicht'
-        TypeIsGreaterThan: 'ist größer als'
-        TypeIsLighterThan: 'ist kleiner als'
-        TypeIsGreaterThanOrEqual: 'entspricht oder ist größer als'
-        TypeIsLighterThanOrEqual: 'entspricht oder ist kleiner als'
-    SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
-        Behavior-DISABLE-ALL: 'Alle anderen Optionen deaktivieren'
-        Behavior-ENABLE-ALL: 'Alle anderen Optionen reaktivieren'
-        Behavior-NONE: 'Kein'
-    SilverCart\ProductWizard\Model\Wizard\Step:
-        PLURALNAME: Konfigurator-Schritte
-        SINGULARNAME: Konfigurator-Schritt
-        ButtonTitle: Button-Text
-        ButtonTitleDesc: 'Wenn Sie dieses Feld leer lassen, wird "Weiter" verwendet.'
-        Continue: Weiter
-        DescriptionTitle: Beschreibungs-Titel
-        DescriptionTitleDesc: 'Optionaler Titel, der über der Beschreibung angezeigt wird.'
-        DescriptionContent: Beschreibung
-        DescriptionContentDesc: 'Beschreibender Inhalt, der über den Auswahloptionen angezeigt wird.'
-        DisplayConditions: Anzeigebedingungen
-        DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
-        DisplayConditionType: Aktion
-        DisplayConditionTypeShow: anzeigen
-        DisplayConditionTypeHide: ausblenden
-        DisplayConditionOperation: 'Boolesche Verknüpfung'
-        DisplayConditionOperationAnd: aller
-        DisplayConditionOperationOr: einer
-        FontAwesomeIcon: 'FontAwesome Icon Klasse'
-        FontAwesomeIconDesc: 'CSS Klasse für ein FontAwesome Icon. Wird in der Schritt-Navigation angezeigt.'
-        InfoBoxTitle: 'Titel der Info-Box'
-        InfoBoxTitleDesc: 'Titel, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
-        InfoBoxContent: 'Inhalt der Info-Box'
-        InfoBoxContentDesc: 'Inhalt, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
-        RedirectTo: 'Weiterleiten auf'
-        RedirectToDesc: 'Seite, auf die weitergeleitet werden soll, sobald dieser Schritt erreicht wird. Alle Artikel, die bis zu diesem Schritt ausgewählt wurden, werden in den Warenkorb gelegt.'
-        ShowInStepNavigation: 'In Step-Navigation anzeigen'
-        Sort: Sortierreihenfolge
-        Step: Schritt
-        StepOptions: Optionen
-        StepOptionSets: Option-Sets
-        Title: Titel
-    SilverCart\ProductWizard\Model\Wizard\StepOption:
-        PLURALNAME: Konfigurator-Schritt-Optionen
-        SINGULARNAME: Konfigurator-Schritt-Option
-        Advanced: Erweitert
-        AllowMultipleChoices: 'Mehrfachauswahl erlauben'
-        ButtonTargetFile: Button-Ziel-Datei
-        ButtonTargetFileDesc: 'Datei, die beim Klick auf den Button geöffnet werden soll.'
-        ButtonTargetLink: Button-Ziel-Link
-        ButtonTargetLinkDesc: 'Link, der beim Klick auf den Button geöffnet werden soll. Ist eine Button-Ziel-Datei angegeben, wird diese stattdessen verwendet.'
-        ButtonTargetType: 'Link öffnen in'
-        ButtonTargetTypeBlank: 'neuem Fenster'
-        ButtonTargetTypeEmpty: 'selbem Fenster'
-        ButtonTitle: Button-Text
-        Content: Text-Inhalt
-        DefaultValue: Standard-Wert
-        DefaultValueDesc: 'Wert, der als Vorbelegung für diese Option verwendet wird.'
-        DisableLabelForFree: 'Label "kostenfrei" für Optionen ohne direkte Artikelverknüpfung deaktivieren'
-        DisplayConditions: Anzeigebedingungen
-        DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
-        DisplayConditionType: Aktion
-        DisplayConditionTypeShow: anzeigen
-        DisplayConditionTypeHide: ausblenden
-        DisplayConditionOperation: 'Boolesche Verknüpfung'
-        DisplayConditionOperationAnd: aller
-        DisplayConditionOperationOr: einer
-        IsOptional: 'Ist optional'
-        IsPreselected: 'Ist vorausgewählt'
-        moreThanMax: 'mehr als {max} {maxTitle}...'
-        NumberProductRelationTitle: 'Artikel für diese Option'
-        NumberProductRelationDesc: 'Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt.'
-        OptionBehavior: 'Verhalten'
-        OptionBehaviorTitle: 'Verhalten für Option {option}'
-        OptionProductRelation: 'Verknüpfte Artikel'
-        OptionProductRelationTitle: 'Artikel für Option {option}'
-        OptionProductRelationDesc: 'Lege diesen Artikel in den Warenkorb, wenn die Option "{option}" ausgewählt wird.'
-        OptionDescriptionTitle: 'Beschreibung für Option {option}'
-        OptionDescriptionDesc: 'Wird als Beschreibung für die Option "{option}" angezeigt.'
-        OptionLongDescriptionTitle: 'Lang-Beschreibung für Option {option}'
-        OptionLongDescriptionDesc: 'Wird als Lang-Beschreibung in einem Popup-Dialog für die Option "{option}" angezeigt. Ist ein Artikel angegeben, werden stattdessen die Artikel-Informationen angezeigt.'
-        Options: Optionen
-        OptionsDesc: 'Liste der möglichen Optionen, die im Multiple-Choice-Feld zur Auswahl stehen. Bitte geben Sie eine Option pro Zeile an.'
-        OptionType: 'Art der Eingabe'
-        OptionTypeBinaryQuestion: Ja-Nein-Frage
-        OptionTypeLabel: Label
-        OptionTypeNumber: Zahl
-        OptionTypeProductView: Produkte
-        OptionTypeRadio: 'Multiple Choice'
-        OptionTypeRedirection: Weiterleitung
-        OptionTypeTextArea: 'Texteingabe (mehrzeilig)'
-        OptionTypeTextField: Texteingabe
-        OptionTypeRedirectionHeader: 'Diese Option wird Kunden auf eine andere Seite weiterleiten.'
-        OptionUseCustomQuantityTitle: 'Frei wählbare Menge für Option {option} verwenden'
-        OptionUseCustomQuantityDropdownMaximumTitle: 'Maximalanzahl im Dropdown für Option {option}'
-        OptionUseCustomQuantityPluralTitle: 'Mengeneinheit Plural für Option {option}'
-        OptionUseCustomQuantitySingularTitle: 'Mengeneinheit Singular für Option {option}'
-        OptionUseCustomQuantityTextTitle: 'Info-Text Mengenauswahl für {option}'
-        ProductDynQuantityStepOptionID: 'Menge nach Option'
-        ProductDynQuantityStepOptionIDDesc: 'Die Benutzereingabe dieser Option wird als Menge für den Warenkorb verwendet. Erfolgt keine Eingabe oder wird die Option übersprungen, wird die Mindestanzahl verwendet.'
-        ProductMinQuantity: Mindestmenge
-        ProductMinQuantityDesc: 'Mindestmenge, die in den Warenkorb gelegt werden soll.'
-        ProductPriceLabel: Preis-Label
-        ProductPriceLabelDesc: 'Dieses optionale Label wird, wenn angegeben, dem Preis vorangestellt.'
-        ProductPriceLabelFor: 'Preis-Label für {product}'
-        ProductQuantityDropdownMax: 'Maximalanzahl im Dropdown'
-        ProductQuantityDropdownMaxDesc: 'Die Maximalanzahl die im Dropdown asugewählt werden kann. Benötigt der Kunde mehr, kann er diese Auswahl manuell treffen.'
-        ProductQuantityPlural: 'Mengeneinheit Plural'
-        ProductQuantityPluralDesc: 'Die Mengeneinheit, die bei der Auswahl der Menge 0 oder >1 angezeigt werden soll.'
-        ProductQuantitySingular: 'Mengeneinheit Singular'
-        ProductQuantitySingularDesc: 'Die Mengeneinheit, die bei der Auswahl der Menge 1 angezeigt werden soll.'
-        ProductViewIsReadonly: 'Keine Benutzereingabe erlauben'
-        Sort: Sortierreihenfolge
-        Step: Schritt
-        Text: Text
-        TextDesc: 'Text zur Anzeige im unteren Teil der Auswahl-Box (zum Beispiel oberhalb des Auswahl-Buttons/-Dropdowns).'
-        Title: Titel
-    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
-        PLURALNAME: Konfigurator-Schritt-Option-Sets
-        SINGULARNAME: Konfigurator-Schritt-Option-Set
-        DisplayConditions: Anzeigebedingungen
-        DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
-        DisplayConditionType: Aktion
-        DisplayConditionTypeShow: anzeigen
-        DisplayConditionTypeHide: ausblenden
-        DisplayConditionOperation: 'Boolesche Verknüpfung'
-        DisplayConditionOperationAnd: aller
-        DisplayConditionOperationOr: einer
-        Sort: Sortierreihenfolge
-        Step: Schritt
-        StepOptions: Optionen
-        Title: Titel
+  ProductWizard:
+    Choose: Auswählen
+    ChooseShort: Ausw.
+    Chosen: Ausgewählt
+    Close: Schließen
+    GoToCart: 'Zum Warenkorb'
+    GoToWizard: 'Zum Konfigurator'
+    MoreInformation: 'weitere Infos'
+    Overview: Übersicht
+    RedirectionInProgress: 'Sie werden in wenigen Sekunden zum Warenkorb weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button.'
+    RedirectionInProgress2: 'Sie werden in wenigen Sekunden zum Konfigurator weitergeleitet. Sollte die Weiterleitung wider Erwarten nicht erfolgen, klicken Sie bitte den folgenden Button.'
+    ShowAdditionalOptions: 'Weitere Optionen anzeigen'
+    free: kostenlos
+    more: mehr
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Zurück
+    BackTo: 'Zurück zu {step}'
+    DESCRIPTION: 'Seite, die einen auf Schritten basierten Produkt-Konfigurator bereitstellt.'
+    PLURALNAME: 'Produkt-Konfiguratoren (Schritt-basiert)'
+    SINGULARNAME: 'Produkt-Konfigurator (Schritt-basiert)'
+    Step: Schritt
+    Steps: Schritte
+    YourChoices: 'Ihre Auswahl'
+    YourStep: 'Ihre {step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: Anzeigebedingungen
+    ParentStepOption: Eltern-Option
+    SINGULARNAME: Anzeigebedingung
+    StepOptionID: Option
+    StepOptionSet: Option-Set
+    TargetValue: Wert
+    Type: Art
+    TypeIsEqual: entspricht
+    TypeIsGreaterThan: 'ist größer als'
+    TypeIsGreaterThanOrEqual: 'entspricht oder ist größer als'
+    TypeIsLighterThan: 'ist kleiner als'
+    TypeIsLighterThanOrEqual: 'entspricht oder ist kleiner als'
+    TypeIsNotEqual: 'entspricht nicht'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Alle anderen Optionen deaktivieren'
+    Behavior-ENABLE-ALL: 'Alle anderen Optionen reaktivieren'
+    Behavior-NONE: Kein
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: Button-Text
+    ButtonTitleDesc: 'Wenn Sie dieses Feld leer lassen, wird "Weiter" verwendet.'
+    Continue: Weiter
+    DescriptionContent: Beschreibung
+    DescriptionContentDesc: 'Beschreibender Inhalt, der über den Auswahloptionen angezeigt wird.'
+    DescriptionTitle: Beschreibungs-Titel
+    DescriptionTitleDesc: 'Optionaler Titel, der über der Beschreibung angezeigt wird.'
+    DisplayConditionOperation: 'Boolesche Verknüpfung'
+    DisplayConditionOperationAnd: aller
+    DisplayConditionOperationOr: einer
+    DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
+    DisplayConditionType: Aktion
+    DisplayConditionTypeHide: ausblenden
+    DisplayConditionTypeShow: anzeigen
+    DisplayConditions: Anzeigebedingungen
+    FontAwesomeIcon: 'FontAwesome Icon Klasse'
+    FontAwesomeIconDesc: 'CSS Klasse für ein FontAwesome Icon. Wird in der Schritt-Navigation angezeigt.'
+    InfoBoxContent: 'Inhalt der Info-Box'
+    InfoBoxContentDesc: 'Inhalt, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
+    InfoBoxTitle: 'Titel der Info-Box'
+    InfoBoxTitleDesc: 'Titel, der beim Betreten des Schritts in der Info-Box angezeigt wird.'
+    PLURALNAME: Konfigurator-Schritte
+    RedirectTo: 'Weiterleiten auf'
+    RedirectToDesc: 'Seite, auf die weitergeleitet werden soll, sobald dieser Schritt erreicht wird. Alle Artikel, die bis zu diesem Schritt ausgewählt wurden, werden in den Warenkorb gelegt.'
+    SINGULARNAME: Konfigurator-Schritt
+    ShowInStepNavigation: 'In Step-Navigation anzeigen'
+    Sort: Sortierreihenfolge
+    Step: Schritt
+    StepOptionSets: Option-Sets
+    StepOptions: Optionen
+    Title: Titel
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Erweitert
+    AllowMultipleChoices: 'Mehrfachauswahl erlauben'
+    ButtonTargetFile: Button-Ziel-Datei
+    ButtonTargetFileDesc: 'Datei, die beim Klick auf den Button geöffnet werden soll.'
+    ButtonTargetLink: Button-Ziel-Link
+    ButtonTargetLinkDesc: 'Link, der beim Klick auf den Button geöffnet werden soll. Ist eine Button-Ziel-Datei angegeben, wird diese stattdessen verwendet.'
+    ButtonTargetType: 'Link öffnen in'
+    ButtonTargetTypeBlank: 'neuem Fenster'
+    ButtonTargetTypeEmpty: 'selbem Fenster'
+    ButtonTitle: Button-Text
+    Content: Text-Inhalt
+    DefaultValue: Standard-Wert
+    DefaultValueDesc: 'Wert, der als Vorbelegung für diese Option verwendet wird.'
+    DisableLabelForFree: 'Label "kostenfrei" für Optionen ohne direkte Artikelverknüpfung deaktivieren'
+    DisplayConditionOperation: 'Boolesche Verknüpfung'
+    DisplayConditionOperationAnd: aller
+    DisplayConditionOperationOr: einer
+    DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
+    DisplayConditionType: Aktion
+    DisplayConditionTypeHide: ausblenden
+    DisplayConditionTypeShow: anzeigen
+    DisplayConditions: Anzeigebedingungen
+    IsOptional: 'Ist optional'
+    IsPreselected: 'Ist vorausgewählt'
+    NumberProductRelationDesc: 'Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt.'
+    NumberProductRelationTitle: 'Artikel für diese Option'
+    OptionBehavior: Verhalten
+    OptionBehaviorTitle: 'Verhalten für Option {option}'
+    OptionDescriptionDesc: 'Wird als Beschreibung für die Option "{option}" angezeigt.'
+    OptionDescriptionTitle: 'Beschreibung für Option {option}'
+    OptionLongDescriptionDesc: 'Wird als Lang-Beschreibung in einem Popup-Dialog für die Option "{option}" angezeigt. Ist ein Artikel angegeben, werden stattdessen die Artikel-Informationen angezeigt.'
+    OptionLongDescriptionTitle: 'Lang-Beschreibung für Option {option}'
+    OptionProductRelation: 'Verknüpfte Artikel'
+    OptionProductRelationDesc: 'Lege diesen Artikel in den Warenkorb, wenn die Option "{option}" ausgewählt wird.'
+    OptionProductRelationTitle: 'Artikel für Option {option}'
+    OptionType: 'Art der Eingabe'
+    OptionTypeBinaryQuestion: Ja-Nein-Frage
+    OptionTypeLabel: Label
+    OptionTypeNumber: Zahl
+    OptionTypeProductView: Produkte
+    OptionTypeRadio: 'Multiple Choice'
+    OptionTypeRedirection: Weiterleitung
+    OptionTypeRedirectionHeader: 'Diese Option wird Kunden auf eine andere Seite weiterleiten.'
+    OptionTypeTextArea: 'Texteingabe (mehrzeilig)'
+    OptionTypeTextField: Texteingabe
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Maximalanzahl im Dropdown für Option {option}'
+    OptionUseCustomQuantityPluralTitle: 'Mengeneinheit Plural für Option {option}'
+    OptionUseCustomQuantitySingularTitle: 'Mengeneinheit Singular für Option {option}'
+    OptionUseCustomQuantityTextTitle: 'Info-Text Mengenauswahl für {option}'
+    OptionUseCustomQuantityTitle: 'Frei wählbare Menge für Option {option} verwenden'
+    Options: Optionen
+    OptionsDesc: 'Liste der möglichen Optionen, die im Multiple-Choice-Feld zur Auswahl stehen. Bitte geben Sie eine Option pro Zeile an.'
+    PLURALNAME: Konfigurator-Schritt-Optionen
+    ProductDynQuantityStepOptionID: 'Menge nach Option'
+    ProductDynQuantityStepOptionIDDesc: 'Die Benutzereingabe dieser Option wird als Menge für den Warenkorb verwendet. Erfolgt keine Eingabe oder wird die Option übersprungen, wird die Mindestanzahl verwendet.'
+    ProductMinQuantity: Mindestmenge
+    ProductMinQuantityDesc: 'Mindestmenge, die in den Warenkorb gelegt werden soll.'
+    ProductPriceLabel: Preis-Label
+    ProductPriceLabelDesc: 'Dieses optionale Label wird, wenn angegeben, dem Preis vorangestellt.'
+    ProductPriceLabelFor: 'Preis-Label für {product}'
+    ProductQuantityDropdownMax: 'Maximalanzahl im Dropdown'
+    ProductQuantityDropdownMaxDesc: 'Die Maximalanzahl die im Dropdown asugewählt werden kann. Benötigt der Kunde mehr, kann er diese Auswahl manuell treffen.'
+    ProductQuantityPlural: 'Mengeneinheit Plural'
+    ProductQuantityPluralDesc: 'Die Mengeneinheit, die bei der Auswahl der Menge 0 oder >1 angezeigt werden soll.'
+    ProductQuantitySingular: 'Mengeneinheit Singular'
+    ProductQuantitySingularDesc: 'Die Mengeneinheit, die bei der Auswahl der Menge 1 angezeigt werden soll.'
+    ProductViewIsReadonly: 'Keine Benutzereingabe erlauben'
+    SINGULARNAME: Konfigurator-Schritt-Option
+    Sort: Sortierreihenfolge
+    Step: Schritt
+    Text: Text
+    TextDesc: 'Text zur Anzeige im unteren Teil der Auswahl-Box (zum Beispiel oberhalb des Auswahl-Buttons/-Dropdowns).'
+    Title: Titel
+    moreThanMax: 'mehr als {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Boolesche Verknüpfung'
+    DisplayConditionOperationAnd: aller
+    DisplayConditionOperationOr: einer
+    DisplayConditionText: 'Dieses Option-Set bei Erfüllen {operation} der folgenden Bedingungen {type}'
+    DisplayConditionType: Aktion
+    DisplayConditionTypeHide: ausblenden
+    DisplayConditionTypeShow: anzeigen
+    DisplayConditions: Anzeigebedingungen
+    PLURALNAME: Konfigurator-Schritt-Option-Sets
+    SINGULARNAME: Konfigurator-Schritt-Option-Set
+    Sort: Sortierreihenfolge
+    Step: Schritt
+    StepOptions: Optionen
+    Title: Titel

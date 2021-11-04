@@ -1,156 +1,156 @@
 it:
-    ProductWizard:
-        Choose: Seleziona
-        ChooseShort: Seleziona
-        Chosen: Selezionato
-        Close: Chiudi
-        free: Gratuito
-        GoToCart: 'Al carrello'
-        GoToWizard: 'Al configuratore'
-        MoreInformation: 'ulteriori informazioni'
-        Overview: Panoramica
-        RedirectionInProgress: 'Verrai reindirizzato al carrello in pochi secondi. Se il reindirizzamento non dovesse funzionare, fare clic sul seguente pulsante.'
-        RedirectionInProgress2: 'Verrai reindirizzato al configuratore in pochi secondi. Se il reindirizzamento non dovesse funzionare, fare clic sul seguente pulsante.'
-        ShowAdditionalOptions: 'Mostra ulteriori opzioni'
-    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
-        DESCRIPTION: 'Pagina che fornisce un  a fasi configuratore di prodotti.'
-        PLURALNAME: 'Configuratori prodotto (per fasi)'
-        SINGULARNAME: 'Configuratore prodotto (per fasi)'
-        Back: Indietro
-        BackTo: 'Torna a {step}'
-        Step: Fase
-        Steps: Fasi
-        YourChoices: 'La tua selezione'
-        YourStep: 'I tuoi {step}'
-    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
-        PLURALNAME: 'Condizioni di visualizzazione'
-        SINGULARNAME: 'Condizione di visualizzazione'
-        ParentStepOption: 'Opzione madre'
-        StepOptionID: opzione
-        StepOptionSet: 'set di opzioni'
-        TargetValue: valore
-        Type: tipo
-        TypeIsEqual: 'è uguale a'
-        TypeIsNotEqual: 'non corrisponde'
-        TypeIsGreaterThan: 'è maggiore di'
-        TypeIsLighterThan: 'è minore di'
-        TypeIsGreaterThanOrEqual: 'è uguale o maggiore di'
-        TypeIsLighterThanOrEqual: 'è uguale o minore di'
-    SilverCart\ProductWizard\Model\Wizard\Step:
-        PLURALNAME: 'Fasi configuratore '
-        SINGULARNAME: 'Fase configuratore'
-        ButtonTitle: 'Testo pulsante'
-        ButtonTitleDesc: 'Se si lascia vuoto questo campo, viene utilizzato "Avanti".'
-        Continue: Avanti
-        DescriptionTitle: 'Titolo descrizione'
-        DescriptionTitleDesc: 'Titolo opzionale visualizzato sopra la descrizione.'
-        DescriptionContent: Descrizione
-        DescriptionContentDesc: 'Contenuto descrittivo visualizzato sopra le opzioni di selezione.'
-        DisplayConditions: 'Condizioni di visualizzazione'
-        DisplayConditionText: 'Questa opzione è impostata se soddisfa {operation} le seguenti condizioni {type}'
-        DisplayConditionType: Azione
-        DisplayConditionTypeShow: mostra
-        DisplayConditionTypeHide: nascondi
-        DisplayConditionOperation: 'Collegamento booleano'
-        DisplayConditionOperationAnd: tutti
-        DisplayConditionOperationOr: uno
-        FontAwesomeIcon: 'FontAwesome Icon Class'
-        FontAwesomeIconDesc: 'Classe CSS per un''icona FontAwesome. Visualizzato nella navigazione a fasi.'
-        InfoBoxTitle: 'Titolo dell''Info Box'
-        InfoBoxTitleDesc: 'Titolo che viene visualizzato nell''Info Box quando si accede alla fase successiva.'
-        InfoBoxContent: 'Contenuto del campo info'
-        InfoBoxContentDesc: 'Contenuto che viene visualizzato nel riquadro informativo quando si accede alla fase successiva.'
-        ShowInStepNavigation: 'Visualizzazione navigazione a fasi'
-        Sort: Ordina
-        Step: Fase
-        StepOptions: Opzioni
-        StepOptionSets: 'Set di opzioni'
-        Title: Titolo
-        RedirectTo: 'Inoltrare a'
-        RedirectToDesc: 'Pagina a cui essere reindirizzati quando si raggiunge questo step. Tutti gli articoli selezionati fino a questo step saranno aggiunti al carrello.'
-    SilverCart\ProductWizard\Model\Wizard\StepOption:
-        PLURALNAME: 'Configuratore opzioni Step-Option'
-        SINGULARNAME: 'Configuratore opzione Step-Option'
-        Advanced: Esteso
-        ButtonTargetFile: 'Pulsante per raggiungere il file di destinazione'
-        ButtonTargetFileDesc: 'File da aprire quando si fa clic sul pulsante.'
-        ButtonTargetLink: 'Pulsante per raggiungere il link di destinazione'
-        ButtonTargetLinkDesc: 'Link da aprire quando si fa clic sul pulsante. Nel caso in cui sia specificato un pulsante per raggiungere file di destinazione si utilizza questo.'
-        ButtonTargetType: 'Aprire il link in'
-        ButtonTargetTypeBlank: 'nuova finestra'
-        ButtonTargetTypeEmpty: 'stessa finestra'
-        ButtonTitle: 'Testo pulsante'
-        Content: 'Contenuto del testo'
-        DefaultValue: 'Valore standard'
-        DefaultValueDesc: 'Valore utilizzato come predefinito per questa opzione.'
-        DisplayConditions: 'Condizioni di visualizzazione'
-        DisplayConditionText: 'Questa opzione è impostata se soddisfatta {operation} delle seguenti condizioni {type}'
-        DisplayConditionType: Azione
-        DisplayConditionTypeShow: visualizzare
-        DisplayConditionTypeHide: Nascondere
-        DisplayConditionOperation: 'Collegamento booleano'
-        DisplayConditionOperationAnd: Tutti
-        DisplayConditionOperationOr: uno
-        IsOptional: 'È opzionale'
-        IsPreselected: 'È preselezionato'
-        moreThanMax: 'più di {max} {maxTitle} ...'
-        NumberProductRelationTitle: 'Articoli per quest'' opzione'
-        NumberProductRelationDesc: 'Questo articolo viene inserito nel carrello con la quantità specificata  in quest'' opzione.'
-        OptionProductRelation: 'Articoli collegati'
-        OptionProductRelationTitle: 'Articolo per opzione {option}'
-        OptionProductRelationDesc: 'Aggiungi questo articolo al carrello se l''opzione "{option}" è selezionata.'
-        OptionDescriptionTitle: 'Descrizione opzione {option}'
-        OptionDescriptionDesc: 'Visualizzato come descrizione dell''opzione {option}.'
-        OptionLongDescriptionTitle: 'Descrizione lunga per opzione {option}'
-        OptionLongDescriptionDesc: 'Appare come descrizione lunga in un pop-up dialogo per l''opzione {option}. Se è spercificato un articolo, vengono invece visualizzate le informazioni riguardanti l''articolo.'
-        Options: Opzioni
-        OptionsDesc: 'Elenco delle possibili opzioni disponibili nel campo a scelta multipla. Specificare una sola opzione per riga.'
-        OptionType: 'Tipo di input'
-        OptionTypeBinaryQuestion: 'Domanda "si-no"'
-        OptionTypeLabel: Etichetta
-        OptionTypeNumber: Numero
-        OptionTypeProductView: Prodotti
-        OptionTypeRadio: 'Scelta multipla'
-        OptionTypeRedirection: Inoltro
-        OptionTypeTextArea: 'Inserimento del testo (righe multiple)'
-        OptionTypeTextField: 'Inserimento del testo'
-        OptionTypeRedirectionHeader: 'Questa opzione reindirizza i clienti a un''altra pagina.'
-        OptionUseCustomQuantityTitle: 'Selezione libera della quantità per l''opzione {option}'
-        OptionUseCustomQuantityDropdownMaximumTitle: 'Numero massimo selezionabile nel menu a tendina per l''opzione {option}.'
-        OptionUseCustomQuantityPluralTitle: 'Unità di misura quantità per l''opzione {option}'
-        OptionUseCustomQuantitySingularTitle: 'Unità di misura della singola quantità per l''opzione {option}'
-        OptionUseCustomQuantityTextTitle: 'Testo informativo selezione quantità per {option}'
-        ProductDynQuantityStepOptionID: 'Quantità in base all''opzione'
-        ProductDynQuantityStepOptionIDDesc: 'Per questa opzione l''input utente viene utilizzato come quantità per il carrello. Se non viene inserito alcun dato o se si ignora l''opzione verrà utilizzato il numero minimo.'
-        ProductMinQuantity: 'Quantità minima'
-        ProductMinQuantityDesc: 'Quantità minima da inserire nel carrello.'
-        ProductPriceLabel: 'Etichetta prezzo'
-        ProductPriceLabelDesc: 'Se indicato, questa etichetta facoltativa viene preceduta dal prezzo.'
-        ProductPriceLabelFor: 'Etichetta prezzo per {product}'
-        ProductQuantityDropdownMax: 'Numero massimo del menu a tendina.'
-        ProductQuantityDropdownMaxDesc: 'Il numero massimo che può essere selezionato nel menu a tendina. Se il cliente ha bisogno un numero superiore di selezione rispetto a quello massimo consentito, può effettuare la  selezione manualmente.'
-        ProductQuantityPlural: 'Unità di misura'
-        ProductQuantityPluralDesc: 'Unità di misura da visualizzare quando si seleziona la quantità 0 o >1.'
-        ProductQuantitySingular: 'Unità di misura'
-        ProductQuantitySingularDesc: 'Unità di misura da visualizzare quando si seleziona la quantità 1.'
-        ProductViewIsReadonly: 'Non consentire l''input dell''utente'
-        Sort: Ordina
-        Step: Fase
-        Text: Testo
-        TextDesc: 'Testo da visualizzare nella parte inferiore della casella di selezione (ad esempio, sopra il pulsante/ elenco a tendina per la selezione).'
-        Title: Titolo
-    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
-        PLURALNAME: 'Configuratore opzioni Step-Option'
-        SINGULARNAME: 'Configuratore opzione Step-Option'
-        DisplayConditions: 'Condizioni di visualizzazione'
-        DisplayConditionText: 'Questo set opzioni {operation} è presente quando vengono soddisfatte le seguenti condizioni {type}'
-        DisplayConditionType: Azione
-        DisplayConditionTypeShow: visualizza
-        DisplayConditionTypeHide: Nascondi
-        DisplayConditionOperation: 'Collegamento booleano'
-        DisplayConditionOperationAnd: tutti
-        DisplayConditionOperationOr: uno
-        Sort: 'Tipo di ordine'
-        Step: 'Prossima fase'
-        StepOptions: Opzioni
-        Title: Titolo
+  ProductWizard:
+    Choose: Seleziona
+    ChooseShort: Seleziona
+    Chosen: Selezionato
+    Close: Chiudi
+    GoToCart: 'Al carrello'
+    GoToWizard: 'Al configuratore'
+    MoreInformation: 'ulteriori informazioni'
+    Overview: Panoramica
+    RedirectionInProgress: 'Verrai reindirizzato al carrello in pochi secondi. Se il reindirizzamento non dovesse funzionare, fare clic sul seguente pulsante.'
+    RedirectionInProgress2: 'Verrai reindirizzato al configuratore in pochi secondi. Se il reindirizzamento non dovesse funzionare, fare clic sul seguente pulsante.'
+    ShowAdditionalOptions: 'Mostra ulteriori opzioni'
+    free: Gratuito
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Indietro
+    BackTo: 'Torna a {step}'
+    DESCRIPTION: 'Pagina che fornisce un  a fasi configuratore di prodotti.'
+    PLURALNAME: 'Configuratori prodotto (per fasi)'
+    SINGULARNAME: 'Configuratore prodotto (per fasi)'
+    Step: Fase
+    Steps: Fasi
+    YourChoices: 'La tua selezione'
+    YourStep: 'I tuoi {step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Condizioni di visualizzazione'
+    ParentStepOption: 'Opzione madre'
+    SINGULARNAME: 'Condizione di visualizzazione'
+    StepOptionID: opzione
+    StepOptionSet: 'set di opzioni'
+    TargetValue: valore
+    Type: tipo
+    TypeIsEqual: 'è uguale a'
+    TypeIsGreaterThan: 'è maggiore di'
+    TypeIsGreaterThanOrEqual: 'è uguale o maggiore di'
+    TypeIsLighterThan: 'è minore di'
+    TypeIsLighterThanOrEqual: 'è uguale o minore di'
+    TypeIsNotEqual: 'non corrisponde'
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Testo pulsante'
+    ButtonTitleDesc: 'Se si lascia vuoto questo campo, viene utilizzato "Avanti".'
+    Continue: Avanti
+    DescriptionContent: Descrizione
+    DescriptionContentDesc: 'Contenuto descrittivo visualizzato sopra le opzioni di selezione.'
+    DescriptionTitle: 'Titolo descrizione'
+    DescriptionTitleDesc: 'Titolo opzionale visualizzato sopra la descrizione.'
+    DisplayConditionOperation: 'Collegamento booleano'
+    DisplayConditionOperationAnd: tutti
+    DisplayConditionOperationOr: uno
+    DisplayConditionText: 'Questa opzione è impostata se soddisfa {operation} le seguenti condizioni {type}'
+    DisplayConditionType: Azione
+    DisplayConditionTypeHide: nascondi
+    DisplayConditionTypeShow: mostra
+    DisplayConditions: 'Condizioni di visualizzazione'
+    FontAwesomeIcon: 'FontAwesome Icon Class'
+    FontAwesomeIconDesc: 'Classe CSS per un''icona FontAwesome. Visualizzato nella navigazione a fasi.'
+    InfoBoxContent: 'Contenuto del campo info'
+    InfoBoxContentDesc: 'Contenuto che viene visualizzato nel riquadro informativo quando si accede alla fase successiva.'
+    InfoBoxTitle: 'Titolo dell''Info Box'
+    InfoBoxTitleDesc: 'Titolo che viene visualizzato nell''Info Box quando si accede alla fase successiva.'
+    PLURALNAME: 'Fasi configuratore '
+    RedirectTo: 'Inoltrare a'
+    RedirectToDesc: 'Pagina a cui essere reindirizzati quando si raggiunge questo step. Tutti gli articoli selezionati fino a questo step saranno aggiunti al carrello.'
+    SINGULARNAME: 'Fase configuratore'
+    ShowInStepNavigation: 'Visualizzazione navigazione a fasi'
+    Sort: Ordina
+    Step: Fase
+    StepOptionSets: 'Set di opzioni'
+    StepOptions: Opzioni
+    Title: Titolo
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Esteso
+    ButtonTargetFile: 'Pulsante per raggiungere il file di destinazione'
+    ButtonTargetFileDesc: 'File da aprire quando si fa clic sul pulsante.'
+    ButtonTargetLink: 'Pulsante per raggiungere il link di destinazione'
+    ButtonTargetLinkDesc: 'Link da aprire quando si fa clic sul pulsante. Nel caso in cui sia specificato un pulsante per raggiungere file di destinazione si utilizza questo.'
+    ButtonTargetType: 'Aprire il link in'
+    ButtonTargetTypeBlank: 'nuova finestra'
+    ButtonTargetTypeEmpty: 'stessa finestra'
+    ButtonTitle: 'Testo pulsante'
+    Content: 'Contenuto del testo'
+    DefaultValue: 'Valore standard'
+    DefaultValueDesc: 'Valore utilizzato come predefinito per questa opzione.'
+    DisplayConditionOperation: 'Collegamento booleano'
+    DisplayConditionOperationAnd: Tutti
+    DisplayConditionOperationOr: uno
+    DisplayConditionText: 'Questa opzione è impostata se soddisfatta {operation} delle seguenti condizioni {type}'
+    DisplayConditionType: Azione
+    DisplayConditionTypeHide: Nascondere
+    DisplayConditionTypeShow: visualizzare
+    DisplayConditions: 'Condizioni di visualizzazione'
+    IsOptional: 'È opzionale'
+    IsPreselected: 'È preselezionato'
+    NumberProductRelationDesc: 'Questo articolo viene inserito nel carrello con la quantità specificata  in quest'' opzione.'
+    NumberProductRelationTitle: 'Articoli per quest'' opzione'
+    OptionDescriptionDesc: 'Visualizzato come descrizione dell''opzione {option}.'
+    OptionDescriptionTitle: 'Descrizione opzione {option}'
+    OptionLongDescriptionDesc: 'Appare come descrizione lunga in un pop-up dialogo per l''opzione {option}. Se è spercificato un articolo, vengono invece visualizzate le informazioni riguardanti l''articolo.'
+    OptionLongDescriptionTitle: 'Descrizione lunga per opzione {option}'
+    OptionProductRelation: 'Articoli collegati'
+    OptionProductRelationDesc: 'Aggiungi questo articolo al carrello se l''opzione "{option}" è selezionata.'
+    OptionProductRelationTitle: 'Articolo per opzione {option}'
+    OptionType: 'Tipo di input'
+    OptionTypeBinaryQuestion: 'Domanda "si-no"'
+    OptionTypeLabel: Etichetta
+    OptionTypeNumber: Numero
+    OptionTypeProductView: Prodotti
+    OptionTypeRadio: 'Scelta multipla'
+    OptionTypeRedirection: Inoltro
+    OptionTypeRedirectionHeader: 'Questa opzione reindirizza i clienti a un''altra pagina.'
+    OptionTypeTextArea: 'Inserimento del testo (righe multiple)'
+    OptionTypeTextField: 'Inserimento del testo'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Numero massimo selezionabile nel menu a tendina per l''opzione {option}.'
+    OptionUseCustomQuantityPluralTitle: 'Unità di misura quantità per l''opzione {option}'
+    OptionUseCustomQuantitySingularTitle: 'Unità di misura della singola quantità per l''opzione {option}'
+    OptionUseCustomQuantityTextTitle: 'Testo informativo selezione quantità per {option}'
+    OptionUseCustomQuantityTitle: 'Selezione libera della quantità per l''opzione {option}'
+    Options: Opzioni
+    OptionsDesc: 'Elenco delle possibili opzioni disponibili nel campo a scelta multipla. Specificare una sola opzione per riga.'
+    PLURALNAME: 'Configuratore opzioni Step-Option'
+    ProductDynQuantityStepOptionID: 'Quantità in base all''opzione'
+    ProductDynQuantityStepOptionIDDesc: 'Per questa opzione l''input utente viene utilizzato come quantità per il carrello. Se non viene inserito alcun dato o se si ignora l''opzione verrà utilizzato il numero minimo.'
+    ProductMinQuantity: 'Quantità minima'
+    ProductMinQuantityDesc: 'Quantità minima da inserire nel carrello.'
+    ProductPriceLabel: 'Etichetta prezzo'
+    ProductPriceLabelDesc: 'Se indicato, questa etichetta facoltativa viene preceduta dal prezzo.'
+    ProductPriceLabelFor: 'Etichetta prezzo per {product}'
+    ProductQuantityDropdownMax: 'Numero massimo del menu a tendina.'
+    ProductQuantityDropdownMaxDesc: 'Il numero massimo che può essere selezionato nel menu a tendina. Se il cliente ha bisogno un numero superiore di selezione rispetto a quello massimo consentito, può effettuare la  selezione manualmente.'
+    ProductQuantityPlural: 'Unità di misura'
+    ProductQuantityPluralDesc: 'Unità di misura da visualizzare quando si seleziona la quantità 0 o >1.'
+    ProductQuantitySingular: 'Unità di misura'
+    ProductQuantitySingularDesc: 'Unità di misura da visualizzare quando si seleziona la quantità 1.'
+    ProductViewIsReadonly: 'Non consentire l''input dell''utente'
+    SINGULARNAME: 'Configuratore opzione Step-Option'
+    Sort: Ordina
+    Step: Fase
+    Text: Testo
+    TextDesc: 'Testo da visualizzare nella parte inferiore della casella di selezione (ad esempio, sopra il pulsante/ elenco a tendina per la selezione).'
+    Title: Titolo
+    moreThanMax: 'più di {max} {maxTitle} ...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Collegamento booleano'
+    DisplayConditionOperationAnd: tutti
+    DisplayConditionOperationOr: uno
+    DisplayConditionText: 'Questo set opzioni {operation} è presente quando vengono soddisfatte le seguenti condizioni {type}'
+    DisplayConditionType: Azione
+    DisplayConditionTypeHide: Nascondi
+    DisplayConditionTypeShow: visualizza
+    DisplayConditions: 'Condizioni di visualizzazione'
+    PLURALNAME: 'Configuratore opzioni Step-Option'
+    SINGULARNAME: 'Configuratore opzione Step-Option'
+    Sort: 'Tipo di ordine'
+    Step: 'Prossima fase'
+    StepOptions: Opzioni
+    Title: Titolo

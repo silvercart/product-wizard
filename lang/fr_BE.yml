@@ -1,156 +1,156 @@
 fr_BE:
-    ProductWizard:
-        Choose: Sélectionner
-        ChooseShort: Sélection
-        Chosen: Sélectionné
-        Close: Fermer
-        free: gratuit
-        GoToCart: 'Vers le panier'
-        GoToWizard: 'Vers le configurateur'
-        MoreInformation: 'Plus d''informations'
-        Overview: 'Vue d''ensemble'
-        RedirectionInProgress: 'Vous serez redirigé vers le panier d''achat dans quelques secondes. Si, contrairement aux attentes, la redirection n''a pas lieu, veuillez cliquer sur le bouton suivant.'
-        RedirectionInProgress2: 'Vous serez redirigé vers le configurateur dans quelques secondes. Si, contrairement aux attentes, la redirection n''a pas lieu, veuillez cliquer sur le bouton suivant.'
-        ShowAdditionalOptions: 'Afficher plus d''options'
-    SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
-        DESCRIPTION: 'Page qui fournit un configurateur de produits par étapes.'
-        PLURALNAME: 'Configurateurs de produits (par étapes)'
-        SINGULARNAME: 'Configurateur de produits (par étapes)'
-        Back: Retour
-        BackTo: 'Retour à {step}'
-        Step: Étape
-        Steps: Étapes
-        YourChoices: 'Votre sélection'
-        YourStep: 'Votre {step}'
-    SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
-        PLURALNAME: 'Conditions d''affichage'
-        SINGULARNAME: 'Condition d''affichage'
-        ParentStepOption: 'Option parentale'
-        StepOptionID: Option
-        StepOptionSet: 'Ensemble d''options'
-        TargetValue: Valeur
-        Type: Type
-        TypeIsEqual: correspond
-        TypeIsNotEqual: 'ne correspond pas'
-        TypeIsGreaterThan: 'est supérieure à'
-        TypeIsLighterThan: 'est inférieur à'
-        TypeIsGreaterThanOrEqual: 'est égale ou supérieure à'
-        TypeIsLighterThanOrEqual: 'est égale ou inférieure à'
-    SilverCart\ProductWizard\Model\Wizard\Step:
-        PLURALNAME: 'Étapes du configurateur'
-        SINGULARNAME: 'Étape du configurateur'
-        ButtonTitle: 'Texte de bouton'
-        ButtonTitleDesc: 'Si vous laissez ce champ vide, "Suivant" sera utilisé.'
-        Continue: Continuer
-        DescriptionTitle: 'Titre de la description'
-        DescriptionTitleDesc: 'Titre facultatif qui apparaît au-dessus de la description.'
-        DescriptionContent: Description
-        DescriptionContentDesc: 'Contenu descriptif qui s''affiche au-dessus des options de sélection.'
-        DisplayConditions: 'Conditions d''affichage'
-        DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
-        DisplayConditionType: Action
-        DisplayConditionTypeShow: afficher
-        DisplayConditionTypeHide: cacher
-        DisplayConditionOperation: 'Opérateur booléen'
-        DisplayConditionOperationAnd: tous
-        DisplayConditionOperationOr: un
-        FontAwesomeIcon: 'Classe Police d''icônes Font Awesome'
-        FontAwesomeIconDesc: 'Classe CSS pour une police d''icônes Font Awesome. S''affiche dans la navigation par étapes.'
-        InfoBoxTitle: 'Titre de la boîte d''informations'
-        InfoBoxTitleDesc: 'Titre affiché dans la boîte d''informations lors du démarrage de l''étape.'
-        InfoBoxContent: 'Contenu de la boîte d''informations'
-        InfoBoxContentDesc: 'Contenu affiché dans la boîte d''informations lors du démarrage de l''étape.'
-        ShowInStepNavigation: 'Afficher dans la navigation par étapes'
-        Sort: 'Ordre de tri'
-        Step: Étape
-        StepOptions: Options
-        StepOptionSets: 'Ensembles d''options'
-        Title: Titre
-        RedirectTo: 'Rediriger vers'
-        RedirectToDesc: 'Page vers laquelle vous serez redirigé lorsque cette étape sera atteinte. Tous les articles sélectionnés jusqu''à cette étape seront ajoutés au panier.'
-    SilverCart\ProductWizard\Model\Wizard\StepOption:
-        PLURALNAME: 'Options d''étape du configurateur'
-        SINGULARNAME: 'Option d''étape du configurateur'
-        Advanced: Étendue
-        ButtonTargetFile: 'Bouton Fichier cible'
-        ButtonTargetFileDesc: 'Fichier à ouvrir lorsque l''on clique sur le bouton.'
-        ButtonTargetLink: 'Bouton Lien cible'
-        ButtonTargetLinkDesc: 'Lien à ouvrir lorsque l''on clique sur le bouton. Si un fichier cible de bouton est spécifié, il sera utilisé à la place.'
-        ButtonTargetType: 'Ouvrir le lien dans'
-        ButtonTargetTypeBlank: 'nouvelle fenêtre'
-        ButtonTargetTypeEmpty: 'même fenêtre'
-        ButtonTitle: 'Texte de bouton'
-        Content: 'Contenu du texte'
-        DefaultValue: 'Valeur par défaut'
-        DefaultValueDesc: 'Valeur qui est utilisée par défaut pour cette option.'
-        DisplayConditions: 'Conditions d''affichage'
-        DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
-        DisplayConditionType: Action
-        DisplayConditionTypeShow: afficher
-        DisplayConditionTypeHide: cacher
-        DisplayConditionOperation: 'Opérateur booléen'
-        DisplayConditionOperationAnd: tous
-        DisplayConditionOperationOr: un
-        IsOptional: 'Est facultatif'
-        IsPreselected: 'Est présélectionné'
-        moreThanMax: 'plus de {max} {maxTitle} ...'
-        NumberProductRelationTitle: 'Articles pour cette option'
-        NumberProductRelationDesc: 'Cet article sera ajouté au panier avec la quantité spécifiée par cette option.'
-        OptionProductRelation: 'Articles liés'
-        OptionProductRelationTitle: 'Article pour l''option {option}'
-        OptionProductRelationDesc: 'Ajoutez cet article au panier lorsque l''option "{option}" est sélectionnée.'
-        OptionDescriptionTitle: 'Description pour l''option {option}'
-        OptionDescriptionDesc: 'Affiché comme description pour l''option "{option}".'
-        OptionLongDescriptionTitle: 'Description longue pour l''option {option}'
-        OptionLongDescriptionDesc: 'Affiché comme une longue description dans une fenêtre de dialogue pour l''option "{option}". Si un article est spécifié, les informations relatives à cet article sont affichées à la place.'
-        Options: Options
-        OptionsDesc: 'Liste des options possibles qui peuvent être sélectionnées dans le champ à choix multiple. Veuillez saisir une option par ligne.'
-        OptionType: 'Type d''entrée'
-        OptionTypeBinaryQuestion: 'Question Oui-Non'
-        OptionTypeLabel: Label
-        OptionTypeNumber: Numéro
-        OptionTypeProductView: Produits
-        OptionTypeRadio: 'Choix multiple'
-        OptionTypeRedirection: Redirection
-        OptionTypeTextArea: 'Saisie de texte (multiligne)'
-        OptionTypeTextField: 'Saisie de texte'
-        OptionTypeRedirectionHeader: 'Cette option redirigera les clients vers une autre page.'
-        OptionUseCustomQuantityTitle: 'Utiliser une quantité librement sélectionnable pour l''option {option}'
-        OptionUseCustomQuantityDropdownMaximumTitle: 'Nombre maximum dans la liste déroulante pour l''option {option}'
-        OptionUseCustomQuantityPluralTitle: 'Unité de quantité au pluriel pour l''option {option}'
-        OptionUseCustomQuantitySingularTitle: 'Unité de quantité au singulier pour l''option {option}'
-        OptionUseCustomQuantityTextTitle: 'Texte d''information de la sélection de quantité pour {option}'
-        ProductDynQuantityStepOptionID: 'Quantité selon l''option'
-        ProductDynQuantityStepOptionIDDesc: 'L''entrée de l''utilisateur pour cette option est utilisée comme quantité pour le panier. Si aucune entrée n''est effectuée ou si l''option est ignorée, le nombre minimum est utilisé.'
-        ProductMinQuantity: 'Quantité minimale'
-        ProductMinQuantityDesc: 'Quantité minimale à ajouter au panier.'
-        ProductPriceLabel: 'Étiquette de prix'
-        ProductPriceLabelDesc: 'Cette étiquette facultative sera placée devant le prix, si celui-ci est spécifié.'
-        ProductPriceLabelFor: 'Étiquette de prix pour {product}'
-        ProductQuantityDropdownMax: 'Nombre maximum dans la liste déroulante'
-        ProductQuantityDropdownMaxDesc: 'Le nombre maximum qui peut être sélectionné dans le menu déroulant. Si le client a besoin de plus, il peut faire cette sélection manuellement.'
-        ProductQuantityPlural: 'Unité de quantité au pluriel'
-        ProductQuantityPluralDesc: 'L''unité de quantité à afficher lors de la sélection de la quantité 0 ou >1.'
-        ProductQuantitySingular: 'Unité de quantité singulière'
-        ProductQuantitySingularDesc: 'L''unité de quantité à afficher lors de la sélection de la quantité 1.'
-        ProductViewIsReadonly: 'Ne pas permettre la saisie de l''utilisateur'
-        Sort: 'Ordre de tri'
-        Step: Étape
-        Text: Texte
-        TextDesc: 'Texte à afficher dans la partie inférieure de la boîte de sélection (par exemple au-dessus du bouton de sélection/de la liste de sélection).'
-        Title: Titre
-    SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
-        PLURALNAME: 'Ensembles d''options d''étape du configurateur'
-        SINGULARNAME: 'Ensemble d''options d''étape du configurateur'
-        DisplayConditions: 'Conditions d''affichage'
-        DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
-        DisplayConditionType: Action
-        DisplayConditionTypeShow: afficher
-        DisplayConditionTypeHide: cacher
-        DisplayConditionOperation: 'Opérateur booléen'
-        DisplayConditionOperationAnd: tous
-        DisplayConditionOperationOr: un
-        Sort: 'Ordre de tri'
-        Step: Étape
-        StepOptions: Options
-        Title: Titre
+  ProductWizard:
+    Choose: Sélectionner
+    ChooseShort: Sélection
+    Chosen: Sélectionné
+    Close: Fermer
+    GoToCart: 'Vers le panier'
+    GoToWizard: 'Vers le configurateur'
+    MoreInformation: 'Plus d''informations'
+    Overview: 'Vue d''ensemble'
+    RedirectionInProgress: 'Vous serez redirigé vers le panier d''achat dans quelques secondes. Si, contrairement aux attentes, la redirection n''a pas lieu, veuillez cliquer sur le bouton suivant.'
+    RedirectionInProgress2: 'Vous serez redirigé vers le configurateur dans quelques secondes. Si, contrairement aux attentes, la redirection n''a pas lieu, veuillez cliquer sur le bouton suivant.'
+    ShowAdditionalOptions: 'Afficher plus d''options'
+    free: gratuit
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Retour
+    BackTo: 'Retour à {step}'
+    DESCRIPTION: 'Page qui fournit un configurateur de produits par étapes.'
+    PLURALNAME: 'Configurateurs de produits (par étapes)'
+    SINGULARNAME: 'Configurateur de produits (par étapes)'
+    Step: Étape
+    Steps: Étapes
+    YourChoices: 'Votre sélection'
+    YourStep: 'Votre {step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Conditions d''affichage'
+    ParentStepOption: 'Option parentale'
+    SINGULARNAME: 'Condition d''affichage'
+    StepOptionID: Option
+    StepOptionSet: 'Ensemble d''options'
+    TargetValue: Valeur
+    Type: Type
+    TypeIsEqual: correspond
+    TypeIsGreaterThan: 'est supérieure à'
+    TypeIsGreaterThanOrEqual: 'est égale ou supérieure à'
+    TypeIsLighterThan: 'est inférieur à'
+    TypeIsLighterThanOrEqual: 'est égale ou inférieure à'
+    TypeIsNotEqual: 'ne correspond pas'
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Texte de bouton'
+    ButtonTitleDesc: 'Si vous laissez ce champ vide, "Suivant" sera utilisé.'
+    Continue: Continuer
+    DescriptionContent: Description
+    DescriptionContentDesc: 'Contenu descriptif qui s''affiche au-dessus des options de sélection.'
+    DescriptionTitle: 'Titre de la description'
+    DescriptionTitleDesc: 'Titre facultatif qui apparaît au-dessus de la description.'
+    DisplayConditionOperation: 'Opérateur booléen'
+    DisplayConditionOperationAnd: tous
+    DisplayConditionOperationOr: un
+    DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: afficher
+    DisplayConditions: 'Conditions d''affichage'
+    FontAwesomeIcon: 'Classe Police d''icônes Font Awesome'
+    FontAwesomeIconDesc: 'Classe CSS pour une police d''icônes Font Awesome. S''affiche dans la navigation par étapes.'
+    InfoBoxContent: 'Contenu de la boîte d''informations'
+    InfoBoxContentDesc: 'Contenu affiché dans la boîte d''informations lors du démarrage de l''étape.'
+    InfoBoxTitle: 'Titre de la boîte d''informations'
+    InfoBoxTitleDesc: 'Titre affiché dans la boîte d''informations lors du démarrage de l''étape.'
+    PLURALNAME: 'Étapes du configurateur'
+    RedirectTo: 'Rediriger vers'
+    RedirectToDesc: 'Page vers laquelle vous serez redirigé lorsque cette étape sera atteinte. Tous les articles sélectionnés jusqu''à cette étape seront ajoutés au panier.'
+    SINGULARNAME: 'Étape du configurateur'
+    ShowInStepNavigation: 'Afficher dans la navigation par étapes'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    StepOptionSets: 'Ensembles d''options'
+    StepOptions: Options
+    Title: Titre
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Étendue
+    ButtonTargetFile: 'Bouton Fichier cible'
+    ButtonTargetFileDesc: 'Fichier à ouvrir lorsque l''on clique sur le bouton.'
+    ButtonTargetLink: 'Bouton Lien cible'
+    ButtonTargetLinkDesc: 'Lien à ouvrir lorsque l''on clique sur le bouton. Si un fichier cible de bouton est spécifié, il sera utilisé à la place.'
+    ButtonTargetType: 'Ouvrir le lien dans'
+    ButtonTargetTypeBlank: 'nouvelle fenêtre'
+    ButtonTargetTypeEmpty: 'même fenêtre'
+    ButtonTitle: 'Texte de bouton'
+    Content: 'Contenu du texte'
+    DefaultValue: 'Valeur par défaut'
+    DefaultValueDesc: 'Valeur qui est utilisée par défaut pour cette option.'
+    DisplayConditionOperation: 'Opérateur booléen'
+    DisplayConditionOperationAnd: tous
+    DisplayConditionOperationOr: un
+    DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: afficher
+    DisplayConditions: 'Conditions d''affichage'
+    IsOptional: 'Est facultatif'
+    IsPreselected: 'Est présélectionné'
+    NumberProductRelationDesc: 'Cet article sera ajouté au panier avec la quantité spécifiée par cette option.'
+    NumberProductRelationTitle: 'Articles pour cette option'
+    OptionDescriptionDesc: 'Affiché comme description pour l''option "{option}".'
+    OptionDescriptionTitle: 'Description pour l''option {option}'
+    OptionLongDescriptionDesc: 'Affiché comme une longue description dans une fenêtre de dialogue pour l''option "{option}". Si un article est spécifié, les informations relatives à cet article sont affichées à la place.'
+    OptionLongDescriptionTitle: 'Description longue pour l''option {option}'
+    OptionProductRelation: 'Articles liés'
+    OptionProductRelationDesc: 'Ajoutez cet article au panier lorsque l''option "{option}" est sélectionnée.'
+    OptionProductRelationTitle: 'Article pour l''option {option}'
+    OptionType: 'Type d''entrée'
+    OptionTypeBinaryQuestion: 'Question Oui-Non'
+    OptionTypeLabel: Label
+    OptionTypeNumber: Numéro
+    OptionTypeProductView: Produits
+    OptionTypeRadio: 'Choix multiple'
+    OptionTypeRedirection: Redirection
+    OptionTypeRedirectionHeader: 'Cette option redirigera les clients vers une autre page.'
+    OptionTypeTextArea: 'Saisie de texte (multiligne)'
+    OptionTypeTextField: 'Saisie de texte'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Nombre maximum dans la liste déroulante pour l''option {option}'
+    OptionUseCustomQuantityPluralTitle: 'Unité de quantité au pluriel pour l''option {option}'
+    OptionUseCustomQuantitySingularTitle: 'Unité de quantité au singulier pour l''option {option}'
+    OptionUseCustomQuantityTextTitle: 'Texte d''information de la sélection de quantité pour {option}'
+    OptionUseCustomQuantityTitle: 'Utiliser une quantité librement sélectionnable pour l''option {option}'
+    Options: Options
+    OptionsDesc: 'Liste des options possibles qui peuvent être sélectionnées dans le champ à choix multiple. Veuillez saisir une option par ligne.'
+    PLURALNAME: 'Options d''étape du configurateur'
+    ProductDynQuantityStepOptionID: 'Quantité selon l''option'
+    ProductDynQuantityStepOptionIDDesc: 'L''entrée de l''utilisateur pour cette option est utilisée comme quantité pour le panier. Si aucune entrée n''est effectuée ou si l''option est ignorée, le nombre minimum est utilisé.'
+    ProductMinQuantity: 'Quantité minimale'
+    ProductMinQuantityDesc: 'Quantité minimale à ajouter au panier.'
+    ProductPriceLabel: 'Étiquette de prix'
+    ProductPriceLabelDesc: 'Cette étiquette facultative sera placée devant le prix, si celui-ci est spécifié.'
+    ProductPriceLabelFor: 'Étiquette de prix pour {product}'
+    ProductQuantityDropdownMax: 'Nombre maximum dans la liste déroulante'
+    ProductQuantityDropdownMaxDesc: 'Le nombre maximum qui peut être sélectionné dans le menu déroulant. Si le client a besoin de plus, il peut faire cette sélection manuellement.'
+    ProductQuantityPlural: 'Unité de quantité au pluriel'
+    ProductQuantityPluralDesc: 'L''unité de quantité à afficher lors de la sélection de la quantité 0 ou >1.'
+    ProductQuantitySingular: 'Unité de quantité singulière'
+    ProductQuantitySingularDesc: 'L''unité de quantité à afficher lors de la sélection de la quantité 1.'
+    ProductViewIsReadonly: 'Ne pas permettre la saisie de l''utilisateur'
+    SINGULARNAME: 'Option d''étape du configurateur'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    Text: Texte
+    TextDesc: 'Texte à afficher dans la partie inférieure de la boîte de sélection (par exemple au-dessus du bouton de sélection/de la liste de sélection).'
+    Title: Titre
+    moreThanMax: 'plus de {max} {maxTitle} ...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Opérateur booléen'
+    DisplayConditionOperationAnd: tous
+    DisplayConditionOperationOr: un
+    DisplayConditionText: 'Cette option est configurée si vous remplissez {operation} les conditions suivantes {type}'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: afficher
+    DisplayConditions: 'Conditions d''affichage'
+    PLURALNAME: 'Ensembles d''options d''étape du configurateur'
+    SINGULARNAME: 'Ensemble d''options d''étape du configurateur'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    StepOptions: Options
+    Title: Titre
