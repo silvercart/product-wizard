@@ -1,0 +1,165 @@
+fr:
+  ProductWizard:
+    Choose: Sélectionnez
+    ChooseShort: Ausw.
+    Chosen: Sélectionné
+    Close: Fermer
+    GoToCart: 'Vers le panier d''achat'
+    GoToWizard: 'Vers le configurateur'
+    MoreInformation: 'plus d''infos'
+    Overview: 'Vue d''ensemble'
+    RedirectionInProgress: 'Vous serez redirigé vers le panier d''achat en quelques secondes. Si, contre toute attente, vous n''êtes pas redirigé, veuillez cliquer sur le bouton suivant.'
+    RedirectionInProgress2: 'Vous serez redirigé vers le configurateur dans quelques secondes. Si, contre toute attente, vous n''êtes pas redirigé, veuillez cliquer sur le bouton suivant.'
+    ShowAdditionalOptions: 'Afficher d''autres options'
+    free: gratuit
+    more: plus
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Dos
+    BackTo: 'Retour à {step}'
+    DESCRIPTION: 'Page qui fournit un configurateur de produits par étapes.'
+    PLURALNAME: 'Configurateurs de produits (par étapes)'
+    SINGULARNAME: 'Configurateur de produits (par étapes)'
+    Step: Étape
+    Steps: Étapes
+    YourChoices: 'Votre sélection'
+    YourStep: 'Votre {step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Conditions d''affichage'
+    ParentStepOption: 'Option pour les parents'
+    SINGULARNAME: 'Condition d''affichage'
+    StepOptionID: Option
+    StepOptionSet: 'Option choisie'
+    TargetValue: Valeur
+    Type: Art
+    TypeIsEqual: 'correspond à'
+    TypeIsGreaterThan: 'est supérieure à'
+    TypeIsGreaterThanOrEqual: 'est égal ou supérieur à'
+    TypeIsLighterThan: 'est plus petit que'
+    TypeIsLighterThanOrEqual: 'est égal ou inférieur à'
+    TypeIsNotEqual: 'ne correspond pas'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Désactiver toutes les autres options'
+    Behavior-ENABLE-ALL: 'Réactiver toutes les autres options'
+    Behavior-NONE: Non
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Texte du bouton'
+    ButtonTitleDesc: 'Si vous laissez ce champ vide, c''est "Suivant" qui sera utilisé.'
+    Continue: 'Plus d''informations sur'
+    DescriptionContent: Description
+    DescriptionContentDesc: 'Contenu descriptif affiché au-dessus des options de sélection.'
+    DescriptionTitle: 'Titre de la description'
+    DescriptionTitleDesc: 'Titre facultatif affiché au-dessus de la description.'
+    DisplayConditionOperation: 'Opération booléenne'
+    DisplayConditionOperationAnd: 'de tous'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Cette option est activée lorsque {opération} les conditions suivantes {type} sont remplies.'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: montrer
+    DisplayConditions: 'Conditions d''affichage'
+    FontAwesomeIcon: 'Classe d''icônes de FontAwesome'
+    FontAwesomeIconDesc: 'Classe CSS pour une icône FontAwesome. Affiché dans la navigation par étapes.'
+    InfoBoxContent: 'Contenu de l''Info Box'
+    InfoBoxContentDesc: 'Contenu affiché dans la boîte d''information lors de la saisie de l''étape.'
+    InfoBoxTitle: 'Titre de la boîte d''information'
+    InfoBoxTitleDesc: 'Titre affiché dans la boîte d''information lors de la saisie de l''étape.'
+    PLURALNAME: 'Étapes du configurateur'
+    RedirectTo: 'En avant vers'
+    RedirectToDesc: 'Page vers laquelle être redirigé une fois cette étape atteinte. Tous les articles sélectionnés jusqu''à cette étape seront ajoutés au panier.'
+    SINGULARNAME: 'Étape du configurateur'
+    ShowInStepNavigation: 'Afficher la navigation par étapes'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    StepOptionSets: 'Jeux d''options'
+    StepOptions: Options
+    Title: Titre
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: 'Extension du site'
+    AllowMultipleChoices: 'Permettre la sélection multiple'
+    ButtonTargetFile: 'Fichier cible des boutons'
+    ButtonTargetFileDesc: 'Fichier à ouvrir lorsque le bouton est cliqué.'
+    ButtonTargetLink: 'Lien cible du bouton'
+    ButtonTargetLinkDesc: 'Lien à ouvrir lorsque le bouton est cliqué. Si un fichier cible de boutons est spécifié, il est utilisé à la place.'
+    ButtonTargetType: 'Ouvrir le lien dans'
+    ButtonTargetTypeBlank: 'nouvelle fenêtre'
+    ButtonTargetTypeEmpty: 'même fenêtre'
+    ButtonTitle: 'Texte du bouton'
+    Content: 'Contenu du texte'
+    DefaultValue: 'Valeur par défaut'
+    DefaultValueDesc: 'Valeur utilisée par défaut pour cette option.'
+    DisableLabelForFree: 'Désactiver l''étiquette "gratuit" pour les options sans lien direct avec l''article.'
+    DisplayConditionOperation: 'Opération booléenne'
+    DisplayConditionOperationAnd: 'de tous'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Cette option est activée lorsque {opération} les conditions suivantes {type} sont remplies.'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: montrer
+    DisplayConditions: 'Conditions d''affichage'
+    IsOptional: 'est facultatif'
+    IsPreselected: 'Est présélectionné'
+    NumberProductRelationDesc: 'Cet article sera ajouté au panier avec la quantité indiquée à cette option.'
+    NumberProductRelationTitle: 'Articles pour cette option'
+    OptionBehavior: Comportement
+    OptionBehaviorTitle: 'Comportement de l''option {option}'
+    OptionDescriptionDesc: 'Affiché comme une description de l''option "{option}".'
+    OptionDescriptionTitle: 'Description de l''option {option}'
+    OptionLongDescriptionDesc: 'Affiché comme une description longue dans une fenêtre de dialogue pour l''option "{option}". Si un élément est spécifié, les informations sur l''élément sont affichées à la place.'
+    OptionLongDescriptionTitle: 'Description longue de l''option {option}'
+    OptionProductRelation: 'Articles liés'
+    OptionProductRelationDesc: 'Ajoute cet article au panier lorsque l''"{option}" est sélectionnée.'
+    OptionProductRelationTitle: 'Article pour l''option {option}'
+    OptionType: 'Type d''entrée'
+    OptionTypeBinaryQuestion: 'Question oui/non'
+    OptionTypeLabel: Étiquette
+    OptionTypeNumber: Numéro
+    OptionTypeProductView: Produits
+    OptionTypeRadio: 'Choix multiple'
+    OptionTypeRedirection: Transférer
+    OptionTypeRedirectionHeader: 'Cette option permet de rediriger les clients vers une autre page.'
+    OptionTypeTextArea: 'Saisie de texte (multiligne)'
+    OptionTypeTextField: 'Saisie de texte'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Nombre maximum dans la liste déroulante pour l''option {option}'
+    OptionUseCustomQuantityPluralTitle: 'Unité de mesure plurielle pour l''option {option}'
+    OptionUseCustomQuantitySingularTitle: 'Unité de mesure singulière pour l''option {option}'
+    OptionUseCustomQuantityTextTitle: 'Texte d''information Sélection de la quantité pour {option}'
+    OptionUseCustomQuantityTitle: 'Utiliser la quantité libre sélectionnable pour l''option {option}'
+    Options: Options
+    OptionsDesc: 'Liste des options possibles à choisir dans le champ à choix multiple. Veuillez indiquer une option par ligne.'
+    PLURALNAME: 'Options de l''étape du configurateur'
+    ProductDynQuantityStepOptionID: 'Quantité selon l''option'
+    ProductDynQuantityStepOptionIDDesc: 'L''entrée de l''utilisateur dans cette option est utilisée comme quantité pour le panier. Si aucune entrée n''est effectuée ou si l''option est ignorée, la quantité minimale est utilisée.'
+    ProductMinQuantity: 'Quantité minimale'
+    ProductMinQuantityDesc: 'Quantité minimale à ajouter au panier d''achat.'
+    ProductPriceLabel: 'Etiquette de prix'
+    ProductPriceLabelDesc: 'Cette étiquette facultative est préfixée au prix lorsqu''elle est indiquée.'
+    ProductPriceLabelFor: 'Etiquette de prix pour {produit}'
+    ProductQuantityDropdownMax: 'Nombre maximum dans la liste déroulante'
+    ProductQuantityDropdownMaxDesc: 'Le nombre maximum qui peut être sélectionné dans la liste déroulante. Si le client a besoin de plus, il peut faire cette sélection manuellement.'
+    ProductQuantityPlural: 'Unité de mesure plurielle'
+    ProductQuantityPluralDesc: 'L''unité de mesure à afficher lors de la sélection de la quantité 0 ou >1.'
+    ProductQuantitySingular: 'Unité de mesure singulière'
+    ProductQuantitySingularDesc: 'L''unité de mesure à afficher lors de la sélection de la quantité 1.'
+    ProductViewIsReadonly: 'Ne pas autoriser la saisie par l''utilisateur'
+    SINGULARNAME: 'Option de l''étape du configurateur'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    Text: Texte
+    TextDesc: 'Texte à afficher dans la partie inférieure de la boîte de sélection (par exemple, au-dessus du bouton de sélection/de la liste déroulante).'
+    Title: Titre
+    moreThanMax: 'plus que {max} {maxTitre}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Opération booléenne'
+    DisplayConditionOperationAnd: 'de tous'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Cette option est activée lorsque {opération} les conditions suivantes {type} sont remplies.'
+    DisplayConditionType: Action
+    DisplayConditionTypeHide: cacher
+    DisplayConditionTypeShow: montrer
+    DisplayConditions: 'Conditions d''affichage'
+    PLURALNAME: 'Configurateur Step Option Sets'
+    SINGULARNAME: 'Configurateur Étape Option Set'
+    Sort: 'Ordre de tri'
+    Step: Étape
+    StepOptions: Options
+    Title: Titre

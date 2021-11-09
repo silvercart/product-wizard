@@ -12,6 +12,7 @@ fr_BE:
     RedirectionInProgress2: 'Vous serez redirigé vers le configurateur dans quelques secondes. Si, contrairement aux attentes, la redirection n''a pas lieu, veuillez cliquer sur le bouton suivant.'
     ShowAdditionalOptions: 'Afficher plus d''options'
     free: gratuit
+    more: plus
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Retour
     BackTo: 'Retour à {step}'
@@ -36,6 +37,10 @@ fr_BE:
     TypeIsLighterThan: 'est inférieur à'
     TypeIsLighterThanOrEqual: 'est égale ou inférieure à'
     TypeIsNotEqual: 'ne correspond pas'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Désactiver toutes les autres options'
+    Behavior-ENABLE-ALL: 'Réactiver toutes les autres options'
+    Behavior-NONE: Non
   SilverCart\ProductWizard\Model\Wizard\Step:
     ButtonTitle: 'Texte de bouton'
     ButtonTitleDesc: 'Si vous laissez ce champ vide, "Suivant" sera utilisé.'
@@ -70,6 +75,7 @@ fr_BE:
     Title: Titre
   SilverCart\ProductWizard\Model\Wizard\StepOption:
     Advanced: Étendue
+    AllowMultipleChoices: 'Permettre la sélection multiple'
     ButtonTargetFile: 'Bouton Fichier cible'
     ButtonTargetFileDesc: 'Fichier à ouvrir lorsque l''on clique sur le bouton.'
     ButtonTargetLink: 'Bouton Lien cible'
@@ -81,6 +87,7 @@ fr_BE:
     Content: 'Contenu du texte'
     DefaultValue: 'Valeur par défaut'
     DefaultValueDesc: 'Valeur qui est utilisée par défaut pour cette option.'
+    DisableLabelForFree: 'Désactiver l''étiquette "gratuit" pour les options sans lien direct avec l''article.'
     DisplayConditionOperation: 'Opérateur booléen'
     DisplayConditionOperationAnd: tous
     DisplayConditionOperationOr: un
@@ -93,6 +100,8 @@ fr_BE:
     IsPreselected: 'Est présélectionné'
     NumberProductRelationDesc: 'Cet article sera ajouté au panier avec la quantité spécifiée par cette option.'
     NumberProductRelationTitle: 'Articles pour cette option'
+    OptionBehavior: Comportement
+    OptionBehaviorTitle: 'Comportement de l''option {option}'
     OptionDescriptionDesc: 'Affiché comme description pour l''option "{option}".'
     OptionDescriptionTitle: 'Description pour l''option {option}'
     OptionLongDescriptionDesc: 'Affiché comme une longue description dans une fenêtre de dialogue pour l''option "{option}". Si un article est spécifié, les informations relatives à cet article sont affichées à la place.'

@@ -1,0 +1,165 @@
+ru:
+  ProductWizard:
+    Choose: Выберите
+    ChooseShort: Ausw.
+    Chosen: Избранное
+    Close: Закрыть
+    GoToCart: 'В корзину'
+    GoToWizard: 'К конфигуратору'
+    MoreInformation: 'дополнительная информация'
+    Overview: Обзор
+    RedirectionInProgress: 'Через несколько секунд вы будете перенаправлены в корзину. Если, вопреки ожиданиям, вы не перенаправляетесь, пожалуйста, нажмите следующую кнопку.'
+    RedirectionInProgress2: 'Через несколько секунд вы будете перенаправлены в конфигуратор. Если, вопреки ожиданиям, вы не перенаправляетесь, пожалуйста, нажмите следующую кнопку.'
+    ShowAdditionalOptions: 'Показать больше вариантов'
+    free: бесплатно
+    more: больше
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Назад
+    BackTo: 'Назад к {шаг}'
+    DESCRIPTION: 'Страница, предоставляющая пошаговый конфигуратор продуктов.'
+    PLURALNAME: 'Конфигураторы продуктов (пошаговые)'
+    SINGULARNAME: 'Конфигуратор продукции (пошаговый)'
+    Step: Шаг
+    Steps: Шаги
+    YourChoices: 'Ваш выбор'
+    YourStep: 'Ваш {шаг}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Условия отображения'
+    ParentStepOption: 'Родительский вариант'
+    SINGULARNAME: 'Состояние дисплея'
+    StepOptionID: Вариант
+    StepOptionSet: 'Набор опций'
+    TargetValue: Значение
+    Type: Искусство
+    TypeIsEqual: соответствует
+    TypeIsGreaterThan: 'больше, чем'
+    TypeIsGreaterThanOrEqual: 'равна или больше, чем'
+    TypeIsLighterThan: 'меньше, чем'
+    TypeIsLighterThanOrEqual: 'равна или меньше'
+    TypeIsNotEqual: 'не соответствует'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Деактивировать все остальные опции'
+    Behavior-ENABLE-ALL: 'Снова активируйте все остальные опции'
+    Behavior-NONE: Нет
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Текст кнопки'
+    ButtonTitleDesc: 'Если вы оставите это поле пустым, будет использоваться "Далее".'
+    Continue: Далее
+    DescriptionContent: Описание
+    DescriptionContentDesc: 'Описательный контент, отображаемый над параметрами выбора.'
+    DescriptionTitle: 'Название описания'
+    DescriptionTitleDesc: 'Необязательный заголовок, отображаемый над описанием.'
+    DisplayConditionOperation: 'Булева операция'
+    DisplayConditionOperationAnd: всего
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Этот параметр устанавливается при выполнении {операция} следующих условий {тип}.'
+    DisplayConditionType: Действие
+    DisplayConditionTypeHide: скрыть
+    DisplayConditionTypeShow: показать
+    DisplayConditions: 'Условия отображения'
+    FontAwesomeIcon: 'Класс значков FontAwesome'
+    FontAwesomeIconDesc: 'CSS-класс для иконки FontAwesome. Отображается в навигации по шагам.'
+    InfoBoxContent: 'Содержание информационного блока'
+    InfoBoxContentDesc: 'Содержание, отображаемое в информационном окне при вводе шага.'
+    InfoBoxTitle: 'Название информационного блока'
+    InfoBoxTitleDesc: 'Название, отображаемое в информационном окне при вводе шага.'
+    PLURALNAME: 'Шаги конфигуратора'
+    RedirectTo: 'Вперед к'
+    RedirectToDesc: 'Страница, на которую следует перенаправить после выполнения этого шага. Все товары, выбранные до этого шага, будут добавлены в корзину.'
+    SINGULARNAME: 'Шаг конфигуратора'
+    ShowInStepNavigation: 'Показать пошаговую навигацию'
+    Sort: 'Порядок сортировки'
+    Step: Шаг
+    StepOptionSets: 'Наборы опций'
+    StepOptions: Опции
+    Title: Название
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Расширенный
+    AllowMultipleChoices: 'Разрешить множественный выбор'
+    ButtonTargetFile: 'Целевой файл кнопки'
+    ButtonTargetFileDesc: 'Файл, который будет открыт при нажатии на кнопку.'
+    ButtonTargetLink: 'Целевая ссылка на кнопку'
+    ButtonTargetLinkDesc: 'Ссылка, которая будет открываться при нажатии на кнопку. Если указан целевой файл кнопки, он используется вместо него.'
+    ButtonTargetType: 'Открыть ссылку в'
+    ButtonTargetTypeBlank: 'новое окно'
+    ButtonTargetTypeEmpty: 'одно и то же окно'
+    ButtonTitle: 'Текст кнопки'
+    Content: 'Содержание текста'
+    DefaultValue: 'Значение по умолчанию'
+    DefaultValueDesc: 'Значение, используемое по умолчанию для этой опции.'
+    DisableLabelForFree: 'Деактивируйте пометку "бесплатно" для вариантов без прямой привязки к статье'
+    DisplayConditionOperation: 'Булева операция'
+    DisplayConditionOperationAnd: всего
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Этот параметр устанавливается при выполнении {операция} следующих условий {тип}.'
+    DisplayConditionType: Действие
+    DisplayConditionTypeHide: скрыть
+    DisplayConditionTypeShow: показать
+    DisplayConditions: 'Условия отображения'
+    IsOptional: необязательно
+    IsPreselected: 'Предварительно выбирается'
+    NumberProductRelationDesc: 'Этот товар будет добавлен в корзину с количеством, указанным в данном параметре.'
+    NumberProductRelationTitle: 'Статьи для этого варианта'
+    OptionBehavior: Поведение
+    OptionBehaviorTitle: 'Поведение для опции {option}'
+    OptionDescriptionDesc: 'Отображается как описание для опции "{option}".'
+    OptionDescriptionTitle: 'Описание для опции {option}'
+    OptionLongDescriptionDesc: 'Отображается как длинное описание во всплывающем диалоге для опции "{option}". Если указан элемент, то вместо него отображается информация об элементе.'
+    OptionLongDescriptionTitle: 'Длинное описание для опции {option}'
+    OptionProductRelation: 'Связанные статьи'
+    OptionProductRelationDesc: 'Добавление этого товара в корзину при выборе опции "{option}".'
+    OptionProductRelationTitle: 'Статья для опции {option}'
+    OptionType: 'Тип входа'
+    OptionTypeBinaryQuestion: 'Вопрос "да-нет'
+    OptionTypeLabel: Этикетка
+    OptionTypeNumber: Номер
+    OptionTypeProductView: Продукция
+    OptionTypeRadio: 'Множественный выбор'
+    OptionTypeRedirection: Переадресация
+    OptionTypeRedirectionHeader: 'Эта опция перенаправляет клиентов на другую страницу.'
+    OptionTypeTextArea: 'Ввод текста (многострочный)'
+    OptionTypeTextField: 'Ввод текста'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Максимальное число в выпадающем списке для опции {option}'
+    OptionUseCustomQuantityPluralTitle: 'Единица измерения во множественном числе для опции {option}'
+    OptionUseCustomQuantitySingularTitle: 'Единица измерения единственная для опции {option}'
+    OptionUseCustomQuantityTextTitle: 'Информационный текст Выбор количества для {option}'
+    OptionUseCustomQuantityTitle: 'Используйте свободное выбираемое количество для опции {option}'
+    Options: Опции
+    OptionsDesc: 'Список возможных вариантов для выбора в поле множественного выбора. Пожалуйста, укажите по одному варианту в каждой строке.'
+    PLURALNAME: 'Варианты шагов конфигуратора'
+    ProductDynQuantityStepOptionID: 'Количество в соответствии с опцией'
+    ProductDynQuantityStepOptionIDDesc: 'Введенное пользователем значение этого параметра используется в качестве количества для корзины. Если запись не сделана или опция пропущена, используется минимальное количество.'
+    ProductMinQuantity: 'Минимальное количество'
+    ProductMinQuantityDesc: 'Минимальное количество для добавления в корзину.'
+    ProductPriceLabel: 'Ценовая этикетка'
+    ProductPriceLabelDesc: 'Эта необязательная метка ставится перед ценой, когда она указана.'
+    ProductPriceLabelFor: 'Ценовая этикетка для {продукта}'
+    ProductQuantityDropdownMax: 'Максимальное количество в выпадающем списке'
+    ProductQuantityDropdownMaxDesc: 'Максимальное число, которое можно выбрать в выпадающем списке. Если клиенту нужно больше, он может сделать этот выбор вручную.'
+    ProductQuantityPlural: 'Единица измерения множественное число'
+    ProductQuantityPluralDesc: 'Единица измерения, которая будет отображаться при выборе количества 0 или >1.'
+    ProductQuantitySingular: 'Единица измерения сингулярная'
+    ProductQuantitySingularDesc: 'Единица измерения, которая будет отображаться при выборе количества 1.'
+    ProductViewIsReadonly: 'Не разрешать ввод пользователем'
+    SINGULARNAME: 'Опция шага конфигуратора'
+    Sort: 'Порядок сортировки'
+    Step: Шаг
+    Text: Текст
+    TextDesc: 'Текст, который будет отображаться в нижней части поля выбора (например, над кнопкой выбора/выпадающего списка).'
+    Title: Название
+    moreThanMax: 'больше чем {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Булева операция'
+    DisplayConditionOperationAnd: всего
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Этот параметр устанавливается при выполнении {операция} следующих условий {тип}.'
+    DisplayConditionType: Действие
+    DisplayConditionTypeHide: скрыть
+    DisplayConditionTypeShow: показать
+    DisplayConditions: 'Условия отображения'
+    PLURALNAME: 'Конфигуратор Шаг Наборы опций'
+    SINGULARNAME: 'Конфигуратор Шаг Набор опций'
+    Sort: 'Порядок сортировки'
+    Step: Шаг
+    StepOptions: Опции
+    Title: Название

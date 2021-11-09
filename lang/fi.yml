@@ -1,0 +1,165 @@
+fi:
+  ProductWizard:
+    Choose: Valitse
+    ChooseShort: Ausw.
+    Chosen: Valitut
+    Close: Sulje
+    GoToCart: Ostoskoriin
+    GoToWizard: Konfiguraattoriin
+    MoreInformation: lisätietoja
+    Overview: Yleiskatsaus
+    RedirectionInProgress: 'Sinut ohjataan ostoskoriin muutaman sekunnin kuluttua. Jos sinua ei odotetusti ohjatakaan uudelleen, klikkaa seuraavaa painiketta.'
+    RedirectionInProgress2: 'Sinut ohjataan konfiguraattoriin muutaman sekunnin kuluttua. Jos sinua ei odotetusti ohjatakaan uudelleen, klikkaa seuraavaa painiketta.'
+    ShowAdditionalOptions: 'Näytä lisää vaihtoehtoja'
+    free: maksutta
+    more: lisää
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Takaisin
+    BackTo: 'Takaisin {step}'
+    DESCRIPTION: 'Sivu, joka tarjoaa vaiheittaisen tuotekonfiguraattorin.'
+    PLURALNAME: 'Tuotekonfiguraattorit (vaiheittain)'
+    SINGULARNAME: 'Tuotekonfiguraattori (vaiheittainen)'
+    Step: Vaihe
+    Steps: Askeleet
+    YourChoices: 'Sinun valintasi'
+    YourStep: 'Sinun {askeleesi}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: Näyttöolosuhteet
+    ParentStepOption: 'Vanhempien vaihtoehto'
+    SINGULARNAME: 'Näytön tila'
+    StepOptionID: Vaihtoehto
+    StepOptionSet: Vaihtoehtosarja
+    TargetValue: Arvo
+    Type: Art
+    TypeIsEqual: vastaa
+    TypeIsGreaterThan: 'on suurempi kuin'
+    TypeIsGreaterThanOrEqual: 'on yhtä suuri tai suurempi kuin'
+    TypeIsLighterThan: 'on pienempi kuin'
+    TypeIsLighterThanOrEqual: 'on yhtä suuri tai pienempi kuin'
+    TypeIsNotEqual: 'ei vastaa'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Poista kaikki muut vaihtoehdot käytöstä'
+    Behavior-ENABLE-ALL: 'Aktivoi kaikki muut vaihtoehdot uudelleen'
+    Behavior-NONE: Ei
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Painikkeen teksti'
+    ButtonTitleDesc: 'Jos jätät tämän kentän tyhjäksi, käytetään "Seuraava".'
+    Continue: Lisätietoja
+    DescriptionContent: Kuvaus
+    DescriptionContentDesc: 'Kuvaileva sisältö näytetään valintavaihtoehtojen yläpuolella.'
+    DescriptionTitle: 'Kuvaus otsikko'
+    DescriptionTitleDesc: 'Vapaaehtoinen otsikko, joka näkyy kuvauksen yläpuolella.'
+    DisplayConditionOperation: 'Boolen operaatio'
+    DisplayConditionOperationAnd: kaikista
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Tämä vaihtoehto asetetaan, kun {operation} seuraavat ehdot {type} täyttyvät.'
+    DisplayConditionType: Toiminta
+    DisplayConditionTypeHide: piilota
+    DisplayConditionTypeShow: näytä
+    DisplayConditions: Näyttöolosuhteet
+    FontAwesomeIcon: 'FontAwesome Icon Class'
+    FontAwesomeIconDesc: 'FontAwesome-kuvakkeen CSS-luokka. Näytetään vaiheen navigoinnissa.'
+    InfoBoxContent: 'Infolaatikon sisältö'
+    InfoBoxContentDesc: 'Sisältö, joka näytetään tietoruudussa vaihetta syötettäessä.'
+    InfoBoxTitle: 'Infolaatikon otsikko'
+    InfoBoxTitleDesc: 'Otsikko, joka näytetään tietoruudussa vaihetta syötettäessä.'
+    PLURALNAME: 'Konfiguraattorin vaiheet'
+    RedirectTo: Eteenpäin
+    RedirectToDesc: 'Sivu, jolle ohjataan, kun tämä vaihe on saavutettu. Kaikki tähän vaiheeseen asti valitut tuotteet lisätään ostoskoriin.'
+    SINGULARNAME: 'Konfiguraattorin vaihe'
+    ShowInStepNavigation: 'Näytä vaiheittainen navigointi'
+    Sort: Lajittelujärjestys
+    Step: Vaihe
+    StepOptionSets: Vaihtoehtosarjat
+    StepOptions: Vaihtoehdot
+    Title: Otsikko
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Laajennettu
+    AllowMultipleChoices: 'Salli monivalinta'
+    ButtonTargetFile: 'Painikkeen kohdetiedosto'
+    ButtonTargetFileDesc: 'Tiedosto, joka avataan, kun painiketta napsautetaan.'
+    ButtonTargetLink: 'Painikkeen kohdelinkki'
+    ButtonTargetLinkDesc: 'Linkki, joka avataan, kun painiketta napsautetaan. Jos painikkeen kohdetiedosto on määritetty, sitä käytetään sen sijaan.'
+    ButtonTargetType: 'Avaa linkki'
+    ButtonTargetTypeBlank: 'uusi ikkuna'
+    ButtonTargetTypeEmpty: 'sama ikkuna'
+    ButtonTitle: 'Painikkeen teksti'
+    Content: 'Tekstin sisältö'
+    DefaultValue: Oletusarvo
+    DefaultValueDesc: 'Tämän vaihtoehdon oletusarvo.'
+    DisableLabelForFree: 'Deaktivoi merkintä "maksuton" sellaisten vaihtoehtojen osalta, joihin ei liity suoraa artikkelikytkentää.'
+    DisplayConditionOperation: 'Boolen operaatio'
+    DisplayConditionOperationAnd: kaikista
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Tämä vaihtoehto asetetaan, kun {operation} seuraavat ehdot {type} täyttyvät.'
+    DisplayConditionType: Toiminta
+    DisplayConditionTypeHide: piilota
+    DisplayConditionTypeShow: näytä
+    DisplayConditions: Näyttöolosuhteet
+    IsOptional: 'On valinnainen'
+    IsPreselected: 'On esivalittu'
+    NumberProductRelationDesc: 'Tämä tuote lisätään koriin tässä vaihtoehdossa ilmoitetulla määrällä.'
+    NumberProductRelationTitle: 'Tätä vaihtoehtoa koskevat artikkelit'
+    OptionBehavior: Käyttäytyminen
+    OptionBehaviorTitle: 'Vaihtoehdon {option} käyttäytyminen'
+    OptionDescriptionDesc: 'Näytetään vaihtoehdon "{option}" kuvauksena.'
+    OptionDescriptionTitle: 'Kuvaus vaihtoehdolle {option}'
+    OptionLongDescriptionDesc: 'Näytetään pitkänä kuvauksena vaihtoehdon "{option}" ponnahdusikkunassa. Jos kohde on määritetty, sen sijaan näytetään kohteen tiedot.'
+    OptionLongDescriptionTitle: 'Pitkä kuvaus vaihtoehdolle {option}'
+    OptionProductRelation: 'Linkitetyt artikkelit'
+    OptionProductRelationDesc: 'Lisää tämä tuote ostoskoriin, kun vaihtoehto "{option}" on valittu.'
+    OptionProductRelationTitle: 'Vaihtoehtoa {option} koskeva artikkeli'
+    OptionType: 'Syötteen tyyppi'
+    OptionTypeBinaryQuestion: Kyllä-ei-kysymys
+    OptionTypeLabel: Tarra
+    OptionTypeNumber: Numero
+    OptionTypeProductView: Tuotteet
+    OptionTypeRadio: Monivalinta
+    OptionTypeRedirection: Edelleenlähetys
+    OptionTypeRedirectionHeader: 'Tämä vaihtoehto ohjaa asiakkaat toiselle sivulle.'
+    OptionTypeTextArea: 'Tekstinsyöttö (monirivinen)'
+    OptionTypeTextField: Tekstinsyöttö
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Enimmäislukumäärä pudotusvalikossa vaihtoehdossa {option}'
+    OptionUseCustomQuantityPluralTitle: 'Vaihtoehdon mittayksikkö monikossa {option}'
+    OptionUseCustomQuantitySingularTitle: 'Vaihtoehdon {option} mittayksikkö singulaari'
+    OptionUseCustomQuantityTextTitle: 'Infoteksti Määrän valinta {option}'
+    OptionUseCustomQuantityTitle: 'Käytä vapaasti valittavissa olevaa määrää vaihtoehdolle {option}'
+    Options: Vaihtoehdot
+    OptionsDesc: 'Luettelo mahdollisista vaihtoehdoista, joista valita monivalintakentässä. Ilmoita yksi vaihtoehto riviä kohti.'
+    PLURALNAME: 'Konfiguraattorin vaihevaihtoehdot'
+    ProductDynQuantityStepOptionID: 'Määrä vaihtoehdon mukaan'
+    ProductDynQuantityStepOptionIDDesc: 'Käyttäjän syöttämää tätä vaihtoehtoa käytetään ostoskorin määränä. Jos merkintää ei ole tehty tai vaihtoehto on jätetty pois, käytetään vähimmäismäärää.'
+    ProductMinQuantity: Vähimmäismäärä
+    ProductMinQuantityDesc: 'Ostoskoriin lisättävä vähimmäismäärä.'
+    ProductPriceLabel: Hintalappu
+    ProductPriceLabelDesc: 'Tämä valinnainen merkintä liitetään hinnan eteen, kun se on ilmoitettu.'
+    ProductPriceLabelFor: '{tuotteen} hintalappu'
+    ProductQuantityDropdownMax: 'Enimmäislukumäärä pudotusvalikossa'
+    ProductQuantityDropdownMaxDesc: 'Enimmäisluku, joka voidaan valita pudotusvalikosta. Jos asiakas tarvitsee enemmän, hän voi tehdä tämän valinnan manuaalisesti.'
+    ProductQuantityPlural: 'Mittayksikkö monikko'
+    ProductQuantityPluralDesc: 'Näytettävä mittayksikkö, kun valitaan määrä 0 tai >1.'
+    ProductQuantitySingular: 'Mittayksikkö singulaari'
+    ProductQuantitySingularDesc: 'Mittayksikkö, joka näytetään, kun valitaan määrä 1.'
+    ProductViewIsReadonly: 'Älä salli käyttäjän syöttöä'
+    SINGULARNAME: 'Konfiguraattorin vaihevaihtoehto'
+    Sort: Lajittelujärjestys
+    Step: Vaihe
+    Text: Teksti
+    TextDesc: 'Teksti, joka näytetään valintaikkunan alaosassa (esimerkiksi valintapainikkeen/pudotusvalikon yläpuolella).'
+    Title: Otsikko
+    moreThanMax: 'enemmän kuin {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Boolen operaatio'
+    DisplayConditionOperationAnd: kaikista
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Tämä vaihtoehto asetetaan, kun {operation} seuraavat ehdot {type} täyttyvät.'
+    DisplayConditionType: Toiminta
+    DisplayConditionTypeHide: piilota
+    DisplayConditionTypeShow: näytä
+    DisplayConditions: Näyttöolosuhteet
+    PLURALNAME: 'Konfiguraattorin vaihevaihtoehtosarjat'
+    SINGULARNAME: 'Konfiguraattorin vaihevaihtoehto'
+    Sort: Lajittelujärjestys
+    Step: Vaihe
+    StepOptions: Vaihtoehdot
+    Title: Otsikko

@@ -1,0 +1,165 @@
+nb_NO:
+  ProductWizard:
+    Choose: Velge
+    ChooseShort: Utvalg
+    Chosen: Valgt
+    Close: Konkludere
+    GoToCart: 'Til varekurven'
+    GoToWizard: 'Til konfiguratoren'
+    MoreInformation: 'mer informasjon'
+    Overview: oversikt
+    RedirectionInProgress: 'Du vil bli omdirigert til handlekurven i løpet av få sekunder. Dersom videresendingen mot forventning ikke finner sted, vennligst klikk på følgende knapp.'
+    RedirectionInProgress2: 'Du vil bli videresendt til konfiguratoren i løpet av noen sekunder. Dersom videresendingen mot forventning ikke finner sted, vennligst klikk på følgende knapp.'
+    ShowAdditionalOptions: 'Vis flere alternativer'
+    free: gratis
+    more: mer
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: 'Komme tilbake'
+    BackTo: 'Tilbake til {step}'
+    DESCRIPTION: 'Side som gir en trinnbasert produktkonfigurator.'
+    PLURALNAME: 'Produktkonfiguratorer (trinnbasert)'
+    SINGULARNAME: 'Produktkonfigurator (trinnbasert)'
+    Step: steg
+    Steps: trinn
+    YourChoices: 'Ditt valg'
+    YourStep: 'Ditt {step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: Visningsforhold
+    ParentStepOption: 'Foreldre alternativ'
+    SINGULARNAME: Visningstilstand
+    StepOptionID: alternativ
+    StepOptionSet: 'Alternativ satt'
+    TargetValue: verdi
+    Type: Kunst
+    TypeIsEqual: tilsvarer
+    TypeIsGreaterThan: 'er større enn'
+    TypeIsGreaterThanOrEqual: 'lik eller er større enn'
+    TypeIsLighterThan: 'er mindre enn'
+    TypeIsLighterThanOrEqual: 'lik eller er mindre enn'
+    TypeIsNotEqual: 'passer ikke'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Deaktiver alle andre alternativer'
+    Behavior-ENABLE-ALL: 'Aktiver alle andre alternativer på nytt'
+    Behavior-NONE: Nei
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: Knappetekst
+    ButtonTitleDesc: 'Hvis du lar dette feltet stå tomt, vil "Neste" bli brukt.'
+    Continue: Lengre
+    DescriptionContent: beskrivelse
+    DescriptionContentDesc: 'Beskrivende innhold som vises over valgalternativene.'
+    DescriptionTitle: Beskrivelsestittel
+    DescriptionTitleDesc: 'Valgfri tittel som vises over beskrivelsen.'
+    DisplayConditionOperation: 'Boolsk lenke'
+    DisplayConditionOperationAnd: alle
+    DisplayConditionOperationOr: en
+    DisplayConditionText: 'Dette alternativet er satt for å fullføre {operation} av følgende betingelser {type}'
+    DisplayConditionType: handling
+    DisplayConditionTypeHide: 'gjemme seg'
+    DisplayConditionTypeShow: Forestilling
+    DisplayConditions: Visningsforhold
+    FontAwesomeIcon: 'FontAwesome Icon klasse'
+    FontAwesomeIconDesc: 'CSS-klasse for et FontAwesome-ikon. Vises i trinnnavigasjonen.'
+    InfoBoxContent: 'Innhold i infoboksen'
+    InfoBoxContentDesc: 'Innhold som vises i informasjonsboksen når du går inn i trinnet.'
+    InfoBoxTitle: Infobokstittel
+    InfoBoxTitleDesc: 'Tittel som vises i informasjonsboksen når du går inn i trinnet.'
+    PLURALNAME: Konfiguratortrinn
+    RedirectTo: 'Videresend til'
+    RedirectToDesc: 'Side som skal omdirigeres til så snart dette trinnet er nådd. Alle varer som er valgt frem til dette trinnet vil bli lagt til i handlekurven.'
+    SINGULARNAME: 'Konfigurator trinn'
+    ShowInStepNavigation: 'Vis trinnvis navigering'
+    Sort: Sorteringsrekkefølge
+    Step: steg
+    StepOptionSets: Opsjonssett
+    StepOptions: Alternativer
+    Title: tittel
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Forlenget
+    AllowMultipleChoices: 'Tillat flere valg'
+    ButtonTargetFile: Knappmålfil
+    ButtonTargetFileDesc: 'Fil som skal åpnes når knappen klikkes.'
+    ButtonTargetLink: Knappmållenke
+    ButtonTargetLinkDesc: 'Link som skal åpnes når knappen trykkes. Hvis en knappmålfil er spesifisert, vil denne bli brukt i stedet.'
+    ButtonTargetType: 'Åpne lenken i'
+    ButtonTargetTypeBlank: 'nytt vindu'
+    ButtonTargetTypeEmpty: 'samme vindu'
+    ButtonTitle: Knappetekst
+    Content: Tekstinnhold
+    DefaultValue: Standardverdi
+    DefaultValueDesc: 'Verdi som brukes som standard for dette alternativet.'
+    DisableLabelForFree: 'Deaktiver etiketten "gratis" for alternativer uten direkte artikkelkobling'
+    DisplayConditionOperation: 'Boolsk lenke'
+    DisplayConditionOperationAnd: alle
+    DisplayConditionOperationOr: en
+    DisplayConditionText: 'Dette alternativet er satt for å fullføre {operation} av følgende betingelser {type}'
+    DisplayConditionType: handling
+    DisplayConditionTypeHide: 'gjemme seg'
+    DisplayConditionTypeShow: Forestilling
+    DisplayConditions: Visningsforhold
+    IsOptional: 'Er valgfritt'
+    IsPreselected: 'Er forhåndsvalgt'
+    NumberProductRelationDesc: 'Denne artikkelen vil bli lagt i handlekurven i mengden spesifisert for dette alternativet.'
+    NumberProductRelationTitle: 'Element for dette alternativet'
+    OptionBehavior: oppførsel
+    OptionBehaviorTitle: 'Atferd for alternativ {option}'
+    OptionDescriptionDesc: 'Vises som beskrivelse for alternativet " {option} ".'
+    OptionDescriptionTitle: 'Beskrivelse for alternativ {option}'
+    OptionLongDescriptionDesc: 'Vises som en lang beskrivelse i en popup-dialog for alternativet " {option} ". Hvis en artikkel er spesifisert, vises artikkelinformasjonen i stedet.'
+    OptionLongDescriptionTitle: 'Lang beskrivelse for alternativ {option}'
+    OptionProductRelation: 'Koblede artikler'
+    OptionProductRelationDesc: 'Legg denne varen i handlekurven når alternativet " {option} " er valgt.'
+    OptionProductRelationTitle: 'Vare for alternativ {option}'
+    OptionType: 'Type input'
+    OptionTypeBinaryQuestion: 'Ja-nei spørsmål'
+    OptionTypeLabel: Merkelapp
+    OptionTypeNumber: Nummer
+    OptionTypeProductView: Produkter
+    OptionTypeRadio: flervalg
+    OptionTypeRedirection: Videresending
+    OptionTypeRedirectionHeader: 'Dette alternativet vil omdirigere kunder til en annen side.'
+    OptionTypeTextArea: 'Tekstinntasting (flere linjer)'
+    OptionTypeTextField: Tekstinntasting
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Maksimalt antall i rullegardinmenyen for alternativ {option}'
+    OptionUseCustomQuantityPluralTitle: 'Måleenhet flertall for alternativ {option}'
+    OptionUseCustomQuantitySingularTitle: 'Måleenhet entall for alternativ {option}'
+    OptionUseCustomQuantityTextTitle: 'Valg av informasjonstekst for {option}'
+    OptionUseCustomQuantityTitle: 'Bruk fritt valgbart beløp for alternativ {option}'
+    Options: Alternativer
+    OptionsDesc: 'Liste over mulige alternativer som er tilgjengelige for valg i flervalgsfeltet. Vennligst skriv inn ett alternativ per linje.'
+    PLURALNAME: 'Alternativer for konfiguratortrinn'
+    ProductDynQuantityStepOptionID: 'Antall i henhold til alternativ'
+    ProductDynQuantityStepOptionIDDesc: 'Brukerinndata for dette alternativet brukes som mengde for handlekurven. Hvis det ikke legges inn eller alternativet hoppes over, brukes minimumsantallet.'
+    ProductMinQuantity: Minimumsmengde
+    ProductMinQuantityDesc: 'Minimumsantall som skal legges i handlekurven.'
+    ProductPriceLabel: Prisetikett
+    ProductPriceLabelDesc: 'Hvis spesifisert, plasseres denne valgfrie etiketten foran prisen.'
+    ProductPriceLabelFor: 'Prisetikett for {product}'
+    ProductQuantityDropdownMax: 'Maksimalt antall i rullegardinmenyen'
+    ProductQuantityDropdownMaxDesc: 'Maksimalt antall som kan velges i rullegardinmenyen. Hvis kunden trenger mer, kan han gjøre dette valget manuelt.'
+    ProductQuantityPlural: 'Flertall måleenhet'
+    ProductQuantityPluralDesc: 'Måleenheten som skal vises når du velger mengden 0 eller >'
+    ProductQuantitySingular: 'Måleenhet entall'
+    ProductQuantitySingularDesc: 'Måleenheten som skal vises ved valg av mengde 1.'
+    ProductViewIsReadonly: 'Ikke tillat brukerinndata'
+    SINGULARNAME: 'Alternativ for konfiguratortrinn'
+    Sort: Sorteringsrekkefølge
+    Step: steg
+    Text: tekst
+    TextDesc: 'Tekst som skal vises i den nedre delen av valgboksen (for eksempel over valgknappen / rullegardinmenyen).'
+    Title: tittel
+    moreThanMax: 'mer enn {max} {maxTitle} ...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Boolsk lenke'
+    DisplayConditionOperationAnd: alle
+    DisplayConditionOperationOr: en
+    DisplayConditionText: 'Dette alternativet er satt for å fullføre {operation} av følgende betingelser {type}'
+    DisplayConditionType: handling
+    DisplayConditionTypeHide: 'gjemme seg'
+    DisplayConditionTypeShow: Forestilling
+    DisplayConditions: Visningsforhold
+    PLURALNAME: 'Konfigurator trinn alternativ sett'
+    SINGULARNAME: 'Konfigurator trinn alternativ satt'
+    Sort: Sorteringsrekkefølge
+    Step: steg
+    StepOptions: Alternativer
+    Title: tittel

@@ -1,0 +1,165 @@
+ro:
+  ProductWizard:
+    Choose: Selectați
+    ChooseShort: Ausw.
+    Chosen: Selectată
+    Close: Închideți
+    GoToCart: 'În coșul de cumpărături'
+    GoToWizard: 'Către configurator'
+    MoreInformation: 'mai multe informații'
+    Overview: 'Prezentare generală'
+    RedirectionInProgress: 'Veți fi redirecționat către coșul de cumpărături în câteva secunde. Dacă, contrar așteptărilor, nu sunteți redirecționat, vă rugăm să faceți clic pe următorul buton.'
+    RedirectionInProgress2: 'Veți fi redirecționat către configurator în câteva secunde. Dacă, contrar așteptărilor, nu sunteți redirecționat, vă rugăm să faceți clic pe următorul buton.'
+    ShowAdditionalOptions: 'Afișați mai multe opțiuni'
+    free: gratuit
+    more: 'mai mult'
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Înapoi
+    BackTo: 'Înapoi la {step}'
+    DESCRIPTION: 'Pagina care oferă un configurator de produse bazat pe etape.'
+    PLURALNAME: 'Configuratoare de produse (pe etape)'
+    SINGULARNAME: 'Configurator de produse (pe etape)'
+    Step: Pasul
+    Steps: Pași
+    YourChoices: 'Selecția dvs.'
+    YourStep: 'Pasul tău'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Condiții de afișare'
+    ParentStepOption: 'Opțiunea pentru părinți'
+    SINGULARNAME: 'Starea afișajului'
+    StepOptionID: Opțiunea
+    StepOptionSet: 'Set de opțiuni'
+    TargetValue: Valoare
+    Type: Artă
+    TypeIsEqual: 'corespunde cu'
+    TypeIsGreaterThan: 'este mai mare decât'
+    TypeIsGreaterThanOrEqual: 'este egală sau mai mare decât'
+    TypeIsLighterThan: 'este mai mică decât'
+    TypeIsLighterThanOrEqual: 'este egală sau mai mică decât'
+    TypeIsNotEqual: 'nu corespunde'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Dezactivați toate celelalte opțiuni'
+    Behavior-ENABLE-ALL: 'Reactivați toate celelalte opțiuni'
+    Behavior-NONE: Nu
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Textul butonului'
+    ButtonTitleDesc: 'Dacă lăsați acest câmp gol, se va folosi "Next" (Următorul).'
+    Continue: 'Mai departe'
+    DescriptionContent: Descriere
+    DescriptionContentDesc: 'Conținut descriptiv afișat deasupra opțiunilor de selecție.'
+    DescriptionTitle: 'Titlu descriere'
+    DescriptionTitleDesc: 'Titlu opțional afișat deasupra descrierii.'
+    DisplayConditionOperation: 'Operație booleană'
+    DisplayConditionOperationAnd: 'a tuturor'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Această opțiune este setată atunci când {operațiune} sunt îndeplinite următoarele condiții {tip}.'
+    DisplayConditionType: Acțiune
+    DisplayConditionTypeHide: ascundeți
+    DisplayConditionTypeShow: arată
+    DisplayConditions: 'Condiții de afișare'
+    FontAwesomeIcon: 'Clasa de pictograme FontAwesome'
+    FontAwesomeIconDesc: 'Clasa CSS pentru o pictogramă FontAwesome. Afișat în navigarea pe etape.'
+    InfoBoxContent: 'Conținutul Casetei de informații'
+    InfoBoxContentDesc: 'Conținutul afișat în caseta de informații la introducerea etapei.'
+    InfoBoxTitle: 'Titlul Casetei de informații'
+    InfoBoxTitleDesc: 'Titlul afișat în caseta de informații la introducerea pasului.'
+    PLURALNAME: 'Etapele configuratorului'
+    RedirectTo: 'Înainte de'
+    RedirectToDesc: 'Pagina către care să fie redirecționată odată ce se atinge acest pas. Toate articolele selectate până la această etapă vor fi adăugate în coșul de cumpărături.'
+    SINGULARNAME: 'Pasul Configurator'
+    ShowInStepNavigation: 'Afișare în pas de navigare'
+    Sort: 'Ordinea de sortare'
+    Step: Pasul
+    StepOptionSets: 'Seturi de opțiuni'
+    StepOptions: Opțiuni
+    Title: Titlu
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Extins
+    AllowMultipleChoices: 'Permiteți selecția multiplă'
+    ButtonTargetFile: 'Fișier țintă buton'
+    ButtonTargetFileDesc: 'Fișierul care urmează să fie deschis atunci când se face clic pe buton.'
+    ButtonTargetLink: 'Buton țintă link'
+    ButtonTargetLinkDesc: 'Legătura care trebuie deschisă atunci când se face clic pe buton. Dacă este specificat un fișier țintă pentru buton, acesta este utilizat în locul lui.'
+    ButtonTargetType: 'Deschideți link-ul în'
+    ButtonTargetTypeBlank: 'fereastră nouă'
+    ButtonTargetTypeEmpty: 'aceeași fereastră'
+    ButtonTitle: 'Textul butonului'
+    Content: 'Conținutul textului'
+    DefaultValue: 'Valoarea implicită'
+    DefaultValueDesc: 'Valoarea utilizată ca valoare implicită pentru această opțiune.'
+    DisableLabelForFree: 'Dezactivați eticheta "gratuit" pentru opțiunile fără legătură directă cu articolul.'
+    DisplayConditionOperation: 'Operație booleană'
+    DisplayConditionOperationAnd: 'a tuturor'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Această opțiune este setată atunci când {operațiune} sunt îndeplinite următoarele condiții {tip}.'
+    DisplayConditionType: Acțiune
+    DisplayConditionTypeHide: ascundeți
+    DisplayConditionTypeShow: arată
+    DisplayConditions: 'Condiții de afișare'
+    IsOptional: 'Este opțional'
+    IsPreselected: 'Este preselectat'
+    NumberProductRelationDesc: 'Acest articol va fi adăugat în coș cu cantitatea indicată la această opțiune.'
+    NumberProductRelationTitle: 'Articole pentru această opțiune'
+    OptionBehavior: Comportament
+    OptionBehaviorTitle: 'Comportamentul pentru opțiunea {option}'
+    OptionDescriptionDesc: 'Afișată ca descriere pentru opțiunea "{opțiune}".'
+    OptionDescriptionTitle: 'Descriere pentru opțiunea {option}'
+    OptionLongDescriptionDesc: 'Afișată ca o descriere lungă într-un dialog pop-up pentru opțiunea "{opțiune}". Dacă se specifică un articol, se afișează în schimb informațiile despre articol.'
+    OptionLongDescriptionTitle: 'Descriere lungă pentru opțiunea {option}'
+    OptionProductRelation: 'Articole legate'
+    OptionProductRelationDesc: 'Adaugă acest articol în coș atunci când este selectată opțiunea "{opțiune}".'
+    OptionProductRelationTitle: 'Articolul pentru opțiunea {opțiune}'
+    OptionType: 'Tipul de intrare'
+    OptionTypeBinaryQuestion: 'Întrebare de tip da-nu'
+    OptionTypeLabel: Etichetă
+    OptionTypeNumber: Număr
+    OptionTypeProductView: Produse
+    OptionTypeRadio: 'Alegere multiplă'
+    OptionTypeRedirection: Redirecționare
+    OptionTypeRedirectionHeader: 'Această opțiune va redirecționa clienții către o altă pagină.'
+    OptionTypeTextArea: 'Introducerea textului (multiliniar)'
+    OptionTypeTextField: 'Introducerea textului'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Numărul maxim din lista derulantă pentru opțiunea {option}'
+    OptionUseCustomQuantityPluralTitle: 'Unitatea de măsură la plural pentru opțiunea {option}'
+    OptionUseCustomQuantitySingularTitle: 'Unitatea de măsură singulară pentru opțiunea {option}'
+    OptionUseCustomQuantityTextTitle: 'Text de informare Selecție cantitativă pentru {opțiune}'
+    OptionUseCustomQuantityTitle: 'Utilizați cantitatea selectabilă gratuită pentru opțiunea {opțiune}'
+    Options: Opțiuni
+    OptionsDesc: 'Lista de opțiuni posibile din care se poate alege în câmpul cu alegere multiplă. Vă rugăm să indicați o opțiune pe fiecare rând.'
+    PLURALNAME: 'Opțiuni de etapă Configurator'
+    ProductDynQuantityStepOptionID: 'Cantitate în funcție de opțiune'
+    ProductDynQuantityStepOptionIDDesc: 'Valoarea introdusă de utilizator în această opțiune este utilizată ca cantitate pentru coșul de cumpărături. În cazul în care nu se face nici o înscriere sau opțiunea este omisă, se utilizează cantitatea minimă.'
+    ProductMinQuantity: 'Cantitate minimă'
+    ProductMinQuantityDesc: 'Cantitatea minimă care trebuie adăugată în coșul de cumpărături.'
+    ProductPriceLabel: 'Etichetă de preț'
+    ProductPriceLabelDesc: 'Această etichetă opțională este prefixată la preț atunci când este indicată.'
+    ProductPriceLabelFor: 'Etichetă de preț pentru {produs}'
+    ProductQuantityDropdownMax: 'Numărul maxim în lista derulantă'
+    ProductQuantityDropdownMaxDesc: 'Numărul maxim care poate fi selectat în lista derulantă. În cazul în care clientul are nevoie de mai multe, poate face această selecție manual.'
+    ProductQuantityPlural: 'Unitate de măsură la plural'
+    ProductQuantityPluralDesc: 'Unitatea de măsură care urmează să fie afișată atunci când se selectează cantitatea 0 sau >1.'
+    ProductQuantitySingular: 'Unitate de măsură singular'
+    ProductQuantitySingularDesc: 'Unitatea de măsură care urmează să fie afișată la selectarea cantității 1.'
+    ProductViewIsReadonly: 'Nu permiteți intrarea utilizatorului'
+    SINGULARNAME: 'Opțiunea de configurare a treptelor Configurator'
+    Sort: 'Ordinea de sortare'
+    Step: Pasul
+    Text: Text
+    TextDesc: 'Text care trebuie afișat în partea inferioară a casetei de selecție (de exemplu, deasupra butonului de selecție/blocul derulant).'
+    Title: Titlu
+    moreThanMax: 'mai mult de {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Operație booleană'
+    DisplayConditionOperationAnd: 'a tuturor'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Această opțiune este setată atunci când {operațiune} sunt îndeplinite următoarele condiții {tip}.'
+    DisplayConditionType: Acțiune
+    DisplayConditionTypeHide: ascundeți
+    DisplayConditionTypeShow: arată
+    DisplayConditions: 'Condiții de afișare'
+    PLURALNAME: 'Configurator Seturi de opțiuni pentru pasul de configurare'
+    SINGULARNAME: 'Configurator Pasul de configurare Set de opțiuni'
+    Sort: 'Ordinea de sortare'
+    Step: Pasul
+    StepOptions: Opțiuni
+    Title: Titlu

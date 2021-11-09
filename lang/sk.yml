@@ -1,0 +1,165 @@
+sk:
+  ProductWizard:
+    Choose: Vyberte
+    ChooseShort: Ausw.
+    Chosen: Vybrané
+    Close: Zatvoriť
+    GoToCart: 'Do nákupného košíka'
+    GoToWizard: 'Do konfigurátora'
+    MoreInformation: 'viac informácií'
+    Overview: Prehľad
+    RedirectionInProgress: 'O niekoľko sekúnd budete presmerovaní do nákupného košíka. Ak v rozpore s očakávaniami nie ste presmerovaní, kliknite na nasledujúce tlačidlo.'
+    RedirectionInProgress2: 'O niekoľko sekúnd budete presmerovaní do konfigurátora. Ak v rozpore s očakávaniami nie ste presmerovaní, kliknite na nasledujúce tlačidlo.'
+    ShowAdditionalOptions: 'Zobraziť viac možností'
+    free: bezplatne
+    more: viac
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Späť
+    BackTo: 'Späť na {krok}'
+    DESCRIPTION: 'Stránka, ktorá poskytuje konfigurátor produktov založený na krokoch.'
+    PLURALNAME: 'Konfigurátory produktov (založené na krokoch)'
+    SINGULARNAME: 'Konfigurátor produktov (založený na krokoch)'
+    Step: Krok
+    Steps: Kroky
+    YourChoices: 'Váš výber'
+    YourStep: 'Váš {krok}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Podmienky zobrazenia'
+    ParentStepOption: 'Možnosť rodiča'
+    SINGULARNAME: 'Podmienka zobrazenia'
+    StepOptionID: Možnosť
+    StepOptionSet: 'Súbor možností'
+    TargetValue: Hodnota
+    Type: Art
+    TypeIsEqual: zodpovedá
+    TypeIsGreaterThan: 'je väčšia ako'
+    TypeIsGreaterThanOrEqual: 'sa rovná alebo je väčšia ako'
+    TypeIsLighterThan: 'je menšia ako'
+    TypeIsLighterThanOrEqual: 'je rovná alebo menšia ako'
+    TypeIsNotEqual: nezodpovedá
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Deaktivujte všetky ostatné možnosti'
+    Behavior-ENABLE-ALL: 'Opätovná aktivácia všetkých ostatných možností'
+    Behavior-NONE: Nie
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Text tlačidla'
+    ButtonTitleDesc: 'Ak necháte toto pole prázdne, použije sa "Next".'
+    Continue: 'Ďalšie informácie na'
+    DescriptionContent: Popis
+    DescriptionContentDesc: 'Popisný obsah zobrazený nad možnosťami výberu.'
+    DescriptionTitle: 'Názov popisu'
+    DescriptionTitleDesc: 'Voliteľný názov zobrazený nad opisom.'
+    DisplayConditionOperation: 'Logická operácia'
+    DisplayConditionOperationAnd: všetkých
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Táto možnosť sa nastaví, keď sú splnené nasledujúce podmienky {typu}.'
+    DisplayConditionType: Akcia
+    DisplayConditionTypeHide: skryť
+    DisplayConditionTypeShow: zobraziť
+    DisplayConditions: 'Podmienky zobrazenia'
+    FontAwesomeIcon: 'Trieda ikon FontAwesome'
+    FontAwesomeIconDesc: 'Trieda CSS pre ikonu FontAwesome. Zobrazuje sa v krokovej navigácii.'
+    InfoBoxContent: 'Obsah informačného okna'
+    InfoBoxContentDesc: 'Obsah zobrazený v informačnom poli pri zadávaní kroku.'
+    InfoBoxTitle: 'Názov informačného okna'
+    InfoBoxTitleDesc: 'Názov zobrazený v informačnom poli pri zadávaní kroku.'
+    PLURALNAME: 'Kroky konfigurátora'
+    RedirectTo: 'Dopredu na'
+    RedirectToDesc: 'Stránka, na ktorú budete presmerovaní po dosiahnutí tohto kroku. Všetky položky vybrané do tohto kroku sa pridajú do nákupného košíka.'
+    SINGULARNAME: 'Krok konfigurátora'
+    ShowInStepNavigation: 'Zobrazenie navigácie v krokoch'
+    Sort: 'Poradie triedenia'
+    Step: Krok
+    StepOptionSets: 'Súbory možností'
+    StepOptions: Možnosti
+    Title: Názov
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Rozšírené
+    AllowMultipleChoices: 'Umožniť viacnásobný výber'
+    ButtonTargetFile: 'Cieľový súbor tlačidla'
+    ButtonTargetFileDesc: 'Súbor, ktorý sa otvorí po kliknutí na tlačidlo.'
+    ButtonTargetLink: 'Cieľové prepojenie tlačidla'
+    ButtonTargetLinkDesc: 'Odkaz, ktorý sa otvorí po kliknutí na tlačidlo. Ak je zadaný cieľový súbor tlačidla, použije sa namiesto neho.'
+    ButtonTargetType: 'Otvoriť odkaz v'
+    ButtonTargetTypeBlank: 'nové okno'
+    ButtonTargetTypeEmpty: 'to isté okno'
+    ButtonTitle: 'Text tlačidla'
+    Content: 'Obsah textu'
+    DefaultValue: 'Predvolená hodnota'
+    DefaultValueDesc: 'Hodnota použitá ako predvolená pre túto možnosť.'
+    DisableLabelForFree: 'Deaktivovať označenie "bezplatne" pre možnosti bez priameho prepojenia s článkom'
+    DisplayConditionOperation: 'Logická operácia'
+    DisplayConditionOperationAnd: všetkých
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Táto možnosť sa nastaví, keď sú splnené nasledujúce podmienky {typu}.'
+    DisplayConditionType: Akcia
+    DisplayConditionTypeHide: skryť
+    DisplayConditionTypeShow: zobraziť
+    DisplayConditions: 'Podmienky zobrazenia'
+    IsOptional: 'Je voliteľné'
+    IsPreselected: 'Je vopred vybraný'
+    NumberProductRelationDesc: 'Táto položka bude pridaná do košíka s množstvom uvedeným pri tejto možnosti.'
+    NumberProductRelationTitle: 'Články pre túto možnosť'
+    OptionBehavior: Správanie
+    OptionBehaviorTitle: 'Správanie pre možnosť {option}'
+    OptionDescriptionDesc: 'Zobrazuje sa ako popis možnosti "{option}".'
+    OptionDescriptionTitle: 'Popis možnosti {option}'
+    OptionLongDescriptionDesc: 'Zobrazuje sa ako dlhý popis vo vyskakovacom dialógu pre možnosť "{option}". Ak je zadaná položka, namiesto nej sa zobrazia informácie o položke.'
+    OptionLongDescriptionTitle: 'Dlhý popis pre možnosť {option}'
+    OptionProductRelation: 'Prepojené články'
+    OptionProductRelationDesc: 'Pridanie tejto položky do košíka, keď je vybraná možnosť "{option}".'
+    OptionProductRelationTitle: 'Článok pre možnosť {option}'
+    OptionType: 'Typ vstupu'
+    OptionTypeBinaryQuestion: 'Otázka áno - nie'
+    OptionTypeLabel: Štítok
+    OptionTypeNumber: Číslo
+    OptionTypeProductView: Produkty
+    OptionTypeRadio: 'Viacnásobný výber'
+    OptionTypeRedirection: Preposielanie
+    OptionTypeRedirectionHeader: 'Táto možnosť presmeruje zákazníkov na inú stránku.'
+    OptionTypeTextArea: 'Zadávanie textu (viacriadkové)'
+    OptionTypeTextField: 'Zadávanie textu'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Maximálny počet v rozbaľovacom zozname pre možnosť {option}'
+    OptionUseCustomQuantityPluralTitle: 'Jednotka miery v množnom čísle pre možnosť {option}'
+    OptionUseCustomQuantitySingularTitle: 'Merná jednotka singulárna pre možnosť {option}'
+    OptionUseCustomQuantityTextTitle: 'Informačný text Výber množstva pre {option}'
+    OptionUseCustomQuantityTitle: 'Použite voľne voliteľné množstvo pre možnosť {option}'
+    Options: Možnosti
+    OptionsDesc: 'Zoznam možných možností, z ktorých si môžete vybrať v poli s viacerými možnosťami. Na každom riadku uveďte jednu možnosť.'
+    PLURALNAME: 'Možnosti krokov konfigurátora'
+    ProductDynQuantityStepOptionID: 'Množstvo podľa možnosti'
+    ProductDynQuantityStepOptionIDDesc: 'Používateľský vstup tejto možnosti sa použije ako množstvo pre nákupný košík. Ak nie je zadaný žiadny údaj alebo je táto možnosť vynechaná, použije sa minimálne množstvo.'
+    ProductMinQuantity: 'Minimálne množstvo'
+    ProductMinQuantityDesc: 'Minimálne množstvo, ktoré sa má pridať do nákupného košíka.'
+    ProductPriceLabel: 'Cenový štítok'
+    ProductPriceLabelDesc: 'Toto nepovinné označenie sa uvádza pred cenou, ak je uvedená.'
+    ProductPriceLabelFor: 'Cenový štítok pre {produkt}'
+    ProductQuantityDropdownMax: 'Maximálny počet v rozbaľovacom zozname'
+    ProductQuantityDropdownMaxDesc: 'Maximálny počet, ktorý možno vybrať v rozbaľovacom zozname. Ak zákazník potrebuje viac, môže tento výber vykonať manuálne.'
+    ProductQuantityPlural: 'Merná jednotka v množnom čísle'
+    ProductQuantityPluralDesc: 'Merná jednotka, ktorá sa zobrazí pri výbere množstva 0 alebo >1.'
+    ProductQuantitySingular: 'Merná jednotka singulárna'
+    ProductQuantitySingularDesc: 'Merná jednotka, ktorá sa zobrazí pri výbere množstva 1.'
+    ProductViewIsReadonly: 'Nepovoľte vstup používateľa'
+    SINGULARNAME: 'Možnosť kroku konfigurátora'
+    Sort: 'Poradie triedenia'
+    Step: Krok
+    Text: Text
+    TextDesc: 'Text, ktorý sa má zobraziť v spodnej časti výberového poľa (napríklad nad výberovým tlačidlom/rozbaľovacím zoznamom).'
+    Title: Názov
+    moreThanMax: 'viac ako {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Logická operácia'
+    DisplayConditionOperationAnd: všetkých
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Táto možnosť sa nastaví, keď sú splnené nasledujúce podmienky {typu}.'
+    DisplayConditionType: Akcia
+    DisplayConditionTypeHide: skryť
+    DisplayConditionTypeShow: zobraziť
+    DisplayConditions: 'Podmienky zobrazenia'
+    PLURALNAME: 'Súbory možností krokov konfigurátora'
+    SINGULARNAME: 'Súbor možností kroku konfigurátora'
+    Sort: 'Poradie triedenia'
+    Step: Krok
+    StepOptions: Možnosti
+    Title: Názov

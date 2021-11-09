@@ -1,0 +1,165 @@
+sv:
+  ProductWizard:
+    Choose: Välj
+    ChooseShort: Ausw.
+    Chosen: Utvald
+    Close: Stäng
+    GoToCart: 'Till kundvagnen'
+    GoToWizard: 'Till konfiguratorn'
+    MoreInformation: 'mer information'
+    Overview: Översikt
+    RedirectionInProgress: 'Du kommer att omdirigeras till kundvagnen inom några sekunder. Om du mot förmodan inte omdirigeras, klicka på följande knapp.'
+    RedirectionInProgress2: 'Du kommer att omdirigeras till konfiguratorn inom några sekunder. Om du mot förmodan inte omdirigeras, klicka på följande knapp.'
+    ShowAdditionalOptions: 'Visa fler alternativ'
+    free: kostnadsfritt
+    more: mer
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Tillbaka
+    BackTo: 'Tillbaka till {steg}'
+    DESCRIPTION: 'En sida som tillhandahåller en stegbaserad produktkonfigurator.'
+    PLURALNAME: 'Produktkonfiguratorer (stegbaserade)'
+    SINGULARNAME: 'Produktkonfigurator (stegbaserad)'
+    Step: Steg
+    Steps: Steg
+    YourChoices: 'Ditt val'
+    YourStep: 'Ditt {steg}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Villkor för visning'
+    ParentStepOption: Föräldraalternativ
+    SINGULARNAME: 'Villkor för visning'
+    StepOptionID: Alternativ
+    StepOptionSet: Alternativ
+    TargetValue: Värde
+    Type: Konst
+    TypeIsEqual: motsvarar
+    TypeIsGreaterThan: 'är större än'
+    TypeIsGreaterThanOrEqual: 'är lika med eller större än'
+    TypeIsLighterThan: 'är mindre än'
+    TypeIsLighterThanOrEqual: 'är lika med eller mindre än'
+    TypeIsNotEqual: 'inte motsvarar'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Inaktivera alla andra alternativ'
+    Behavior-ENABLE-ALL: 'Återaktivera alla andra alternativ.'
+    Behavior-NONE: Ingen
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: Knapptext
+    ButtonTitleDesc: 'Om du lämnar det här fältet tomt används "Nästa".'
+    Continue: Vidare
+    DescriptionContent: Beskrivning
+    DescriptionContentDesc: 'Beskrivande innehåll som visas ovanför valmöjligheterna.'
+    DescriptionTitle: 'Beskrivning titel'
+    DescriptionTitleDesc: 'Valfri titel som visas ovanför beskrivningen.'
+    DisplayConditionOperation: 'Boolesk operation'
+    DisplayConditionOperationAnd: 'av alla'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Det här alternativet ställs in när {operation} följande villkor {typ} är uppfyllda.'
+    DisplayConditionType: Åtgärd
+    DisplayConditionTypeHide: dölja
+    DisplayConditionTypeShow: visa
+    DisplayConditions: 'Villkor för visning'
+    FontAwesomeIcon: 'FontAwesome ikonklass'
+    FontAwesomeIconDesc: 'CSS-klass för en FontAwesome-ikon. Visas i stegnavigationen.'
+    InfoBoxContent: 'Innehållet i informationsrutan'
+    InfoBoxContentDesc: 'Innehåll som visas i informationsrutan när du anger steget.'
+    InfoBoxTitle: 'Titel på informationsrutan'
+    InfoBoxTitleDesc: 'Titel som visas i informationsrutan när du anger steget.'
+    PLURALNAME: 'Steg i konfiguratorn'
+    RedirectTo: 'Framåt till'
+    RedirectToDesc: 'Sidan som du ska omdirigeras till när detta steg har uppnåtts. Alla varor som valts fram till detta steg läggs till i kundvagnen.'
+    SINGULARNAME: 'Steg i konfiguratorn'
+    ShowInStepNavigation: 'Visa navigering i steg'
+    Sort: Sorteringsordning
+    Step: Steg
+    StepOptionSets: Alternativuppsättningar
+    StepOptions: Alternativ
+    Title: Titel
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Utökad
+    AllowMultipleChoices: 'Tillåt flera val'
+    ButtonTargetFile: 'Knappens målfil'
+    ButtonTargetFileDesc: 'Fil som ska öppnas när du klickar på knappen.'
+    ButtonTargetLink: 'Knappens mållänk'
+    ButtonTargetLinkDesc: 'Länk som ska öppnas när du klickar på knappen. Om en målfil för en knapp har angetts används den i stället.'
+    ButtonTargetType: 'Öppna länken i'
+    ButtonTargetTypeBlank: 'nytt fönster'
+    ButtonTargetTypeEmpty: 'samma fönster'
+    ButtonTitle: Knapptext
+    Content: Textinnehåll
+    DefaultValue: Standardvärde
+    DefaultValueDesc: 'Värde som används som standardvärde för detta alternativ.'
+    DisableLabelForFree: 'Avaktivera märkningen "gratis" för alternativ utan direkt artikelkoppling.'
+    DisplayConditionOperation: 'Boolesk operation'
+    DisplayConditionOperationAnd: 'av alla'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Det här alternativet ställs in när {operation} följande villkor {typ} är uppfyllda.'
+    DisplayConditionType: Åtgärd
+    DisplayConditionTypeHide: dölja
+    DisplayConditionTypeShow: visa
+    DisplayConditions: 'Villkor för visning'
+    IsOptional: 'Är valfritt.'
+    IsPreselected: 'Är förvald'
+    NumberProductRelationDesc: 'Artikeln läggs till i korgen med den mängd som anges i det här alternativet.'
+    NumberProductRelationTitle: 'Artiklar för detta alternativ'
+    OptionBehavior: Beteende
+    OptionBehaviorTitle: 'Beteende för alternativet {option}'
+    OptionDescriptionDesc: 'Visas som en beskrivning för alternativet "{option}".'
+    OptionDescriptionTitle: 'Beskrivning för alternativet {option}'
+    OptionLongDescriptionDesc: 'Visas som en lång beskrivning i en popup-dialog för alternativet "{option}". Om ett objekt anges visas informationen om objektet i stället.'
+    OptionLongDescriptionTitle: 'Lång beskrivning av alternativet {option}'
+    OptionProductRelation: 'Länkade artiklar'
+    OptionProductRelationDesc: 'Lägg den här artikeln i korgen när "{option}" väljs.'
+    OptionProductRelationTitle: 'Artikel för option {option}'
+    OptionType: 'Typ av input'
+    OptionTypeBinaryQuestion: Ja-nej-fråga
+    OptionTypeLabel: Etikett
+    OptionTypeNumber: Antal
+    OptionTypeProductView: Produkter
+    OptionTypeRadio: 'Flera alternativ'
+    OptionTypeRedirection: Vidarebefordran
+    OptionTypeRedirectionHeader: 'Det här alternativet omdirigerar kunderna till en annan sida.'
+    OptionTypeTextArea: 'Inmatning av text (flera rader)'
+    OptionTypeTextField: 'Inmatning av text'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Maximalt antal i rullgardinsmenyn för alternativet {option}'
+    OptionUseCustomQuantityPluralTitle: 'Måttenhet plural för alternativ {option}'
+    OptionUseCustomQuantitySingularTitle: 'Måttenhet singular för alternativet {option}'
+    OptionUseCustomQuantityTextTitle: 'Infotext Kvantitetsval för {option}'
+    OptionUseCustomQuantityTitle: 'Använd fritt valbar kvantitet för alternativet {option}'
+    Options: Alternativ
+    OptionsDesc: 'Förteckning över möjliga alternativ att välja mellan i flervalsfältet. Ange ett alternativ per rad.'
+    PLURALNAME: 'Alternativ för konfiguratorns steg'
+    ProductDynQuantityStepOptionID: 'Kvantitet enligt alternativ'
+    ProductDynQuantityStepOptionIDDesc: 'Användarens inmatning av detta alternativ används som kvantitet för varukorgen. Om ingen uppgift görs eller om alternativet inte anges, används minimikvantiteten.'
+    ProductMinQuantity: 'Minsta kvantitet'
+    ProductMinQuantityDesc: 'Minsta antal som ska läggas till i varukorgen.'
+    ProductPriceLabel: Prislapp
+    ProductPriceLabelDesc: 'Denna frivilliga märkning ska sättas före priset när det anges.'
+    ProductPriceLabelFor: 'Prisetikett för {produkt}'
+    ProductQuantityDropdownMax: 'Maximalt antal i rullgardinsmenyn'
+    ProductQuantityDropdownMaxDesc: 'Det högsta antalet som kan väljas i rullgardinsmenyn. Om kunden behöver mer kan han eller hon göra detta val manuellt.'
+    ProductQuantityPlural: 'Måttenhet plural'
+    ProductQuantityPluralDesc: 'Den måttenhet som ska visas när du väljer kvantitet 0 eller >1.'
+    ProductQuantitySingular: 'Måttenhet singular'
+    ProductQuantitySingularDesc: 'Den måttenhet som ska visas när du väljer kvantitet 1.'
+    ProductViewIsReadonly: 'Tillåt inte användarinmatning.'
+    SINGULARNAME: 'Konfiguratorns stegalternativ'
+    Sort: Sorteringsordning
+    Step: Steg
+    Text: Text
+    TextDesc: 'Text som ska visas i den nedre delen av urvalsrutan (t.ex. ovanför urvalsknappen/droppdown).'
+    Title: Titel
+    moreThanMax: 'mer än {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Boolesk operation'
+    DisplayConditionOperationAnd: 'av alla'
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Det här alternativet ställs in när {operation} följande villkor {typ} är uppfyllda.'
+    DisplayConditionType: Åtgärd
+    DisplayConditionTypeHide: dölja
+    DisplayConditionTypeShow: visa
+    DisplayConditions: 'Villkor för visning'
+    PLURALNAME: 'Konfigurator Steg Alternativuppsättningar'
+    SINGULARNAME: 'Konfigurator Steg Alternativinställning'
+    Sort: Sorteringsordning
+    Step: Steg
+    StepOptions: Alternativ
+    Title: Titel

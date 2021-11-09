@@ -1,0 +1,164 @@
+pl:
+  ProductWizard:
+    Choose: Wybierz
+    ChooseShort: Ausw.
+    Chosen: Wybrane
+    Close: Zamknij
+    GoToCart: 'Do koszyka'
+    GoToWizard: 'Do konfiguratora'
+    MoreInformation: 'więcej informacji'
+    Overview: Przegląd
+    RedirectionInProgress: 'W ciągu kilku sekund zostaniesz przekierowany do koszyka. Jeśli, wbrew oczekiwaniom, nie zostaniesz przekierowany, kliknij poniższy przycisk.'
+    RedirectionInProgress2: 'W ciągu kilku sekund zostaniesz przekierowany do konfiguratora. Jeśli, wbrew oczekiwaniom, nie zostaniesz przekierowany, kliknij poniższy przycisk.'
+    ShowAdditionalOptions: 'Pokaż więcej opcji'
+    free: nieodpłatnie
+    more: więcej
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Powrót
+    BackTo: 'Powrót do {step}'
+    DESCRIPTION: 'Strona, która udostępnia konfigurator produktów oparty na krokach.'
+    PLURALNAME: 'Konfiguratory produktów (oparte na krokach)'
+    SINGULARNAME: 'Konfigurator produktów (oparty na krokach)'
+    Step: Krok
+    Steps: Kroki
+    YourChoices: 'Twój wybór'
+    YourStep: 'Twój krok.'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Warunki wyświetlania'
+    ParentStepOption: 'Opcja dla rodzica'
+    SINGULARNAME: 'Stan wyświetlacza'
+    StepOptionID: Opcja
+    StepOptionSet: 'Zestaw opcji'
+    TargetValue: Wartość
+    Type: Sztuka
+    TypeIsEqual: odpowiada
+    TypeIsGreaterThan: 'jest większa niż'
+    TypeIsGreaterThanOrEqual: 'jest równa lub większa od'
+    TypeIsLighterThan: 'jest mniejsza niż'
+    TypeIsLighterThanOrEqual: 'jest równa lub mniejsza od'
+    TypeIsNotEqual: 'nie odpowiada'
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Dezaktywuj wszystkie inne opcje'
+    Behavior-ENABLE-ALL: 'Reaktywuj wszystkie pozostałe opcje'
+    Behavior-NONE: Nie
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Tekst przycisku'
+    ButtonTitleDesc: 'Jeśli pozostawisz to pole puste, użyta zostanie opcja "Next".'
+    Continue: Więcej
+    DescriptionContent: Opis
+    DescriptionContentDesc: 'Treść opisowa wyświetlana nad opcjami wyboru.'
+    DescriptionTitle: 'Tytuł opisu'
+    DisplayConditionOperation: 'Operacja boolean'
+    DisplayConditionOperationAnd: wszystkich
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Opcja ustawiana, gdy {operacja} spełnione są następujące warunki {type}.'
+    DisplayConditionType: Działanie
+    DisplayConditionTypeHide: ukryj
+    DisplayConditionTypeShow: pokaż
+    DisplayConditions: 'Warunki wyświetlania'
+    FontAwesomeIcon: 'Klasa ikon FontAwesome'
+    FontAwesomeIconDesc: 'Klasa CSS dla ikony FontAwesome. Wyświetlane w nawigacji po krokach.'
+    InfoBoxContent: 'Zawartość skrzynki informacyjnej'
+    InfoBoxContentDesc: 'Zawartość wyświetlana w polu informacyjnym podczas wprowadzania kroku.'
+    InfoBoxTitle: 'Tytuł pola informacyjnego'
+    InfoBoxTitleDesc: 'Tytuł wyświetlany w polu informacyjnym podczas wprowadzania kroku.'
+    PLURALNAME: 'Kroki konfiguratora'
+    RedirectTo: 'Do przodu'
+    RedirectToDesc: 'Strona, na którą ma zostać przekierowana po osiągnięciu tego kroku. Wszystkie pozycje wybrane do tego momentu zostaną dodane do koszyka.'
+    SINGULARNAME: 'Krok konfiguratora'
+    ShowInStepNavigation: 'Pokaż nawigację w kroku'
+    Sort: 'Kolejność sortowania'
+    Step: Krok
+    StepOptionSets: 'Zestawy opcji'
+    StepOptions: Opcje
+    Title: Tytuł
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Rozszerzony
+    AllowMultipleChoices: 'Pozwól na wielokrotny wybór'
+    ButtonTargetFile: 'Plik docelowy przycisku'
+    ButtonTargetFileDesc: 'Plik, który ma zostać otwarty po kliknięciu przycisku.'
+    ButtonTargetLink: 'Link docelowy przycisku'
+    ButtonTargetLinkDesc: 'Link, który zostanie otwarty po kliknięciu na przycisk. Jeśli podany jest plik docelowy przycisku, jest on używany zamiast niego.'
+    ButtonTargetType: 'Otwórz link w'
+    ButtonTargetTypeBlank: 'nowe okno'
+    ButtonTargetTypeEmpty: 'to samo okno'
+    ButtonTitle: 'Tekst przycisku'
+    Content: 'Treść tekstu'
+    DefaultValue: 'Wartość domyślna'
+    DefaultValueDesc: 'Wartość używana jako domyślna dla tej opcji.'
+    DisableLabelForFree: 'Dezaktywuj etykietę "bezpłatnie" dla opcji bez bezpośredniego powiązania z artykułem'
+    DisplayConditionOperation: 'Operacja boolean'
+    DisplayConditionOperationAnd: wszystkich
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Opcja ustawiana, gdy {operacja} spełnione są następujące warunki {type}.'
+    DisplayConditionType: Działanie
+    DisplayConditionTypeHide: ukryj
+    DisplayConditionTypeShow: pokaż
+    DisplayConditions: 'Warunki wyświetlania'
+    IsOptional: 'Jest opcjonalny'
+    IsPreselected: 'Jest wstępnie wybrany'
+    NumberProductRelationDesc: 'Ten artykuł zostanie dodany do koszyka z ilością wskazaną przy tej opcji.'
+    NumberProductRelationTitle: 'Artykuły dla tej opcji'
+    OptionBehavior: Zachowanie
+    OptionBehaviorTitle: 'Zachowanie dla opcji {option}'
+    OptionDescriptionDesc: 'Wyświetlane jako opis dla opcji "{opcja}".'
+    OptionDescriptionTitle: 'Opis dla opcji {opcja}'
+    OptionLongDescriptionDesc: 'Wyświetlane jako długi opis w dialogu wyskakującym dla opcji "{opcja}". Jeśli podano element, zamiast niego wyświetlana jest informacja o elemencie.'
+    OptionLongDescriptionTitle: 'Długi opis dla opcji {opcja}'
+    OptionProductRelation: 'Powiązane artykuły'
+    OptionProductRelationDesc: 'Dodaj ten element do koszyka po wybraniu opcji "{opcja}".'
+    OptionProductRelationTitle: 'Artykuł dla opcji {opcja}'
+    OptionType: 'Typ wejścia'
+    OptionTypeBinaryQuestion: 'Pytanie tak-nie'
+    OptionTypeLabel: Etykieta
+    OptionTypeNumber: Numer
+    OptionTypeProductView: Produkty
+    OptionTypeRadio: 'Wybór wielokrotny'
+    OptionTypeRedirection: 'Przekazywanie dalej'
+    OptionTypeRedirectionHeader: 'Ta opcja przekieruje klientów na inną stronę.'
+    OptionTypeTextArea: 'Wprowadzanie tekstu (wielowierszowe)'
+    OptionTypeTextField: 'Wprowadzanie tekstu'
+    OptionUseCustomQuantityDropdownMaximumTitle: 'Maksymalna liczba w rozwijanej liście dla opcji {option}'
+    OptionUseCustomQuantityPluralTitle: 'Jednostka miary liczby mnogiej dla opcji {opcja}'
+    OptionUseCustomQuantitySingularTitle: 'Jednostka miary pojedyncza dla opcji {opcja}'
+    OptionUseCustomQuantityTextTitle: 'Tekst informacyjny Wybór ilości dla {opcja}'
+    OptionUseCustomQuantityTitle: 'Użyj wolnej ilości do wyboru dla opcji {opcja}'
+    Options: Opcje
+    OptionsDesc: 'Lista możliwych opcji do wyboru w polu wielokrotnego wyboru. Proszę wskazać jedną opcję w każdym wierszu.'
+    PLURALNAME: 'Opcje kroków konfiguratora'
+    ProductDynQuantityStepOptionID: 'Ilość wg opcji'
+    ProductDynQuantityStepOptionIDDesc: 'Dane wprowadzone przez użytkownika w tej opcji są używane jako ilość do koszyka. Jeśli nie dokonano wpisu lub opcja została pominięta, stosowana jest ilość minimalna.'
+    ProductMinQuantity: 'Minimalna ilość'
+    ProductMinQuantityDesc: 'Minimalna ilość, która ma być dodana do koszyka.'
+    ProductPriceLabel: 'Etykieta cenowa'
+    ProductPriceLabelDesc: 'Ta opcjonalna etykieta jest poprzedzona ceną, gdy jest to wskazane.'
+    ProductPriceLabelFor: 'Etykieta cenowa dla {produktu}'
+    ProductQuantityDropdownMax: 'Maksymalna liczba w rozwijanej liście'
+    ProductQuantityDropdownMaxDesc: 'Maksymalna liczba, która może być wybrana w rozwijanej liście. Jeśli klient potrzebuje więcej, może dokonać tego wyboru ręcznie.'
+    ProductQuantityPlural: 'Jednostka miary liczba mnoga'
+    ProductQuantityPluralDesc: 'Jednostka miary, która ma być wyświetlana przy wyborze ilości 0 lub >1.'
+    ProductQuantitySingular: 'Jednostka miary pojedyncza'
+    ProductQuantitySingularDesc: 'Jednostka miary, która ma być wyświetlana przy wyborze ilości 1.'
+    ProductViewIsReadonly: 'Nie zezwalaj na wprowadzanie danych przez użytkownika'
+    SINGULARNAME: 'Opcja kroku konfiguratora'
+    Sort: 'Kolejność sortowania'
+    Step: Krok
+    Text: Tekst
+    TextDesc: 'Tekst, który ma być wyświetlany w dolnej części okna wyboru (np. nad przyciskiem wyboru/dropdown).'
+    Title: Tytuł
+    moreThanMax: 'więcej niż {max} {maxTitle}...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Operacja boolean'
+    DisplayConditionOperationAnd: wszystkich
+    DisplayConditionOperationOr: a
+    DisplayConditionText: 'Opcja ustawiana, gdy {operacja} spełnione są następujące warunki {type}.'
+    DisplayConditionType: Działanie
+    DisplayConditionTypeHide: ukryj
+    DisplayConditionTypeShow: pokaż
+    DisplayConditions: 'Warunki wyświetlania'
+    PLURALNAME: 'Zestawy opcji stopni konfiguratora'
+    SINGULARNAME: 'Konfigurator Krok Zestaw opcji'
+    Sort: 'Kolejność sortowania'
+    Step: Krok
+    StepOptions: Opcje
+    Title: Tytuł

@@ -1,0 +1,165 @@
+tr_TR:
+  ProductWizard:
+    Choose: Seçmek
+    ChooseShort: seçim
+    Chosen: Seçildi
+    Close: Sonuçlandırmak
+    GoToCart: 'İyi şeyler sepetine'
+    GoToWizard: yapılandırıcıya
+    MoreInformation: 'daha fazla bilgi'
+    Overview: 'genel bakış'
+    RedirectionInProgress: 'Birkaç saniye içinde alışveriş sepetine yönlendirileceksiniz. Beklentilerin aksine yönlendirme gerçekleşmezse lütfen aşağıdaki butona tıklayın.'
+    RedirectionInProgress2: 'Birkaç saniye içinde konfigüratöre yönlendirileceksiniz. Beklentilerin aksine yönlendirme gerçekleşmezse lütfen aşağıdaki butona tıklayın.'
+    ShowAdditionalOptions: 'Daha fazla seçenek göster'
+    free: ücretsiz
+    more: 'daha fazla'
+  SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
+    Back: Dönüş
+    BackTo: '{step} geri dön'
+    DESCRIPTION: 'Adım tabanlı bir ürün yapılandırıcı sağlayan sayfa.'
+    PLURALNAME: 'Ürün konfigüratörleri (adım tabanlı)'
+    SINGULARNAME: 'Ürün yapılandırıcı (adım tabanlı)'
+    Step: adım
+    Steps: adımlar
+    YourChoices: 'Senin seçimin'
+    YourStep: '{step}'
+  SilverCart\ProductWizard\Model\Wizard\DisplayCondition:
+    PLURALNAME: 'Görüntüleme koşulları'
+    ParentStepOption: 'Ebeveyn seçeneği'
+    SINGULARNAME: 'Görüntüleme koşulu'
+    StepOptionID: seçenek
+    StepOptionSet: 'Seçenek seti'
+    TargetValue: değer
+    Type: Sanat
+    TypeIsEqual: eşdeğerdir
+    TypeIsGreaterThan: 'den daha büyük'
+    TypeIsGreaterThanOrEqual: 'eşittir veya büyüktür'
+    TypeIsLighterThan: 'den daha küçük'
+    TypeIsLighterThanOrEqual: 'eşittir veya daha küçüktür'
+    TypeIsNotEqual: eşleşmiyor
+  SilverCart\ProductWizard\Model\Wizard\OptionProductRelation:
+    Behavior-DISABLE-ALL: 'Diğer tüm seçenekleri devre dışı bırakın'
+    Behavior-ENABLE-ALL: 'Diğer tüm seçenekleri yeniden etkinleştirin'
+    Behavior-NONE: Numara
+  SilverCart\ProductWizard\Model\Wizard\Step:
+    ButtonTitle: 'Düğme metni'
+    ButtonTitleDesc: 'Bu alanı boş bırakırsanız "İleri" kullanılır.'
+    Continue: 'Daha öte'
+    DescriptionContent: tanım
+    DescriptionContentDesc: 'Seçim seçeneklerinin üzerinde görünen açıklayıcı içerik.'
+    DescriptionTitle: 'Açıklama başlığı'
+    DescriptionTitleDesc: 'Açıklamanın üzerinde görünen isteğe bağlı başlık.'
+    DisplayConditionOperation: 'Boole bağlantısı'
+    DisplayConditionOperationAnd: herşey
+    DisplayConditionOperationOr: bir
+    DisplayConditionText: 'Bu seçenek, aşağıdaki {type} koşullarının {operation} tamamlamak için ayarlanmıştır.'
+    DisplayConditionType: eylem
+    DisplayConditionTypeHide: saklamak
+    DisplayConditionTypeShow: Göstermek
+    DisplayConditions: 'Görüntüleme koşulları'
+    FontAwesomeIcon: 'FontAwesome Simge sınıfı'
+    FontAwesomeIconDesc: 'FontAwesome simgesi için CSS sınıfı. Adım navigasyonunda görüntülenir.'
+    InfoBoxContent: 'Bilgi kutusunun içeriği'
+    InfoBoxContentDesc: 'Adıma girilirken bilgi kutusunda görüntülenen içerik.'
+    InfoBoxTitle: 'Bilgi kutusu başlığı'
+    InfoBoxTitleDesc: 'Adıma girilirken bilgi kutusunda görüntülenen başlık.'
+    PLURALNAME: 'Konfigüratör adımları'
+    RedirectTo: İlet
+    RedirectToDesc: 'Bu adıma ulaşılır ulaşılmaz yönlendirilecek sayfa. Bu adıma kadar seçilen tüm ürünler alışveriş sepetine eklenecektir.'
+    SINGULARNAME: 'Konfigüratör adımı'
+    ShowInStepNavigation: 'Adım navigasyonunda göster'
+    Sort: 'Sıralama düzeni'
+    Step: adım
+    StepOptionSets: 'Seçenek kümeleri'
+    StepOptions: Seçenekler
+    Title: Başlık
+  SilverCart\ProductWizard\Model\Wizard\StepOption:
+    Advanced: Genişletilmiş
+    AllowMultipleChoices: 'Birden çok seçime izin ver'
+    ButtonTargetFile: 'Düğme hedef dosyası'
+    ButtonTargetFileDesc: 'Butona tıklandığında açılacak dosya.'
+    ButtonTargetLink: 'Düğme hedef bağlantısı'
+    ButtonTargetLinkDesc: 'Butona tıklandığında açılması gereken link. Bir düğme hedef dosyası belirtilirse, bunun yerine bu kullanılacaktır.'
+    ButtonTargetType: 'Bağlantıyı aç'
+    ButtonTargetTypeBlank: 'yeni Pencere'
+    ButtonTargetTypeEmpty: 'aynı pencere'
+    ButtonTitle: 'Düğme metni'
+    Content: 'Metin içeriği'
+    DefaultValue: 'Varsayılan değer'
+    DefaultValueDesc: 'Bu seçenek için varsayılan olarak kullanılan değer.'
+    DisableLabelForFree: 'Doğrudan makale bağlantısı olmayan seçenekler için "ücretsiz" etiketini devre dışı bırakın'
+    DisplayConditionOperation: 'Boole bağlantısı'
+    DisplayConditionOperationAnd: herşey
+    DisplayConditionOperationOr: bir
+    DisplayConditionText: 'Bu seçenek, aşağıdaki {type} koşullarının {operation} tamamlamak için ayarlanmıştır.'
+    DisplayConditionType: eylem
+    DisplayConditionTypeHide: saklamak
+    DisplayConditionTypeShow: Göstermek
+    DisplayConditions: 'Görüntüleme koşulları'
+    IsOptional: 'İsteğe bağlı'
+    IsPreselected: 'önceden seçilmiş'
+    NumberProductRelationDesc: 'Bu makale, bu seçenek için belirtilen miktarda alışveriş sepetine yerleştirilecektir.'
+    NumberProductRelationTitle: 'Bu seçenek için öğe'
+    OptionBehavior: davranış
+    OptionBehaviorTitle: '{option} için davranış'
+    OptionDescriptionDesc: '{option} " seçeneğinin açıklaması olarak görünür.'
+    OptionDescriptionTitle: '{option} için açıklama'
+    OptionLongDescriptionDesc: '{option} " seçeneği için bir açılır iletişim kutusunda uzun bir açıklama olarak görüntülenir. Bir makale belirtilirse, bunun yerine makale bilgileri görüntülenir.'
+    OptionLongDescriptionTitle: '{option} için uzun açıklama'
+    OptionProductRelation: 'Bağlantılı makaleler'
+    OptionProductRelationDesc: '{option} " seçeneği seçildiğinde bu öğeyi alışveriş sepetine koyun.'
+    OptionProductRelationTitle: '{option} için öğe'
+    OptionType: 'Giriş türü'
+    OptionTypeBinaryQuestion: 'Evet soru yok'
+    OptionTypeLabel: Etiket
+    OptionTypeNumber: sayı
+    OptionTypeProductView: 'Ürün:% s'
+    OptionTypeRadio: 'çoktan seçmeli'
+    OptionTypeRedirection: Yönlendirme
+    OptionTypeRedirectionHeader: 'Bu seçenek, müşterileri başka bir sayfaya yönlendirecektir.'
+    OptionTypeTextArea: 'Metin girişi (çok satırlı)'
+    OptionTypeTextField: 'Metin girişi'
+    OptionUseCustomQuantityDropdownMaximumTitle: '{option} seçeneği için açılır menüdeki maksimum sayı'
+    OptionUseCustomQuantityPluralTitle: '{option} için çoğul ölçü birimi'
+    OptionUseCustomQuantitySingularTitle: '{option} için tekil ölçü birimi'
+    OptionUseCustomQuantityTextTitle: '{option} için bilgi metni miktarı seçimi'
+    OptionUseCustomQuantityTitle: '{option} için serbestçe seçilebilir miktarı kullanın'
+    Options: Seçenekler
+    OptionsDesc: 'Çoktan seçmeli alanda seçilebilecek olası seçeneklerin listesi. Lütfen her satıra bir seçenek girin.'
+    PLURALNAME: 'Konfigüratör adım seçenekleri'
+    ProductDynQuantityStepOptionID: 'Seçeneğe göre miktar'
+    ProductDynQuantityStepOptionIDDesc: 'Bu seçeneğin kullanıcı girişi, alışveriş sepeti için miktar olarak kullanılır. Herhangi bir giriş yapılmazsa veya seçenek atlanırsa, minimum sayı kullanılır.'
+    ProductMinQuantity: 'Minimum miktar'
+    ProductMinQuantityDesc: 'Alışveriş sepetine atılması gereken minimum miktar.'
+    ProductPriceLabel: 'Fiyat etiketi'
+    ProductPriceLabelDesc: 'Belirtilirse bu isteğe bağlı etiket fiyatın önüne konur.'
+    ProductPriceLabelFor: '{product} için fiyat etiketi'
+    ProductQuantityDropdownMax: 'Açılır menüdeki maksimum sayı'
+    ProductQuantityDropdownMaxDesc: 'Açılır menüden seçilebilecek maksimum sayı. Müşteri daha fazlasına ihtiyaç duyarsa bu seçimi manuel olarak yapabilir.'
+    ProductQuantityPlural: 'Çoğul ölçü birimi'
+    ProductQuantityPluralDesc: '> miktarı seçilirken görüntülenecek ölçü birimi.'
+    ProductQuantitySingular: 'Tekil ölçü birimi'
+    ProductQuantitySingularDesc: 'Miktar 1 seçilirken görüntülenecek ölçü birimi.'
+    ProductViewIsReadonly: 'Kullanıcı girişine izin verme'
+    SINGULARNAME: 'Konfigüratör adım seçeneği'
+    Sort: 'Sıralama düzeni'
+    Step: adım
+    Text: Metin
+    TextDesc: 'Seçim kutusunun alt kısmında görüntülenecek metin (örneğin seçim düğmesinin / açılır listenin yukarısında).'
+    Title: Başlık
+    moreThanMax: '{max} {maxTitle} ...'
+  SilverCart\ProductWizard\Model\Wizard\StepOptionSet:
+    DisplayConditionOperation: 'Boole bağlantısı'
+    DisplayConditionOperationAnd: herşey
+    DisplayConditionOperationOr: bir
+    DisplayConditionText: 'Bu seçenek, aşağıdaki {type} koşullarının {operation} tamamlamak için ayarlanmıştır.'
+    DisplayConditionType: eylem
+    DisplayConditionTypeHide: saklamak
+    DisplayConditionTypeShow: Göstermek
+    DisplayConditions: 'Görüntüleme koşulları'
+    PLURALNAME: 'Konfigüratör adım seçenek setleri'
+    SINGULARNAME: 'Konfigüratör adımı seçenek seti'
+    Sort: 'Sıralama düzeni'
+    Step: adım
+    StepOptions: Seçenekler
+    Title: Başlık
