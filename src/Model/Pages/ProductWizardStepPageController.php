@@ -21,6 +21,8 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
  * @since 15.02.2019
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
+ * 
+ * @method ProductWizardStepPage data() Returns the associated database record.
  */
 class ProductWizardStepPageController extends PageController
 {
@@ -43,14 +45,13 @@ class ProductWizardStepPageController extends PageController
      * Default action.
      * 
      * @return void
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 25.02.2019
      */
     public function index() : void
     {
         $currentStep = $this->data()->getCurrentStep();
-        $this->redirect($currentStep->Link());
+        if ($currentStep instanceof Step) {
+            $this->redirect($currentStep->Link());
+        }
     }
     
     /**
