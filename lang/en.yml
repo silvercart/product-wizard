@@ -96,6 +96,9 @@ en:
     DisplayConditionTypeHide: hide
     DisplayConditionTypeShow: show
     DisplayConditions: 'Display conditions'
+    DisplayType: 'Display type'
+    DisplayType-list: 'List'
+    DisplayType-tile: 'Tile'
     IsOptional: 'Is optional'
     IsPreselected: 'Is preselected'
     NumberProductRelationDesc: 'This item will be added to the shopping cart with the quantity specified in this option.'

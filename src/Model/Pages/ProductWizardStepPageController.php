@@ -32,6 +32,7 @@ class ProductWizardStepPageController extends PageController
      * @var array
      */
     private static $allowed_actions = [
+        'skip',
         'step',
         'createOffer',
         'getCartSummaryData',
@@ -52,6 +53,31 @@ class ProductWizardStepPageController extends PageController
         if ($currentStep instanceof Step) {
             $this->redirect($currentStep->Link());
         }
+    }
+    
+    /**
+     * Action to skip the resulting options of the given step.
+     * The given step is determined by the URL parameter 'ID'.
+     * 
+     * @param HTTPRequest $request Request
+     * 
+     * @return HTTPResponse
+     */
+    public function skip(HTTPRequest $request) : ?HTTPResponse
+    {
+        $stepSort = $request->param('ID');
+        if (!is_numeric($stepSort)) {
+            return $this->redirectBack();
+        }
+        $step = $this->data()->Steps()->filter('Sort', $stepSort)->first();
+        if (!($step instanceof Step)
+         || !$step->exists()
+        ) {
+            return $this->redirectBack();
+        }
+        $this->data()->addCompletedStep($step->getPreviousStep());
+        $this->data()->addCompletedStep($step);
+        return $this->redirect($step->NextLink());
     }
     
     /**

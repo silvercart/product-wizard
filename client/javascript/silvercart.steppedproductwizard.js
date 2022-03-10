@@ -17,7 +17,9 @@ silvercart.ProductWizard.Base = (function () {
     return public;
 });
 silvercart.ProductWizard.CartSummary = (function () {
-    var property = {},
+    var property = {
+            postRequestCount: 0,
+        },
         selector = {
             container: "#ProductWizardCartSummary",
             amounts: "#ProductWizardCartSummaryAmounts",
@@ -165,6 +167,7 @@ silvercart.ProductWizard.CartSummary = (function () {
                     quantity = 0;
                 }
                 $(selector.container).addClass('loading');
+                property.postRequestCount++;
                 $.post(
                         private.getBaseControllerURL() + 'postOptionData',
                         {
@@ -173,6 +176,10 @@ silvercart.ProductWizard.CartSummary = (function () {
                             'Quantity': quantity
                         },
                         function(data) {
+                            property.postRequestCount--;
+                            if (property.postRequestCount > 0) {
+                                return;
+                            }
                             public.initWith(data);
                             $(selector.container).removeClass('loading');
                         }
@@ -237,10 +244,12 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
         },
         selector = {
             container: "#ProductWizardStepOptionsWithProgress",
+            inputUpdateQuantityOnChange: '.update-quantity-on-change',
             option: ".wizard-option",
             optionPicker: ".wizard-option-picker",
             optionPickerBtnChoose: ".wizard-option-picker.btn-choose",
             optionProduct: '.wizard-option-product',
+            optionProductRequired: '.wizard-required-product-option',
             pickQuantity: ".pick-quantity",
             pickMoreQuantity: ".pick-more-quantity",
             pickMoreQuantityField: ".pick-more-quantity-field",
@@ -250,6 +259,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             radioOptionPicker: ".radio-option-picker",
             stepForm: "form[name='ProductWizardStepForm']",
             selectProductButton: "#product-wizard-step .select-product",
+            selectProductOptionButton: "#product-wizard-step .select-product-option",
             submitButton: "form[name='ProductWizardStepForm'] button[type='submit']",
             variantPicker: ".wizard-option .variant-picker"
         },
@@ -294,6 +304,19 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         valid = false;
                     }
                 }
+                if (valid) {
+                    var requiredProductOptions = $(selector.optionProductRequired);
+                    requiredProductOptions.each(function() {
+                        if ($('.wizard-option.picked', $(this)).length === 0) {
+                            var error = ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOneProductOption', 'Please choose at least one product.');
+                            if ($(this).data('title').length > 0) {
+                                error = ss.i18n._t('SilverCart.ProductWizard.ERROR.PickOneProductOptionFrom', 'Please choose at least one product from:') + ' "' + $(this).data('title') + '"';
+                            }
+                            $(selector.submitButton).before('<div class="alert alert-danger alert-submit-button-error-message"><span class="fa fa-exclamation-circle"></span> ' + error + '</div>');
+                            valid = false;
+                        }
+                    });
+                }
                 return valid;
             },
             resetValidationTooltip: function(input) {
@@ -319,6 +342,55 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     private.pickOption(option);
                     private.switchBtnChooseLabel(option);
                 }
+            },
+            selectProductOptionButtonClick: function() {
+                var productID     = $(this).data('product-id'),
+                    optionID      = $(this).data('option-id'),
+                    option        = $('#wizard-option-' + optionID + '-' + productID),
+                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
+                if (parseInt(quantityField.val()) === 0) {
+                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]').val(1);
+                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]').val(1);
+                    option
+                            .addClass('picked')
+                            .removeClass('not-picked');
+                    $('.btn.select-product-option', option)
+                            .addClass('btn-primary')
+                            .removeClass('btn-outline-primary');
+                    private.switchBtnLabel($('.btn.select-product-option', option));
+                    property.cartSummary.postOptionData(optionID, productID, 1);
+                } else {
+                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]').val(0);
+                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]').val(0);
+                    option
+                            .addClass('not-picked')
+                            .removeClass('picked');
+                    $('.btn.select-product-option', option)
+                            .addClass('btn-outline-primary')
+                            .removeClass('btn-primary');
+                    private.switchBtnLabel($('.btn.select-product-option', option));
+                    property.cartSummary.postOptionData(optionID, productID, 0);
+                }
+                if (parseInt(option.data('allow-multiple-products')) === 1) {
+                    return;
+                }
+                $('.wizard-option[data-option-id="' + optionID + '"]').each(function() {
+                    if ($(this).attr('id') === option.attr('id')) {
+                        return;
+                    }
+                    $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Select]"]').val(0);
+                    $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Quantity]"]').val(0);
+                    if ($(this).hasClass('picked')) {
+                        private.switchBtnLabel($('.btn.select-product-option', $(this)));
+                        $(this)
+                                .removeClass('picked')
+                                .addClass('not-picked');
+                    }
+                    $('.btn.select-product-option', $(this))
+                            .addClass('btn-outline-primary')
+                            .removeClass('btn-primary');
+                    property.cartSummary.postOptionData($(this).data('option-id'), $(this).data('product-id'), 0);
+                });
             },
             pickOptionByPicker: function() {
                 var option = $(this).closest(selector.option),
@@ -381,6 +453,25 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         }
                     }
                 }
+            },
+            pickQuantityOnChange: function() {
+                var quantity  = $(this).val(),
+                    option    = $(this).closest(selector.option),
+                    productID = option.data('product-id'),
+                    optionID  = option.data('option-id');
+                if (option.hasClass('not-picked')
+                 && parseInt(quantity) > 0
+                ) {
+                    private.pickOption(option, $(this).hasClass('skip-ajax'));
+                } else if (!option.hasClass('not-picked')
+                        && parseInt(quantity) <= 0
+                ) {
+                    private.pickOption(option, $(this).hasClass('skip-ajax'));
+                }
+                if ($(this).hasClass('skip-ajax')) {
+                    return;
+                }
+                property.cartSummary.postOptionData(optionID, productID, quantity);
             },
             pickQuantity: function() {
                 var quantity      = $(this).data('quantity'),
@@ -570,6 +661,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 property.cartSummary = silvercart.ProductWizard.CartSummary();
                 property.cartSummary.init();
                 $(document).on('click', selector.selectProductButton, private.pickOptionByModal);
+                $(document).on('click', selector.selectProductOptionButton, private.selectProductOptionButtonClick);
                 $(document).on('keyup', selector.stepForm + ' input', private.resetValidationTooltipByInput);
                 $(document).on('click', selector.optionPicker, private.pickOptionByPicker);
                 $(document).on('click', selector.pickQuantity, private.pickQuantity);
@@ -577,6 +669,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
                 $(document).on('change', selector.radioOption, private.pickRadioOption);
                 $(document).on('change', selector.radioMultipleOption, private.pickRadioOption);
+                $(document).on('change', selector.inputUpdateQuantityOnChange, private.pickQuantityOnChange);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
                 $(document).on('click', selector.variantPicker, private.pickVariant);
                 $(document).on('click', selector.submitButton, private.validateFields);

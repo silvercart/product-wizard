@@ -96,6 +96,9 @@ de:
     DisplayConditionTypeHide: ausblenden
     DisplayConditionTypeShow: anzeigen
     DisplayConditions: Anzeigebedingungen
+    DisplayType: 'Anzeige-Art'
+    DisplayType-list: 'Liste'
+    DisplayType-tile: 'Kacheln'
     IsOptional: 'Ist optional'
     IsPreselected: 'Ist vorausgewählt'
     NumberProductRelationDesc: 'Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt.'

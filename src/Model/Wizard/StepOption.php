@@ -111,6 +111,7 @@ class StepOption extends DataObject
         'Content'                    => DBHTMLText::class,
         'Text'                       => DBText::class,
         'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView,Redirection","BinaryQuestion")',
+        'DisplayType'                => 'Enum("tile,list","tile")',
         'DefaultValue'               => 'Varchar(256)',
         'Options'                    => DBText::class,
         'ButtonTitle'                => DBVarchar::class,
@@ -249,6 +250,19 @@ class StepOption extends DataObject
                     $fields->removeByName('Text');
                 }
             }
+            if ($this->OptionType !== self::OPTION_TYPE_BUTTON
+             && $this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW
+             && $this->OptionType !== self::OPTION_TYPE_RADIO
+            ) {
+                $fields->removeByName('DisplayType');
+            } else {
+                $displayTypes = [];
+                foreach ($this->dbObject('DisplayType')->enumValues() as $enumValue) {
+                    $displayTypes[$enumValue] = _t(self::class . ".DisplayType-{$enumValue}", $enumValue);
+                }
+                $fields->dataFieldByName('DisplayType')
+                        ->setSource($displayTypes);
+            }
             if ($this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_RADIO
              && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
@@ -282,6 +296,7 @@ class StepOption extends DataObject
              && $this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
              && $this->OptionType !== self::OPTION_TYPE_TEXTFIELD
+             && $this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW
             ) {
                 $fields->removeByName('Content');
             } else {
@@ -326,7 +341,9 @@ class StepOption extends DataObject
         if ($this->OptionType !== self::OPTION_TYPE_RADIO) {
             $fields->removeByName('Options');
             $fields->removeByName('DisableLabelForFree');
-            $fields->removeByName('AllowMultipleChoices');
+            if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
+                $fields->removeByName('AllowMultipleChoices');
+            }
         } else {
             $fields->dataFieldByName('Options')->setDescription($this->fieldLabel('OptionsDesc'));
             $optionList = $this->getOptionList();
@@ -1290,6 +1307,7 @@ class StepOption extends DataObject
     {
         if (!$this->IsOptional
          && $this->isVisible()
+         && $this->Products()->count() < 2
         ) {
             return 1;
         }

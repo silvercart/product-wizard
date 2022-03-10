@@ -4,6 +4,7 @@ if (typeof (ss) == 'undefined' || typeof (ss.i18n) == 'undefined') {
 } else {
     ss.i18n.addDictionary('de', {
         "SilverCart.ProductWizard.ERROR.PickOneProductOption": "Bitte wählen Sie mindestens ein Produkt.",
+        "SilverCart.ProductWizard.ERROR.PickOneProductOptionFrom": "Bitte wählen Sie mindestens ein Produkt aus:",
         "SilverCart.ProductWizard.ERROR.PickOptionHeading": "Es ist ein Fehler aufgetreten",
         "SilverCart.ProductWizard.ERROR.PickOptionContent": "Bitte wählen Sie mindestens eine Option, um fortzufahren.",
         "SilverCart.ProductWizard.ERROR.PickOptions": "Bitte wählen Sie zu jedem Angebot eine Option aus.",
