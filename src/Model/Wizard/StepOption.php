@@ -34,6 +34,7 @@ use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBVarchar;
 use SilverStripe\ORM\SS_List;
 use SilverStripe\View\ArrayData;
+use SilverStripe\View\SSViewer;
 
 /**
  * A step option a customer can pick on a SilverCart ProductWizardStepPage.
@@ -251,8 +252,8 @@ class StepOption extends DataObject
                 }
             }
             if ($this->OptionType !== self::OPTION_TYPE_BUTTON
-             && $this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW
              && $this->OptionType !== self::OPTION_TYPE_RADIO
+             && !$this->IsProductView()
             ) {
                 $fields->removeByName('DisplayType');
             } else {
@@ -272,7 +273,7 @@ class StepOption extends DataObject
             } else {
                 $fields->dataFieldByName('DefaultValue')->setDescription($this->fieldLabel('DefaultValueDesc'));
             }
-            if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
+            if (!$this->IsProductView()) {
                 $fields->removeByName('IsPreselected');
                 $fields->removeByName('Products');
                 $fields->removeByName('ProductViewIsReadonly');
@@ -296,7 +297,7 @@ class StepOption extends DataObject
              && $this->OptionType !== self::OPTION_TYPE_NUMBER
              && $this->OptionType !== self::OPTION_TYPE_TEXTAREA
              && $this->OptionType !== self::OPTION_TYPE_TEXTFIELD
-             && $this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW
+             && !$this->IsProductView()
             ) {
                 $fields->removeByName('Content');
             } else {
@@ -554,22 +555,17 @@ class StepOption extends DataObject
     }
     
     /**
-     * Returns the default rendering for this object.
+     * Returns the rendered object.
+     * 
+     * @param string $templateAddition Optional template name addition
      * 
      * @return DBHTMLText
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 24.02.2019
      */
-    public function forTemplate()
+    public function forTemplate(string $templateAddition = '') : DBHTMLText
     {
-        if ($this->OptionType == self::OPTION_TYPE_REDIRECTION) {
-            $link = $this->redirectionLink();
-            if (!is_null($link)) {
-                Controller::curr()->redirect($link, 301);
-            }
-        }
-        return $this->renderWith(self::class . "_{$this->OptionType}");
+        $addition  = empty($templateAddition) ? "_{$this->OptionType}" : "_{$templateAddition}";
+        $templates = SSViewer::get_templates_by_class(static::class, $addition, __CLASS__);
+        return $this->renderWith($templates);
     }
 
     /**
@@ -1025,7 +1021,7 @@ class StepOption extends DataObject
          && empty($value)
         ) {
             $value = '0';
-        } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW
+        } elseif ($this->IsProductView()
                && empty($value)
                && $this->IsPreselected
         ) {
@@ -1366,7 +1362,23 @@ class StepOption extends DataObject
                 $value = (int) $this->getRadioQuantity($optionIndex);
                 break;
             default:
-                $value = 0;
+                if ($this->IsProductView()) {
+                    $productID = $index;
+                    if (is_null($productID)) {
+                        $productID = 0;
+                        $first = $this->Products()->first();
+                        if ($first instanceof Product) {
+                            $productID = $first->ID;
+                        }
+                    }
+                    if (array_key_exists($productID, $postedValues)
+                     && array_key_exists('Quantity', $postedValues[$productID])
+                    ) {
+                        $value = (int) $postedValues[$productID]['Quantity'];
+                    }
+                } else {
+                    $value = 0;
+                }
                 break;
         }
         return (int) $value;
@@ -1409,7 +1421,21 @@ class StepOption extends DataObject
      */
     public function IsProductView() : bool
     {
-        return $this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW;
+        $is = $this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW;
+        $this->extend('updateIsProductView', $is);
+        return $is;
+    }
+    
+    /**
+     * Returns a custom JS POST callback function name.
+     * 
+     * @return string
+     */
+    public function JSPostCallback() : string
+    {
+        $callback = '';
+        $this->extend('updateJSPostCallback', $callback);
+        return $callback;
     }
     
     /**
@@ -1458,7 +1484,7 @@ class StepOption extends DataObject
                     $quantity = $this->getRadioQuantity($this->getValue());
                     $this->addCartData($cartData, $quantity, $product);
                 }
-            } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
+            } elseif ($this->IsProductView()) {
                 $products = $this->Products();
                 foreach ($products as $product) {
                     if ($this->getProductSelectValue($product->ID) === 1) {
@@ -1557,7 +1583,7 @@ class StepOption extends DataObject
                     $this->addCartData($cartData, $quantity, $product);
                 }
             }
-        } elseif ($this->OptionType === self::OPTION_TYPE_PRODUCT_VIEW) {
+        } elseif ($this->IsProductView()) {
             $products = $this->Products();
             foreach ($products as $product) {
                 if ($this->getProductSelectValue($product->ID) === 1) {

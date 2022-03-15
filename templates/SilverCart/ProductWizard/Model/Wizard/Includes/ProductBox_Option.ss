@@ -1,4 +1,4 @@
-<div class="card rounded-0 w-100 h-100 shadow wizard-option {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}-{$ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}" data-service-ids="{$ServicesAsIDString}">
+<div class="card rounded-0 w-100 h-100 shadow wizard-option {$CurrentOption.getProductIsSelectedClass($ID)}" id="wizard-option-{$CurrentOption.ID}-{$ID}" data-option-id="{$CurrentOption.ID}" data-product-id="{$ID}" data-service-ids="{$ServicesAsIDString}" data-post-callback="{$CurrentOption.JSPostCallback}">
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
     <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Quantity]" value="{$CurrentOption.getProductQuantityValue($ID)}" />
 <% if $LongDescription %>

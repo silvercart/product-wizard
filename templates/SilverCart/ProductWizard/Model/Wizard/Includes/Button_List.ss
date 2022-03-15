@@ -1,5 +1,5 @@
 <% if $Title || $Content %>
-<div class="w-100 p-10 shadow mt-20">
+<div class="w-100 p-10 shadow mt-40">
     <h2>{$Title}</h2>
     {$Content}
     <div class="text-right">

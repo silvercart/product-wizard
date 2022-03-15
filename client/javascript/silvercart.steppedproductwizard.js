@@ -162,7 +162,7 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
-            postOptionData: function(optionID, productID, quantity) {
+            postOptionData: function(optionID, productID, quantity, callback) {
                 if (quantity < 0) {
                     quantity = 0;
                 }
@@ -177,11 +177,14 @@ silvercart.ProductWizard.CartSummary = (function () {
                         },
                         function(data) {
                             property.postRequestCount--;
-                            if (property.postRequestCount > 0) {
-                                return;
+                            if (property.postRequestCount === 0) {
+                                public.initWith(data);
+                                $(selector.container).removeClass('loading');
                             }
-                            public.initWith(data);
-                            $(selector.container).removeClass('loading');
+                            var callable = eval(callback);
+                            if (typeof callable === 'function') {
+                                callable(optionID, productID, quantity, data);
+                            }
                         }
                 );
             },
@@ -347,10 +350,11 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 var productID     = $(this).data('product-id'),
                     optionID      = $(this).data('option-id'),
                     option        = $('#wizard-option-' + optionID + '-' + productID),
-                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]');
-                if (parseInt(quantityField.val()) === 0) {
-                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]').val(1);
-                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]').val(1);
+                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]'),
+                    selectField   = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]');
+                if (parseInt(selectField.val()) === 0) {
+                    selectField.val(1);
+                    quantityField.val(1);
                     option
                             .addClass('picked')
                             .removeClass('not-picked');
@@ -358,10 +362,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                             .addClass('btn-primary')
                             .removeClass('btn-outline-primary');
                     private.switchBtnLabel($('.btn.select-product-option', option));
-                    property.cartSummary.postOptionData(optionID, productID, 1);
+                    property.cartSummary.postOptionData(optionID, productID, 1, option.data('post-callback'));
                 } else {
-                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]').val(0);
-                    $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]').val(0);
+                    selectField.val(0);
+                    quantityField.val(0);
                     option
                             .addClass('not-picked')
                             .removeClass('picked');
@@ -375,11 +379,15 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     return;
                 }
                 $('.wizard-option[data-option-id="' + optionID + '"]').each(function() {
-                    if ($(this).attr('id') === option.attr('id')) {
+                    var subQuantityField = $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Quantity]"]'),
+                        subSelectField   = $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Select]"]');
+                    if ($(this).attr('id') === option.attr('id')
+                     || parseInt(subQuantityField.val()) === 0
+                    ) {
                         return;
                     }
-                    $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Select]"]').val(0);
-                    $('input[name="StepOptions[' + $(this).data('option-id') + '][' + $(this).data('product-id') + '][Quantity]"]').val(0);
+                    subSelectField.val(0);
+                    subQuantityField.val(0);
                     if ($(this).hasClass('picked')) {
                         private.switchBtnLabel($('.btn.select-product-option', $(this)));
                         $(this)

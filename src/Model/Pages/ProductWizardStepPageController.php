@@ -441,7 +441,7 @@ class ProductWizardStepPageController extends PageController
         $page       = $this->data();
         $step       = $page->getCurrentStep();
         $storedVars = $page->getPostVarsFor($step);
-        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+        if ($option->IsProductView()) {
             if (array_key_exists('StepOptions', $storedVars)
              && array_key_exists($optionID, $storedVars['StepOptions'])
              && array_key_exists($productID, $storedVars['StepOptions'][$optionID])
@@ -477,7 +477,7 @@ class ProductWizardStepPageController extends PageController
     public function handleStoredVars(array &$storedVars, int $optionID, int $productID, StepOption $option, int $quantity) : void
     {
         $this->prepareStoredVars($storedVars, $optionID, $productID, $option);
-        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+        if ($option->IsProductView()) {
             if (is_numeric($quantity)) {
                 $storedVars['StepOptions'][$optionID][$productID]['Select']   = $quantity > 0 ? '1' : '0';
                 $storedVars['StepOptions'][$optionID][$productID]['Quantity'] = $quantity;
@@ -509,7 +509,7 @@ class ProductWizardStepPageController extends PageController
      */
     protected function prepareStoredVars(array &$storedVars, int $optionID, int $productID, StepOption $option) : ProductWizardStepPageController
     {
-        if ($option->OptionType === StepOption::OPTION_TYPE_PRODUCT_VIEW) {
+        if ($option->IsProductView()) {
             if (!is_array($storedVars)) {
                 $storedVars = [];
             }
