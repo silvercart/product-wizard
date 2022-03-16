@@ -1577,7 +1577,10 @@ class StepOption extends DataObject
                 $values = [$this->getValue()];
             }
             foreach ($values as $value) {
-                if (array_key_exists($value, $products)) {
+                if ((is_int($value)
+                  || is_string($value))
+                 && array_key_exists($value, $products)
+                ) {
                     $product  = $products[$value];
                     $quantity = $this->getRadioQuantity($value);
                     $this->addCartData($cartData, $quantity, $product);
