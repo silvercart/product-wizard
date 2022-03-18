@@ -19,6 +19,7 @@ en:
     CheckoutStepTitle: 'Title to display as checkout step'
     DESCRIPTION: 'Page that provides a step-based product configurator.'
     DisplayCheckoutAsStep: 'Display checkout as last wizard step.'
+    ErrorPleaseCompleteYourSelection: 'Please complete your selection.'
     PLURALNAME: 'Product configurators (step-based)'
     SINGULARNAME: 'Product configurator (step-based)'
     SkipShoppingCart: 'Skip shopping cart and direct to checkout after finishing the wizard.'

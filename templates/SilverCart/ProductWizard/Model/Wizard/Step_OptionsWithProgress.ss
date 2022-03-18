@@ -67,6 +67,14 @@
                         </tr>
                         <% end_if %>
                     </table>
+                    <% if $CurrentPage.HasValidationErrors %>
+                    <div class="alert alert-danger alert-submit-button-error-message">
+                        <span class="fa fa-exclamation-circle"></span>
+                        <% loop $CurrentPage.ValidationErrors %>
+                            {$Message}<br/>
+                        <% end_loop %>
+                    </div>
+                    <% end_if %>
                     <button class="btn btn-primary btn-block" type="submit">{$ButtonTitle} <span class="fa fa-angle-double-right"></span></button>
                 </div>
                 {$ProductWizardStepPage.AfterProductWizardCartSummaryContent}

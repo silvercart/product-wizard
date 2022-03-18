@@ -75,9 +75,12 @@ class ProductWizardStepPageController extends PageController
         ) {
             return $this->redirectBack();
         }
-        $this->data()->addCompletedStep($step->getPreviousStep());
-        $this->data()->addCompletedStep($step);
-        return $this->redirect($step->NextLink());
+        if ($this->data()->canCompleteCurrentStep()) {
+            $this->data()->addCompletedStep($step->getPreviousStep());
+            $this->data()->addCompletedStep($step);
+            return $this->redirect($step->NextLink());
+        }
+        return $this->redirectBack();
     }
     
     /**

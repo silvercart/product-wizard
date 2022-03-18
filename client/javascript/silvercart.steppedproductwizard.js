@@ -180,6 +180,9 @@ silvercart.ProductWizard.CartSummary = (function () {
                             if (property.postRequestCount === 0) {
                                 public.initWith(data);
                                 $(selector.container).removeClass('loading');
+                                if ($('.alert-submit-button-error-message').length > 0) {
+                                    silvercart.ProductWizard.OptionsWithProgress().validateFields();
+                                }
                             }
                             var callable = eval(callback);
                             if (typeof callable === 'function') {
@@ -213,6 +216,9 @@ silvercart.ProductWizard.CartSummary = (function () {
                         function(data) {
                             public.initWith(data);
                             $(selector.container).removeClass('loading');
+                            if ($('.alert-submit-button-error-message').length > 0) {
+                                silvercart.ProductWizard.OptionsWithProgress().validateFields();
+                            }
                         }
                 );
             },
@@ -605,9 +611,6 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     });
                 }
                 property.cartSummary.postPlainOptionData($(this).attr('name'), $(this).closest(selector.option).hasClass('allow-multiple-choices'));
-                if ($('.alert-submit-button-error-message').length > 0) {
-                    private.validateFields();
-                }
             },
             pickVariant: function() {
                 var productID     = $(this).data('product-id'),
@@ -681,6 +684,9 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
                 $(document).on('click', selector.variantPicker, private.pickVariant);
                 $(document).on('click', selector.submitButton, private.validateFields);
+            },
+            validateFields: function() {
+                private.validateFields();
             }
         };
     return public;

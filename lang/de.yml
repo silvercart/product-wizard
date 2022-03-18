@@ -19,6 +19,7 @@ de:
     CheckoutStepTitle: 'Titel Checkout-Schritt'
     DESCRIPTION: 'Seite, die einen auf Schritten basierten Produkt-Konfigurator bereitstellt.'
     DisplayCheckoutAsStep: 'Checkout als letzten Schritt anzeigen.'
+    ErrorPleaseCompleteYourSelection: 'Bitte vervollständigen Sie Ihre Auswahl.'
     PLURALNAME: 'Produkt-Konfiguratoren (Schritt-basiert)'
     SINGULARNAME: 'Produkt-Konfigurator (Schritt-basiert)'
     SkipShoppingCart: 'Warenkorb überspringen und direkt zur Kasse leiten, wenn der Konfigurator beendet wurde.'

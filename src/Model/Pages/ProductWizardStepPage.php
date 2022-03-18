@@ -7,6 +7,7 @@ use SilverCart\Dev\Tools;
 use SilverCart\Model\Pages\CheckoutStepController;
 use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\Step;
+use SilverCart\ProductWizard\Model\Wizard\StepOption;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\CheckboxField;
@@ -41,10 +42,11 @@ class ProductWizardStepPage extends Page
 {
     use \SilverCart\ORM\ExtensibleDataObject;
     
-    const SESSION_KEY                 = 'SilverCart.ProductWizard.ProductWizardStepPage';
-    const SESSION_KEY_COMPLETED_STEPS = self::SESSION_KEY . '.CompletedSteps';
-    const SESSION_KEY_CURRENT_STEP    = self::SESSION_KEY . '.CurrentStep';
-    const SESSION_KEY_POST_VARS       = self::SESSION_KEY . '.PostVars';
+    const SESSION_KEY                   = 'SilverCart.ProductWizard.ProductWizardStepPage';
+    const SESSION_KEY_COMPLETED_STEPS   = self::SESSION_KEY . '.CompletedSteps';
+    const SESSION_KEY_CURRENT_STEP      = self::SESSION_KEY . '.CurrentStep';
+    const SESSION_KEY_POST_VARS         = self::SESSION_KEY . '.PostVars';
+    const SESSION_KEY_VALIDATION_ERRORS = self::SESSION_KEY . '.ValidationErrors';
     
     /**
      * The completed steps.
@@ -191,8 +193,9 @@ class ProductWizardStepPage extends Page
     public function fieldLabels($includerelations = true) : array
     {
         return $this->defaultFieldLabels($includerelations, [
-            'Back' => _t(self::class . '.Back', 'Back'),
-            'Step' => _t(self::class . '.Step', 'Step'),
+            'Back'                             => _t(self::class . '.Back', 'Back'),
+            'ErrorPleaseCompleteYourSelection' => _t(self::class . '.ErrorPleaseCompleteYourSelection', 'Please complete your selection.'),
+            'Step'                             => _t(self::class . '.Step', 'Step'),
         ]);
     }
     
@@ -219,6 +222,115 @@ class ProductWizardStepPage extends Page
             $fields->insertAfter('Steps', CheckboxField::create('SkipShoppingCart', $this->fieldLabel('SkipShoppingCart'), $this->SkipShoppingCart));
         });
         return parent::getCMSFields();
+    }
+    
+    /**
+     * Returns whether the current step can be completed.
+     * 
+     * @return bool
+     */
+    public function canCompleteCurrentStep() : bool
+    {
+        return $this->canCompleteStep($this->getCurrentStep());
+    }
+    
+    /**
+     * Returns whether the given $step can be completed.
+     * 
+     * @param Step $step Step to check
+     * 
+     * @return bool
+     */
+    public function canCompleteStep(Step $step) : bool
+    {
+        if ($step->StepOptionSets()->exists()) {
+            foreach ($step->StepOptionSets() as $optionSet) {
+                if (!$this->validateStepOptions($optionSet->getVisibleStepOptions())) {
+                    return false;
+                }
+            }
+        }
+        return $this->validateStepOptions($step->getVisibleStepOptions());
+    }
+    
+    /**
+     * Returns whether there are validation errors.
+     * 
+     * @return bool
+     */
+    public function HasValidationErrors() : bool
+    {
+        return count((array) Tools::Session()->get(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}")) > 0;
+    }
+    
+    /**
+     * Returns the validation errors.
+     * 
+     * @return ArrayList
+     */
+    public function getValidationErrors() : ArrayList
+    {
+        $errors   = ArrayList::create();
+        $messages = (array) Tools::Session()->get(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}");
+        Tools::Session()->set(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}", []);
+        Tools::Session()->clear(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}");
+        Tools::saveSession();
+        foreach ($messages as $message) {
+            $errors->push(ArrayData::create([
+                'Message' => $message,
+            ]));
+        }
+        return $errors;
+    }
+    
+    /**
+     * Adds a validation error $message.
+     * 
+     * @param string $message Message to add
+     * 
+     * @return ProductWizardStepPage
+     */
+    public function addValidationError(string $message) : ProductWizardStepPage
+    {
+        $messages   = (array) Tools::Session()->get(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}");
+        $messages[] = $message;
+        Tools::Session()->set(self::SESSION_KEY_VALIDATION_ERRORS . ".{$this->ID}", $messages);
+        Tools::saveSession();
+        return $this;
+    }
+    
+    /**
+     * Validates the given $stepOptions.
+     * 
+     * @param ArrayList $stepOptions Step options to validate
+     * 
+     * @return bool
+     */
+    public function validateStepOptions(ArrayList $stepOptions) : bool
+    {
+        $error = false;
+        foreach ($stepOptions as $option) {
+            /* @var $option \SilverCart\ProductWizard\Model\Wizard\StepOption */
+            if ($option->OptionType !== StepOption::OPTION_TYPE_NUMBER
+             && $option->OptionType !== StepOption::OPTION_TYPE_RADIO
+             && $option->OptionType !== StepOption::OPTION_TYPE_TEXTAREA
+             && $option->OptionType !== StepOption::OPTION_TYPE_TEXTFIELD
+             && !($option->IsProductView()
+               && (bool) $option->IsOptional === false)
+            ) {
+                // no input required
+                continue;
+            }
+            $data = $option->getCartSummary();
+            if (empty($data)) {
+                $error = true;
+                break;
+            }
+        }
+        if ($error) {
+            $this->addValidationError($this->fieldLabel('ErrorPleaseCompleteYourSelection'));
+        }
+        return !$error;
     }
     
     /**
