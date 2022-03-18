@@ -167,6 +167,7 @@ class StepOption extends DataObject
         'RedirectionExternalURL'     => 'Varchar(2083)', // 2083 is the maximum length of a URL in Internet Explorer.
         'DisableLabelForFree'        => 'Boolean(0)',
         'AllowMultipleChoices'       => 'Boolean(0)',
+        'DisplayProductImage'        => 'Boolean(0)',
         'Sort'                       => DBInt::class,
     ];
     /**
@@ -387,6 +388,7 @@ class StepOption extends DataObject
         if ($this->OptionType !== self::OPTION_TYPE_RADIO) {
             $fields->removeByName('Options');
             $fields->removeByName('DisableLabelForFree');
+            $fields->removeByName('DisplayProductImage');
             if ($this->OptionType !== self::OPTION_TYPE_PRODUCT_VIEW) {
                 $fields->removeByName('AllowMultipleChoices');
             }

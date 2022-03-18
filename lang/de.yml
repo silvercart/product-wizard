@@ -16,9 +16,12 @@ de:
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Zurück
     BackTo: 'Zurück zu {step}'
+    CheckoutStepTitle: 'Titel Checkout-Schritt'
     DESCRIPTION: 'Seite, die einen auf Schritten basierten Produkt-Konfigurator bereitstellt.'
+    DisplayCheckoutAsStep: 'Checkout als letzten Schritt anzeigen.'
     PLURALNAME: 'Produkt-Konfiguratoren (Schritt-basiert)'
     SINGULARNAME: 'Produkt-Konfigurator (Schritt-basiert)'
+    SkipShoppingCart: 'Warenkorb überspringen und direkt zur Kasse leiten, wenn der Konfigurator beendet wurde.'
     Step: Schritt
     Steps: Schritte
     YourChoices: 'Ihre Auswahl'

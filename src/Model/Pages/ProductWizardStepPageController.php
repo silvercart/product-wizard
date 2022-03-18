@@ -133,18 +133,19 @@ class ProductWizardStepPageController extends PageController
      * 
      * @param HTTPRequest $request Request
      * 
-     * @return DBHTMLText
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 26.02.2019
+     * @return HTTPResponse
      */
-    public function createOffer(HTTPRequest $request) : DBHTMLText
+    public function createOffer(HTTPRequest $request) : HTTPResponse
     {
         $this->transformToCart();
         if (!$this->redirectedTo()) {
-            $this->redirect($this->PageByIdentifierCodeLink('SilvercartCartPage'));
+            if ($this->data()->SkipShoppingCart) {
+                return $this->redirect($this->PageByIdentifierCodeLink(ProductWizardStepPage::IDENTIFIER_CHECKOUT_PAGE));
+            } else {
+                return $this->redirect($this->PageByIdentifierCodeLink(ProductWizardStepPage::IDENTIFIER_CART_PAGE));
+            }
         }
-        return $this->render();
+        return HTTPResponse::create($this->render());
     }
     
     /**

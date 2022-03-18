@@ -16,9 +16,12 @@ en:
   SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage:
     Back: Back
     BackTo: 'Back to {step}'
+    CheckoutStepTitle: 'Title to display as checkout step'
     DESCRIPTION: 'Page that provides a step-based product configurator.'
+    DisplayCheckoutAsStep: 'Display checkout as last wizard step.'
     PLURALNAME: 'Product configurators (step-based)'
     SINGULARNAME: 'Product configurator (step-based)'
+    SkipShoppingCart: 'Skip shopping cart and direct to checkout after finishing the wizard.'
     Step: Step
     Steps: Steps
     YourChoices: 'Your selection'
@@ -96,6 +99,7 @@ en:
     DisplayConditionTypeHide: hide
     DisplayConditionTypeShow: show
     DisplayConditions: 'Display conditions'
+    DisplayProductImage: 'Artikelbild anzeigen, wenn vorhanden'
     DisplayType: 'Display type'
     DisplayType-list: 'List'
     DisplayType-tile: 'Tile'

@@ -1,5 +1,9 @@
 <label class="d-block cursor-pointer border rounded mt-10 mb-0 p-10 pb-15 p-relative clearfix radio-option-picker {$Checked}" data-option-id="{$StepOption.ID}" data-value="{$Value}" data-behavior="{$Behavior}" for="StepOptions-{$StepOption.ID}-{$Value}" style="min-height: 0;">
-    <div class="label pl-50"><span class="font-weight-bold">{$Title}</span>
+    <div class="label pl-50">
+    <% if $StepOption.DisplayProductImage && $Product %>
+        <img class="float-left mr-15 mt--6 mb--10" src="{$Product.ListImage.Pad(50,50).URL}" />
+    <% end_if %>
+        <span class="font-weight-bold">{$Title}</span>
     <% if $Product %>
         <% with $Product %>
         <a class="d-inline" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><span class="fa fa-info-circle"></span></a>

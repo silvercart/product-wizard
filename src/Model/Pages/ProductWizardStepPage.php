@@ -4,13 +4,17 @@ namespace SilverCart\ProductWizard\Model\Pages;
 
 use Page;
 use SilverCart\Dev\Tools;
+use SilverCart\Model\Pages\CheckoutStepController;
 use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\Step;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
+use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -26,6 +30,12 @@ use SilverStripe\View\ArrayData;
  * @since 15.02.2019
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
+ * 
+ * @property bool   $SkipShoppingCart      SkipShoppingCart
+ * @property bool   $DisplayCheckoutAsStep DisplayCheckoutAsStep
+ * @property string $CheckoutStepTitle     CheckoutStepTitle
+ * 
+ * @method \SilverStripe\ORM\HasManyList Steps() Returns the related Steps.
  */
 class ProductWizardStepPage extends Page
 {
@@ -146,6 +156,16 @@ class ProductWizardStepPage extends Page
      */
     private static $table_name = 'SilvercartProductWizardStepPage';
     /**
+     * DB attributes.
+     *
+     * @var array
+     */
+    private static $db = [
+        'SkipShoppingCart'      => 'Boolean',
+        'DisplayCheckoutAsStep' => 'Boolean',
+        'CheckoutStepTitle'     => 'Varchar',
+    ];
+    /**
      * Has many relations.
      *
      * @var array
@@ -194,6 +214,9 @@ class ProductWizardStepPage extends Page
             } elseif (class_exists('\UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows')) {
                 $config->addComponent(new \UndefinedOffset\SortableGridField\Forms\GridFieldSortableRows('Sort'));
             }
+            $fields->insertAfter('Steps', TextField::create('CheckoutStepTitle', $this->fieldLabel('CheckoutStepTitle'), $this->CheckoutStepTitle));
+            $fields->insertAfter('Steps', CheckboxField::create('DisplayCheckoutAsStep', $this->fieldLabel('DisplayCheckoutAsStep'), $this->DisplayCheckoutAsStep));
+            $fields->insertAfter('Steps', CheckboxField::create('SkipShoppingCart', $this->fieldLabel('SkipShoppingCart'), $this->SkipShoppingCart));
         });
         return parent::getCMSFields();
     }
@@ -417,6 +440,21 @@ class ProductWizardStepPage extends Page
             if ($step->isVisible()) {
                 $navigationSteps->push($step);
             }
+        }
+        if ($this->DisplayCheckoutAsStep
+         && !empty($this->CheckoutStepTitle)
+        ) {
+            $navigationSteps->push(ArrayData::create([
+                'IsFinished'      => false,
+                'IsCurrent'       => Controller::curr() instanceof CheckoutStepController,
+                'FontAwesomeIcon' => '',
+                'Title'           => $this->CheckoutStepTitle,
+            ]));
+            [
+                'SkipShoppingCart'      => 'Boolean',
+                'DisplayCheckoutAsStep' => 'Boolean',
+                'CheckoutStepTitle'     => 'Varchar',
+            ];
         }
         return $navigationSteps;
     }
