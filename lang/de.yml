@@ -99,6 +99,8 @@ de:
     DisplayType: 'Anzeige-Art'
     DisplayType-list: 'Liste'
     DisplayType-tile: 'Kacheln'
+    ExtraClasses: 'Zusätzliche CSS Klassen'
+    ExtraClassesDesc: 'Z.B. um innere Abstände, äußere Abstände oder Schrift anzupassen.'
     IsOptional: 'Ist optional'
     IsPreselected: 'Ist vorausgewählt'
     NumberProductRelationDesc: 'Dieser Artikel wird mit der an dieser Option angegebenen Menge in den Warenkorb gelegt.'

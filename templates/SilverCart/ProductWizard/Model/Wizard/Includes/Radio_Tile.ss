@@ -1,4 +1,4 @@
-<div class="card rounded-0 w-100 shadow wizard-option pickable {$IsRadioCheckedClass} {$AllowMultipleChoicesClass}" data-option-id="{$ID}">
+<div class="card rounded-0 w-100 shadow wizard-option pickable {$ExtraClasses} {$IsRadioCheckedClass} {$AllowMultipleChoicesClass}" data-option-id="{$ID}">
     <div class="card-header rounded-0 bg-blue text-white px-10 py-6">{$Title}</div>
 <% if $AllowMultipleChoices %>
     <% loop $OptionList %>

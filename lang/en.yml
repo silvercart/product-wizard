@@ -99,6 +99,8 @@ en:
     DisplayType: 'Display type'
     DisplayType-list: 'List'
     DisplayType-tile: 'Tile'
+    ExtraClasses: 'Additional CSS classes'
+    ExtraClassesDesc: 'E.g. to customize padding, margin or font.'
     IsOptional: 'Is optional'
     IsPreselected: 'Is preselected'
     NumberProductRelationDesc: 'This item will be added to the shopping cart with the quantity specified in this option.'

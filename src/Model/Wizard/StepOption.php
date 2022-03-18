@@ -13,7 +13,6 @@ use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
 use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Control\Controller;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -45,6 +44,42 @@ use SilverStripe\View\SSViewer;
  * @since 15.02.2019
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
+ * 
+ * @property bool   $IsOptional                 Is Optional
+ * @property bool   $IsPreselected              Is Preselected
+ * @property string $Title                      Title
+ * @property string $Content                    Content
+ * @property string $Text                       Text
+ * @property string $ExtraClasses               Extra CSS Classes
+ * @property string $OptionType                 Option Type
+ * @property string $DisplayType                Display Type
+ * @property string $DefaultValue               Default Value
+ * @property string $Options                    Options
+ * @property string $ButtonTitle                Button Title
+ * @property string $ButtonTargetLink           Button Target Link
+ * @property string $ButtonTargetType           Button Target Type
+ * @property string $DisplayConditionType       Display Condition Type
+ * @property string $DisplayConditionOperation  Display Condition Operation
+ * @property string $ProductRelationData        Product Relation Data
+ * @property bool   $ProductViewIsReadonly      Product View Is Readonly
+ * @property int    $ProductQuantityDropdownMax Product Quantity Dropdown Max
+ * @property string $ProductQuantitySingular    Product Quantity Singular
+ * @property string $ProductQuantityPlural      Product Quantity Plural
+ * @property string $ProductPriceLabels         Product Price Labels
+ * @property string $RedirectionType            Redirection Type
+ * @property string $RedirectionExternalURL     Redirection External URL
+ * @property bool   $DisableLabelForFree        Disable Label For Free
+ * @property bool   $AllowMultipleChoices       Allow Multiple Choices
+ * @property int    $Sort                       Sort
+ * 
+ * @method File          ButtonTargetFile()  Returns the related ButtonTargetFile.
+ * @method SiteTree      RedirectionLinkTo() Returns the related RedirectionLinkTo.
+ * @method Step          Step()              Returns the related Step.
+ * @method StepOptionSet StepOptionSet()     Returns the related StepOptionSet.
+ * 
+ * @method \SilverStripe\ORM\HasManyList DisplayConditions() Returns the related DisplayConditions.
+ * 
+ * @method \SilverStripe\ORM\ManyManyList Products() Returns the related Products.
  */
 class StepOption extends DataObject
 {
@@ -111,6 +146,7 @@ class StepOption extends DataObject
         'Title'                      => 'Varchar(256)',
         'Content'                    => DBHTMLText::class,
         'Text'                       => DBText::class,
+        'ExtraClasses'               => 'Varchar',
         'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView,Redirection","BinaryQuestion")',
         'DisplayType'                => 'Enum("tile,list","tile")',
         'DefaultValue'               => 'Varchar(256)',
@@ -231,6 +267,7 @@ class StepOption extends DataObject
             $fields->removeByName('ProductPriceLabels');
             $fields->removeByName('Sort');
             $fields->dataFieldByName('Text')->setDescription($this->fieldLabel('TextDesc'));
+            $fields->dataFieldByName('ExtraClasses')->setDescription($this->owner->fieldLabel('ExtraClassesDesc'));
             if ($this->exists()) {
                 $displayConditionsGrid = $fields->dataFieldByName('DisplayConditions');
                 /* @var $displayConditionsGrid \SilverStripe\Forms\GridField\GridField */
@@ -253,6 +290,7 @@ class StepOption extends DataObject
             }
             if ($this->OptionType !== self::OPTION_TYPE_BUTTON
              && $this->OptionType !== self::OPTION_TYPE_RADIO
+             && $this->OptionType !== self::OPTION_TYPE_LABEL
              && !$this->IsProductView()
             ) {
                 $fields->removeByName('DisplayType');

@@ -4,7 +4,7 @@
         <% include SilverCart\ProductWizard\Model\Wizard\ProductBox %>
     <% end_loop %>
 <% else %>
-<div class="w-100">
+<div class="w-100 {$ExtraClasses}">
     <h2>{$Title}</h2>
     {$Content}
     <% if $AllowMultipleChoices %>
