@@ -1,0 +1,2 @@
+SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController:
+    reload_page_after_choose_global_product_attributes_modal: true

@@ -7,12 +7,15 @@ use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
 use SilverCart\Model\Order\ShoppingCartPosition;
 use SilverCart\Model\Product\Product;
+use SilverCart\ProductAttributes\Model\Product\ProductAttribute;
 use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
+use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
 use SilverCart\ProductWizard\Model\Wizard\OptionProductRelation;
 use SilverStripe\Assets\File;
 use SilverStripe\CMS\Model\RedirectorPage;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
@@ -78,8 +81,6 @@ use SilverStripe\View\SSViewer;
  * @method StepOptionSet StepOptionSet()     Returns the related StepOptionSet.
  * 
  * @method \SilverStripe\ORM\HasManyList DisplayConditions() Returns the related DisplayConditions.
- * 
- * @method \SilverStripe\ORM\ManyManyList Products() Returns the related Products.
  */
 class StepOption extends DataObject
 {
@@ -207,6 +208,12 @@ class StepOption extends DataObject
      * @var string
      */
     private static $default_sort = 'Sort ASC';
+    /**
+     * Products relation.
+     * 
+     * @var \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\UnsavedRelationList|NULL
+     */
+    protected $products = null;
     
     /**
      * Stores the picked variant data in session.
@@ -590,6 +597,30 @@ class StepOption extends DataObject
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
+    }
+    
+    /**
+     * Returns the related products.
+     * 
+     * @return \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\UnsavedRelationList
+     */
+    public function Products() : SS_List
+    {
+        if ($this->products === null) {
+            if (Controller::has_curr()
+             && Controller::curr() instanceof ProductWizardStepPageController
+            ) {
+                if (class_exists(ProductAttribute::class)) {
+                    $this->products = ProductAttribute::filterProductsGlobally($this->getManyManyComponents('Products'));
+                } else {
+                    $this->products = $this->getManyManyComponents('Products');
+                }
+                $this->extend('updateProducts', $this->products);
+            } else {
+                $this->products = $this->getManyManyComponents('Products');
+            }
+        }
+        return $this->products;
     }
     
     /**
