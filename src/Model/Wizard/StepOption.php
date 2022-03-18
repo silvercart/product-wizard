@@ -1155,6 +1155,12 @@ class StepOption extends DataObject
                 $longDescription = null;
                 if (array_key_exists($key, $products)) {
                     $product  = $products[$key];
+                    if ($product instanceof Product
+                     && class_exists(ProductAttribute::class)
+                     && !ProductAttribute::productMatchesGlobally($product)
+                    ) {
+                        continue;
+                    }
                 }
                 if (array_key_exists($key, $behaviors)) {
                     $behavior = $behaviors[$key];
