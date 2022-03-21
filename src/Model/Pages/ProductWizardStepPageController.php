@@ -78,6 +78,9 @@ class ProductWizardStepPageController extends PageController
         if ($this->data()->canCompleteCurrentStep()) {
             $this->data()->addCompletedStep($step->getPreviousStep());
             $this->data()->addCompletedStep($step);
+            if ($step->getNextStep()->Template === 'Redirection') {
+                $this->transformToCart();
+            }
             return $this->redirect($step->NextLink());
         }
         return $this->redirectBack();
