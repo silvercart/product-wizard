@@ -20,6 +20,12 @@
 <% end_if %>
     <div class="mt-1">
         <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
+        <br/>
+        <% if $CurrentPage.showPricesGross %>
+            <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
+        <% else_if $CurrentPage.showPricesNet %>
+            <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
+        <% end_if %>
     <% if $PriceIsLowerThanMsr %>
         <span class="text-line-through text-gray">{$MSRPrice.Nice}</span>
     <% end_if %>

@@ -1,5 +1,5 @@
 <% if $Title || $Content %>
-<div class="w-100 mt-40 {$ExtraClasses}">
+<div class="w-100 mt-40 {$ExtraClasses}" data-wizard-option-type="{$OptionType}">
     <% if $Title %>
     <h2>{$Title}</h2>
     <% end_if %>

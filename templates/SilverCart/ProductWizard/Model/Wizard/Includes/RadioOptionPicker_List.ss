@@ -26,11 +26,19 @@
     <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute l-6 t-6" data-option-id="{$StepOption.ID}"></span>
     <% if $Product %>
         <% with $Product %>
+        <a class="p-absolute r-0 t-10 mr-5px text-right" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">
             <% if not $isInProductChain && $ChainedProductPriceLabel %>
-        <a class="p-absolute r-0 t-10 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$ChainedProductPriceLabel} {$PriceNice}</a>
+            {$ChainedProductPriceLabel} {$PriceNice}
             <% else %>
-        <a class="p-absolute r-0 t-10 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
+            {$PriceNice}
             <% end_if %>
+            <br/>
+            <% if $CurrentPage.showPricesGross %>
+                <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
+            <% else_if $CurrentPage.showPricesNet %>
+                <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
+            <% end_if %>
+        </a>
         <% end_with %>
     <% else_if $LongDescription && not $StepOption.DisableLabelForFree %>
         <a class="p-absolute r-0 t-10 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><%t ProductWizard.free 'free' %></a>

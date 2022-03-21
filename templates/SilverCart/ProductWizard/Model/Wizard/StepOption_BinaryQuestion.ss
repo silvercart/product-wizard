@@ -1,4 +1,4 @@
-<div class="card w-100 mb-4 info-on-hover choosable-option {$ExtraClasses} <% if $Value == 1 %>picked<% end_if %>" data-info-content="{$Content.ATT}" data-info-heading="{$Title.ATT}">
+<div class="card w-100 mb-4 info-on-hover choosable-option {$ExtraClasses} <% if $Value == 1 %>picked<% end_if %>" data-info-content="{$Content.ATT}" data-info-heading="{$Title.ATT}" data-wizard-option-type="{$OptionType}">
     <div class="card-body">
         <h5 class="card-title">{$Title}</h5>
     <% if $Content %>

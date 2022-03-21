@@ -1,7 +1,9 @@
 var $          = $          ? $          : jQuery;
 var silvercart = silvercart ? silvercart : [];
 
-silvercart.ProductWizard = [];
+silvercart.ProductWizard                      = silvercart.ProductWizard ? silvercart.ProductWizard : [];
+silvercart.ProductWizard.CallBacks            = silvercart.ProductWizard.CallBacks ? silvercart.ProductWizard.CallBacks : [];
+silvercart.ProductWizard.CallBacks.Validation = silvercart.ProductWizard.CallBacks.Validation ? silvercart.ProductWizard.CallBacks.Validation : [];
 silvercart.ProductWizard.Base = (function () {
     var property = {},
         selector = {},
@@ -276,7 +278,8 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             getBaseControllerURL: function() {
                 return silvercart.ProductWizard.Base().getBaseControllerURL();
             },
-            validateFields: function() {
+            validateFields: function()
+            {
                 $('.alert-submit-button-error-message').remove();
                 var valid = true, pickedProducts = 0;
                 $('input', property.optionSetSelector).each(function() {
@@ -323,6 +326,18 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                             }
                             $(selector.submitButton).before('<div class="alert alert-danger alert-submit-button-error-message"><span class="fa fa-exclamation-circle"></span> ' + error + '</div>');
                             valid = false;
+                        }
+                    });
+                }
+                if (valid) {
+                    var optionType = '';
+                    $('[data-wizard-option-type]').each(function() {
+                        if (!valid) {
+                            return;
+                        }
+                        optionType = $(this).data('wizard-option-type');
+                        if (eval('typeof silvercart.ProductWizard.CallBacks.Validation.validate' + optionType + ';') === 'function') {
+                            valid = eval('silvercart.ProductWizard.CallBacks.Validation.validate' + optionType + '();');
                         }
                     });
                 }

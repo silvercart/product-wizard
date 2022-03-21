@@ -40,6 +40,12 @@
         <% else %>
             <a class="price h3" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$PriceNice}</a>
         <% end_if %>
+        <br/>
+        <% if $CurrentPage.showPricesGross %>
+            <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
+        <% else_if $CurrentPage.showPricesNet %>
+            <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
+        <% end_if %>
         </div>
         <div class="py-60"></div>
         <div class="p-absolute l-0 b-0 w-100 p-2">

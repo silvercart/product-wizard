@@ -1,4 +1,4 @@
-<div class="w-100 {$ExtraClasses}">
+<div class="w-100 {$ExtraClasses}" data-wizard-option-type="{$OptionType}">
     <h2>{$Title}</h2>
     {$Content}
     <div class="card rounded-0 w-100 shadow wizard-option pickable {$IsRadioCheckedClass} {$AllowMultipleChoicesClass}" data-option-id="{$ID}">
