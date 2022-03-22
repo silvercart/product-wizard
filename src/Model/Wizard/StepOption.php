@@ -342,7 +342,7 @@ class StepOption extends DataObject
               || $this->OptionType === self::OPTION_TYPE_RADIO)
              && $this->DisplayType === 'list'
             ) {
-                $fields->dataFieldByName('ColumnTitleProducts')->setDescription(_t(static::class . '.ColumnTitleProductsDefault', 'Default: "{default}"', ['default' => Product::singleton()->i18n_singular_name()]));
+                $fields->dataFieldByName('ColumnTitleProducts')->setDescription(_t(static::class . '.ColumnTitleProductsDefault', 'Default: "{default}"', ['default' => _t(self::class . '.Product', 'Product')]));
             } else {
                 $fields->removeByName('ColumnTitleProducts');
             }
@@ -727,7 +727,7 @@ class StepOption extends DataObject
         if (!$this->getCMSFieldsIsCalled
          && empty($value)
         ) {
-            $value = Product::singleton()->i18n_singular_name();
+            $value = _t(self::class . '.Product', 'Product');
         }
         return (string) $value;
     }

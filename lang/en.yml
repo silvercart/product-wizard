@@ -139,6 +139,7 @@ en:
     Options: Options
     OptionsDesc: 'List of possible options available in the multiple-choice field. Please specify one option per line.'
     PLURALNAME: 'Configurator Step Options'
+    Product: 'Product'
     ProductDynQuantityStepOptionID: 'Quantity by option'
     ProductDynQuantityStepOptionIDDesc: 'The user input of this option is used as the quantity for the shopping cart. If no entry is made or the option is skipped, the minimum number is used.'
     ProductMinQuantity: 'Minimum quantity'

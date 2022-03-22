@@ -138,6 +138,7 @@ de:
     Options: Optionen
     OptionsDesc: 'Liste der möglichen Optionen, die im Multiple-Choice-Feld zur Auswahl stehen. Bitte geben Sie eine Option pro Zeile an.'
     PLURALNAME: Konfigurator-Schritt-Optionen
+    Product: 'Produkt'
     ProductDynQuantityStepOptionID: 'Menge nach Option'
     ProductDynQuantityStepOptionIDDesc: 'Die Benutzereingabe dieser Option wird als Menge für den Warenkorb verwendet. Erfolgt keine Eingabe oder wird die Option übersprungen, wird die Mindestanzahl verwendet.'
     ProductMinQuantity: Mindestmenge
