@@ -24,7 +24,7 @@
                 <thead>
                     <tr>
                         <th>{$ProductsToDisplay.first.fieldLabel('Quantity')}</th>
-                        <th>{$ProductsToDisplay.first.i18n_singular_name}</th>
+                        <th>{$ColumnTitleProducts}</th>
                         <th>&nbsp;</th>
                         <th>{$ProductsToDisplay.first.fieldLabel('Art')}</th>
                         <th class="text-right">{$ProductsToDisplay.first.fieldLabel('Price')}</th>

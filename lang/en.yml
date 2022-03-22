@@ -88,6 +88,8 @@ en:
     ButtonTargetTypeBlank: 'new window'
     ButtonTargetTypeEmpty: 'same window'
     ButtonTitle: 'Button text'
+    ColumnTitleProducts: 'Title table column "Product"'
+    ColumnTitleProductsDefault: 'Default: "{default}"'
     Content: 'Text content'
     DefaultValue: 'Default value'
     DefaultValueDesc: 'Value that is used as the default for this option.'

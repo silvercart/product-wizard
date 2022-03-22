@@ -150,6 +150,7 @@ class StepOption extends DataObject
         'ExtraClasses'               => 'Varchar',
         'OptionType'                 => 'Enum("BinaryQuestion,Number,TextField,TextArea,Radio,Label,Button,ProductView,Redirection","BinaryQuestion")',
         'DisplayType'                => 'Enum("tile,list","tile")',
+        'ColumnTitleProducts'        => 'Varchar',
         'DefaultValue'               => 'Varchar(256)',
         'Options'                    => DBText::class,
         'ButtonTitle'                => DBVarchar::class,
@@ -326,10 +327,12 @@ class StepOption extends DataObject
                 $fields->removeByName('ProductQuantityDropdownMax');
                 $fields->removeByName('ProductQuantityPlural');
                 $fields->removeByName('ProductQuantitySingular');
+                $fields->removeByName('ColumnTitleProducts');
             } else {
                 $fields->dataFieldByName('ProductQuantityDropdownMax')->setDescription($this->fieldLabel('ProductQuantityDropdownMaxDesc'));
                 $fields->dataFieldByName('ProductQuantityPlural')->setDescription($this->fieldLabel('ProductQuantityPluralDesc'));
                 $fields->dataFieldByName('ProductQuantitySingular')->setDescription($this->fieldLabel('ProductQuantitySingularDesc'));
+                $fields->dataFieldByName('ColumnTitleProducts')->setDescription(_t(static::class . '.ColumnTitleProductsDefault', 'Default: "{default}"', ['default' => Product::singleton()->i18n_singular_name()]));
                 foreach ($this->Products() as $product) {
                     $fields->addFieldToTab('Root.Main', TextField::create(
                             "ProductPriceLabel[{$product->ID}]",
@@ -704,6 +707,23 @@ class StepOption extends DataObject
             $content->setOptions(['shortcodes' => true]);
         }
         return $content;
+    }
+    
+    /**
+     * Returns the ColumnTitleProducts with default fallback if the current context
+     * is not $this->getCMSFields().
+     * 
+     * @return string
+     */
+    public function getColumnTitleProducts() : string
+    {
+        $value = $this->getField('ColumnTitleProducts');
+        if (!$this->getCMSFieldsIsCalled
+         && empty($value)
+        ) {
+            $value = Product::singleton()->i18n_singular_name();
+        }
+        return (string) $value;
     }
     
     /**

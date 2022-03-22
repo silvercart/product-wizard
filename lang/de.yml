@@ -88,6 +88,8 @@ de:
     ButtonTargetTypeBlank: 'neuem Fenster'
     ButtonTargetTypeEmpty: 'selbem Fenster'
     ButtonTitle: Button-Text
+    ColumnTitleProducts: 'Titel Tabellenspalte "Artikel"'
+    ColumnTitleProductsDefault: 'Standard: "{default}"'
     Content: Text-Inhalt
     DefaultValue: Standard-Wert
     DefaultValueDesc: 'Wert, der als Vorbelegung für diese Option verwendet wird.'
