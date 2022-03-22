@@ -580,6 +580,10 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                         quantityPicker.removeClass('d-none');
                     }
                 }
+                var labelFor = $(selector.radioOptionPicker + '[data-option-id="' + optionID + '"][data-value="' + optionValue + '"]').data('label-for');
+                if (typeof labelFor !== 'undefined') {
+                    $('#' + labelFor).trigger('click');
+                }
             },
             pickRadioOption: function()
             {

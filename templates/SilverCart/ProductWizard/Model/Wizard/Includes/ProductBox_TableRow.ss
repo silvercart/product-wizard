@@ -7,22 +7,12 @@
     <% end_if %>
     </td>
     <td>
-    <% if $LongDescription %>
-        <a href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid" src="{$ListImage.Pad(94,94).URL}" alt="{$Title}" /></a>
-    <% else %>
-        <img class="img-fluid" src="{$ListImage.Pad(94,94).URL}" alt="{$Title}" />
-    <% end_if %>
+        <a href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}"><img class="img-fluid-" src="{$ListImage.Pad(94,94).URL}" alt="{$Title}" /></a>
     </td>
     <td class="">
         <input type="hidden" name="StepOptions[{$CurrentOption.ID}][{$ID}][Select]" value="{$CurrentOption.getProductSelectValue($ID)}" />
-    <% if $LongDescription %>
         <a href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">{$Title}</a>
-    <% else %>
-        {$Title}
-    <% end_if %>
-    <% if $LongDescription %>
         <% include SilverCart\ProductWizard\Model\Wizard\ProductDetailModal %>
-    <% end_if %>
     </td>
     <td>{$ProductGroup.Title}</td>
     <td class="text-right">
@@ -32,9 +22,9 @@
         <span class="text-lg font-weight-normal lh-15">{$PriceNice}</span>
         <br/>
         <% if $CurrentPage.showPricesGross %>
-            <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
+            <small class="text-gray text-nowrap"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
         <% else_if $CurrentPage.showPricesNet %>
-            <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
+            <small class="text-gray text-nowrap"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
         <% end_if %>
     </td>
 </tr>

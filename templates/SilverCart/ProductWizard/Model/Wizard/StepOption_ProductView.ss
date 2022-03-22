@@ -34,8 +34,8 @@
                 <% loop $ProductsToDisplay %>
                     {$setCurrentOptionID($Up.ID)}
                     <% include SilverCart\ProductWizard\Model\Wizard\ProductBox_TableRow %>
-                </tbody>
                 <% end_loop %>
+                </tbody>
             </table>
         </div>
     </div>

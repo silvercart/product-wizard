@@ -327,18 +327,24 @@ class StepOption extends DataObject
                 $fields->removeByName('ProductQuantityDropdownMax');
                 $fields->removeByName('ProductQuantityPlural');
                 $fields->removeByName('ProductQuantitySingular');
-                $fields->removeByName('ColumnTitleProducts');
             } else {
                 $fields->dataFieldByName('ProductQuantityDropdownMax')->setDescription($this->fieldLabel('ProductQuantityDropdownMaxDesc'));
                 $fields->dataFieldByName('ProductQuantityPlural')->setDescription($this->fieldLabel('ProductQuantityPluralDesc'));
                 $fields->dataFieldByName('ProductQuantitySingular')->setDescription($this->fieldLabel('ProductQuantitySingularDesc'));
-                $fields->dataFieldByName('ColumnTitleProducts')->setDescription(_t(static::class . '.ColumnTitleProductsDefault', 'Default: "{default}"', ['default' => Product::singleton()->i18n_singular_name()]));
                 foreach ($this->Products() as $product) {
                     $fields->addFieldToTab('Root.Main', TextField::create(
                             "ProductPriceLabel[{$product->ID}]",
                             _t(self::class . '.ProductPriceLabelFor', 'Price label for {product}', ['product' => $product->Title]),
                             $this->getProductPriceLabel($product->ID)));
                 }
+            }
+            if (($this->IsProductView()
+              || $this->OptionType === self::OPTION_TYPE_RADIO)
+             && $this->DisplayType === 'list'
+            ) {
+                $fields->dataFieldByName('ColumnTitleProducts')->setDescription(_t(static::class . '.ColumnTitleProductsDefault', 'Default: "{default}"', ['default' => Product::singleton()->i18n_singular_name()]));
+            } else {
+                $fields->removeByName('ColumnTitleProducts');
             }
             if ($this->OptionType !== self::OPTION_TYPE_BINARY
              && $this->OptionType !== self::OPTION_TYPE_BUTTON
@@ -1788,5 +1794,15 @@ class StepOption extends DataObject
             }
         }
         return $data;
+    }
+    
+    /**
+     * Returns a singleton product.
+     * 
+     * @return Product
+     */
+    public function ProductSingleton() : Product
+    {
+        return Product::singleton();
     }
 }
