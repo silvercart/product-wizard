@@ -60,6 +60,18 @@ class ProductWizardStepPage extends Page
      * @var Step
      */
     protected $currentStep = null;
+    /**
+     * List of custom cart data to display in summary.
+     * 
+     * @var array
+     */
+    protected $customCartData = [];
+    /**
+     * Determines whether to hide the cart summary submit button.
+     * 
+     * @var bool
+     */
+    protected $hideCartSummarySubmitButton = false;
     
     /**
      * Returns the current step ID from Session.
@@ -381,6 +393,31 @@ class ProductWizardStepPage extends Page
             'Amounts' => $amountData,
         ];
     }
+
+    /**
+     * Sets the custom cart data for the given $step.
+     * 
+     * @param Step    $step     Step
+     * @param int     $quantity Quantity
+     * @param Product $product  Product
+     * 
+     * @return ProductWizardStepPage
+     */
+    public function setCustomCartData(Step $step, int $quantity, Product $product) : ProductWizardStepPage
+    {
+        $this->customCartData[$step->ID] = [StepOption::getCartPositionData($quantity, $product)];
+        return $this;
+    }
+    
+    /**
+     * Returns the custom cart data.
+     * 
+     * @return array
+     */
+    public function getCustomCartData() : array
+    {
+        return $this->customCartData;
+    }
     
     /**
      * Loads the step and amount data for the given $stepOptions and $step into 
@@ -399,44 +436,67 @@ class ProductWizardStepPage extends Page
     public function loadStepAndAmountData(ArrayList $stepOptions, Step $step, array &$stepData, array &$amountData) : ProductWizardStepPage
     {
         foreach ($stepOptions as $option) {
+            /* @var $option StepOption */
             $data = $option->getCartSummary();
             if (!empty($data)) {
                 $stepData[$step->ID][$option->ID] = $data;
                 foreach ($data as $positionData) {
-                    $billingPeriod  = _t('SilverCart\Model\Pages\Page.TOTAL', 'Total');
-                    $billingPeriods = [$billingPeriod];
-                    $prices         = [$billingPeriod => $positionData['priceTotal']];
-                    if (Product::singleton()->hasMethod('getBillingPeriodNice')) {
-                        $billingPeriod  = $positionData['BillingPeriodNice'];
-                        $billingPeriods = [$billingPeriod];
-                        $prices         = [$billingPeriod => $positionData['priceTotal']];
-                        if (array_key_exists('BillingPeriodConsequential', $positionData)
-                         && !in_array($positionData['BillingPeriodConsequentialNice'], $billingPeriods)
-                        ) {
-                            $billingPeriod    = $positionData['BillingPeriodConsequentialNice'];
-                            $billingPeriods[] = $billingPeriod;
-                            $prices[$billingPeriod] = $positionData['priceTotalConsequential'];
-                            $positionData['priceSingleConsequential'];
-                            $positionData['BillingPeriodConsequential'];
-                        }
-                    }
-                    foreach ($billingPeriods as $billingPeriod) {
-                        $price = $prices[$billingPeriod];
-                        if (!array_key_exists($billingPeriod, $amountData)) {
-                            $amountData[$billingPeriod] = [
-                                'Amount'   => $price['Amount'],
-                                'Currency' => $price['Currency'],
-                                'Nice'     => $price['Nice'],
-                            ];
-                        } else {
-                            $amountData[$billingPeriod]['Amount'] += $price['Amount'];
-                            $amountData[$billingPeriod]['Nice']    = DBMoney::create()
-                                    ->setCurrency($amountData[$billingPeriod]['Currency'])
-                                    ->setAmount($amountData[$billingPeriod]['Amount'])
-                                    ->Nice();
-                        }
-                    }
+                    $this->loadAmountData($positionData, $amountData);
                 }
+            }
+        }
+        $customCartData = $this->getCustomCartData();
+        if (array_key_exists($step->ID, $customCartData)) {
+            $customStepData = $customCartData[$step->ID];
+            $stepData[$step->ID][0] = $customStepData;
+            foreach ($customStepData as $positionData) {
+                $this->loadAmountData($positionData, $amountData);
+            }
+        }
+        return $this;
+    }
+    
+    /**
+     * Loads the amount data for the given $positionData.
+     * 
+     * @param array $positionData Position data
+     * @param array &$amountData  Amount data to mutate
+     * 
+     * @return \SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage
+     */
+    public function loadAmountData(array $positionData, array &$amountData) : ProductWizardStepPage
+    {
+        $billingPeriod  = _t('SilverCart\Model\Pages\Page.TOTAL', 'Total');
+        $billingPeriods = [$billingPeriod];
+        $prices         = [$billingPeriod => $positionData['priceTotal']];
+        if (Product::singleton()->hasMethod('getBillingPeriodNice')) {
+            $billingPeriod  = $positionData['BillingPeriodNice'];
+            $billingPeriods = [$billingPeriod];
+            $prices         = [$billingPeriod => $positionData['priceTotal']];
+            if (array_key_exists('BillingPeriodConsequential', $positionData)
+             && !in_array($positionData['BillingPeriodConsequentialNice'], $billingPeriods)
+            ) {
+                $billingPeriod    = $positionData['BillingPeriodConsequentialNice'];
+                $billingPeriods[] = $billingPeriod;
+                $prices[$billingPeriod] = $positionData['priceTotalConsequential'];
+                $positionData['priceSingleConsequential'];
+                $positionData['BillingPeriodConsequential'];
+            }
+        }
+        foreach ($billingPeriods as $billingPeriod) {
+            $price = $prices[$billingPeriod];
+            if (!array_key_exists($billingPeriod, $amountData)) {
+                $amountData[$billingPeriod] = [
+                    'Amount'   => $price['Amount'],
+                    'Currency' => $price['Currency'],
+                    'Nice'     => $price['Nice'],
+                ];
+            } else {
+                $amountData[$billingPeriod]['Amount'] += $price['Amount'];
+                $amountData[$billingPeriod]['Nice']    = DBMoney::create()
+                        ->setCurrency($amountData[$billingPeriod]['Currency'])
+                        ->setAmount($amountData[$billingPeriod]['Amount'])
+                        ->Nice();
             }
         }
         return $this;
@@ -689,6 +749,29 @@ class ProductWizardStepPage extends Page
     public function resetCurrentStep() : ProductWizardStepPage
     {
         self::setCurrentStepIDToSession($this->ID, 0);
+        return $this;
+    }
+    
+    /**
+     * Returns whether to hide the cart summary submit button.
+     * 
+     * @return bool
+     */
+    public function getHideCartSummarySubmitButton() : bool
+    {
+        return $this->hideCartSummarySubmitButton;
+    }
+    
+    /**
+     * Sets whether to hide the cart summary submit button.
+     * 
+     * @param bool $hide Hide or not?
+     * 
+     * @return ProductWizardStepPage
+     */
+    public function setHideCartSummarySubmitButton(bool $hide) : ProductWizardStepPage
+    {
+        $this->hideCartSummarySubmitButton = $hide;
         return $this;
     }
     

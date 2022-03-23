@@ -31,7 +31,7 @@ silvercart.ProductWizard.CartSummary = (function () {
         },
         private = {
             getBaseControllerURL: function() {
-                return silvercart.ProductWizard.Base().getBaseControllerURL();
+                return $(selector.container).data('base-url');
             },
             renderServices: function(services) {
                 $.each(services, function(serviceID, serviceQuantity) {
@@ -685,6 +685,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             init: function()
             {
                 if ($(selector.container).length === 0) {
+                    silvercart.ProductWizard.CartSummary().init();
                     return;
                 }
                 private.equalizeWizardOptionHeadings();
