@@ -2,6 +2,7 @@
 
 namespace SilverCart\ProductWizard\Model\Wizard;
 
+use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPageController;
 use SilverStripe\CMS\Model\SiteTree;
@@ -265,6 +266,26 @@ class Step extends DataObject
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
+    }
+    
+    /**
+     * Resets the submitted option data related to the given $product.
+     * 
+     * @param Product $product Product
+     * 
+     * @return Step
+     */
+    public function resetDataForProduct(Product $product) : Step
+    {
+        foreach ($this->StepOptionSets() as $optionSet) {
+            /* @var $optionSet StepOptionSet */
+            $optionSet->resetDataForProduct($product);
+        }
+        foreach ($this->StepOptions() as $option) {
+            /* @var $option StepOption */
+            $option->resetDataForProduct($product);
+        }
+        return $this;
     }
     
     /**

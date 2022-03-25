@@ -739,6 +739,20 @@ class ProductWizardStepPage extends Page
     }
     
     /**
+     * Resets the submitted step data related to the given $product.
+     * 
+     * @return ProductWizardStepPage
+     */
+    public function resetPostVarsForProduct($product) : ProductWizardStepPage
+    {
+        foreach ($this->Steps() as $step) {
+            /* @var $step Step */
+            $step->resetDataForProduct($product);
+        }
+        return $this;
+    }
+    
+    /**
      * Resets the submitted step data.
      * 
      * @return ProductWizardStepPage

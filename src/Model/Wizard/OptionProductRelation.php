@@ -248,17 +248,16 @@ class OptionProductRelation
         if ($this->quantity === 0) {
             $this->quantity = $this->getMinimumQuantity();
             $option         = $this->getDynamicQuantityOption();
-            if (is_null($optionIndex)) {
+            if ($optionIndex === null) {
                 $optionIndex = $this->getRelatedOption()->getValue();
                 if (is_array($optionIndex)) {
                     $optionIndex = array_shift($optionIndex);
                 }
             }
-            $useCustomQuantity = $this->getUseCustomQuantity($optionIndex);
             if ($option instanceof StepOption
              && $option->exists()
             ) {
-                if ($useCustomQuantity) {
+                if ($this->getUseCustomQuantity($optionIndex)) {
                     $maximumQuantity = $this->getMaximumQuantity();
                     $quantity        = 1;
                     if ($quantity <= $maximumQuantity) {

@@ -92,4 +92,24 @@ class ShoppingCartPositionExtension extends DataExtension
             }
         }
     }
+    
+    /**
+     * Resets the current wizard step number and product data if a wizard related 
+     * position was deleted.
+     * Resets the current wizard step data if the last wizard related position was 
+     * deleted.
+     * 
+     * @return void
+     */
+    public function onAfterDelete() : void
+    {
+        $wizard = $this->owner->ProductWizard();
+        if ($wizard->exists()) {
+            $wizard->resetPostVarsForProduct($this->owner->Product());
+            $wizard->resetCurrentStep();
+            if (!$this->owner->ShoppingCart()->ShoppingCartPositions()->filter('ProductWizardID', $wizard->ID)->exists()) {
+                $wizard->resetPostVars();
+            }
+        }
+    }
 }

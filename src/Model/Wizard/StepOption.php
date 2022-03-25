@@ -216,6 +216,12 @@ class StepOption extends DataObject
      * @var \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\UnsavedRelationList|NULL
      */
     protected $products = null;
+    /**
+     * The related step.
+     * 
+     * @var Step|null
+     */
+    protected $relatedStep = null;
     
     /**
      * Stores the picked variant data in session.
@@ -1089,6 +1095,101 @@ class StepOption extends DataObject
     {
         return DBHTMLText::create()->setOptions(['shortcodes' => true])->setValue($this->Text);
     }
+
+    /**
+     * Returns the step related to this option (either the directly related step,
+     * or the step related to the related option set).
+     * 
+     * @return Step|null
+     */
+    public function getRelatedStep() : ?Step
+    {
+        if ($this->relatedStep === null) {
+            if ($this->Step()->exists()) {
+                $this->relatedStep = $this->Step();
+            } elseif ($this->StepOptionSet()->Step()->exists()) {
+                $this->relatedStep = $this->StepOptionSet()->Step();
+            }
+        }
+        return $this->relatedStep;
+    }
+    
+    /**
+     * Returns the session stored post data for this option.
+     * 
+     * @return string|array|null
+     */
+    public function getData()
+    {
+        $data = (string) $this->DefaultValue;
+        $step = $this->getRelatedStep();
+        if ($step instanceof Step) {
+            $page     = $step->ProductWizardStepPage();
+            $postVars = $page->getPostVarsFor($step);
+            if (array_key_exists('StepOptions', $postVars)
+             && is_array($postVars['StepOptions'])
+             && array_key_exists($this->ID, $postVars['StepOptions'])
+            ) {
+                $data = $postVars['StepOptions'][$this->ID];
+            }
+        }
+        return $data;
+    }
+    
+    /**
+     * Resets the submitted option data related to the given $product.
+     * 
+     * @param Product $product Product
+     * 
+     * @return StepOption
+     */
+    public function resetDataForProduct(Product $product) : StepOption
+    {
+        $data = $this->getData();
+        if (empty($data)) {
+            return $this;
+        }
+        $update = false;
+        if ($this->OptionType === self::OPTION_TYPE_NUMBER
+         && (int) $data > 0
+        ) {
+            $products       = $this->getProductRelation()->getProducts();
+            $relatedProduct = array_shift($products);
+            if ($relatedProduct->ID === $product->ID) {
+                $update = true;
+                $data   = 0;
+            }
+        } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
+            $products = $this->getProductRelation()->getProducts();
+            if (array_key_exists($data, $products)) {
+                $relatedProduct = $products[$data];
+                if ($relatedProduct->ID === $product->ID) {
+                    $update = true;
+                    $data   = null;
+                }
+            }
+        } elseif ($this->IsProductView()) {
+            if (array_key_exists($product->ID, $data)) {
+                $update             = true;
+                $data[$product->ID] = [
+                    'Select'   => "0",
+                    'Quantity' => "0",
+                ];
+            } else {
+                return $this;
+            }
+        }
+        if ($update) {
+            $step = $this->getRelatedStep();
+            if ($step instanceof Step) {
+                $page     = $step->ProductWizardStepPage();
+                $postVars = $page->getPostVarsFor($step);
+                $postVars['StepOptions'][$this->ID] = $data;
+                $page->setPostVarsFor($postVars, $step);
+            }
+        }
+        return $this;
+    }
     
     /**
      * Returns the value for this option.
@@ -1097,23 +1198,7 @@ class StepOption extends DataObject
      */
     public function getValue()
     {
-        $value = (string) $this->DefaultValue;
-        $step  = null;
-        if ($this->Step()->exists()) {
-            $step = $this->Step();
-        } elseif ($this->StepOptionSet()->Step()->exists()) {
-            $step = $this->StepOptionSet()->Step();
-        }
-        if ($step instanceof Step) {
-            $page     = $step->ProductWizardStepPage();
-            $postVars = $page->getPostVarsFor($step);
-            if (array_key_exists('StepOptions', $postVars)
-             && is_array($postVars['StepOptions'])
-             && array_key_exists($this->ID, $postVars['StepOptions'])
-            ) {
-                $value = $postVars['StepOptions'][$this->ID];
-            }
-        }
+        $value = $this->getData();
         if ($this->OptionType === self::OPTION_TYPE_BINARY
          && empty($value)
         ) {
@@ -1124,6 +1209,10 @@ class StepOption extends DataObject
         ) {
             $product = $this->Products()->first();
             if ($product instanceof Product) {
+                $step = $this->getRelatedStep();
+                if (!($step instanceof Step)) {
+                    return $value;
+                }
                 $page     = $step->ProductWizardStepPage();
                 $postVars = $page->getPostVarsFor($step);
                 if (!is_array($postVars)) {
@@ -1607,7 +1696,7 @@ class StepOption extends DataObject
                     }
                 }
             }
-            $wizard      = $this->ProductWizardStepPage();
+            $wizard = $this->ProductWizardStepPage();
             if ($wizard instanceof ProductWizardStepPage) {
                 foreach ($cartData as $cartPositionData) {
                     $position = ProductWizardShoppingCartPosition::getWizardPosition($cartPositionData, $wizard);

@@ -2,6 +2,7 @@
 
 namespace SilverCart\ProductWizard\Model\Wizard;
 
+use SilverCart\Model\Product\Product;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
@@ -146,6 +147,22 @@ class StepOptionSet extends DataObject
         ];
         $this->extend('updateSummaryFields', $summaryFields);
         return $summaryFields;
+    }
+    
+    /**
+     * Resets the submitted option data related to the given $product.
+     * 
+     * @param Product $product Product
+     * 
+     * @return StepOptionSet
+     */
+    public function resetDataForProduct(Product $product) : StepOptionSet
+    {
+        foreach ($this->StepOptions() as $option) {
+            /* @var $option StepOption */
+            $option->resetDataForProduct($product);
+        }
+        return $this;
     }
     
     /**
