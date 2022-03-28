@@ -1,4 +1,4 @@
-<form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithProgress">
+<form action="{$Link}" method="POST" name="ProductWizardStepForm" id="ProductWizardStepOptionsWithProgress" class="form-loading-mask">
     <div class="row" id="product-wizard-step">
     <% if $InfoBoxContent %>
         <div class="col-12">
