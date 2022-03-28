@@ -483,21 +483,37 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                     }
                 }
             },
-            pickQuantityOnChange: function() {
-                var quantity  = $(this).val(),
-                    option    = $(this).closest(selector.option),
+            inputUpdateQuantityChange: function()
+            {
+                var option        = $(this).closest('.wizard-option'),
+                    quantityField = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Quantity]"]'),
+                    selectField   = $('input[name="StepOptions[' + option.data('option-id') + '][' + option.data('product-id') + '][Select]"]');
+                if (parseInt(quantityField.val()) > 0) {
+                    selectField.val(1);
+                } else {
+                    selectField.val(0);
+                }
+                private.pickQuantityOnChange($(this));
+            },
+            pickQuantityOnChange: function(context)
+            {
+                if (typeof context === 'undefined') {
+                    context = $(this);
+                }
+                var quantity  = context.val(),
+                    option    = context.closest(selector.option),
                     productID = option.data('product-id'),
                     optionID  = option.data('option-id');
                 if (option.hasClass('not-picked')
                  && parseInt(quantity) > 0
                 ) {
-                    private.pickOption(option, $(this).hasClass('skip-ajax'));
+                    private.pickOption(option, context.hasClass('skip-ajax'));
                 } else if (!option.hasClass('not-picked')
                         && parseInt(quantity) <= 0
                 ) {
-                    private.pickOption(option, $(this).hasClass('skip-ajax'));
+                    private.pickOption(option, context.hasClass('skip-ajax'));
                 }
-                if ($(this).hasClass('skip-ajax')) {
+                if (context.hasClass('skip-ajax')) {
                     return;
                 }
                 property.cartSummary.postOptionData(optionID, productID, quantity);
@@ -700,7 +716,7 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
                 $(document).on('change keyup', selector.pickMoreQuantityField, private.pickMoreQuantityFieldChanged);
                 $(document).on('change', selector.radioOption, private.pickRadioOption);
                 $(document).on('change', selector.radioMultipleOption, private.pickRadioOption);
-                $(document).on('change', selector.inputUpdateQuantityOnChange, private.pickQuantityOnChange);
+                $(document).on('change', selector.inputUpdateQuantityOnChange, private.inputUpdateQuantityChange);
                 $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
                 $(document).on('click', selector.variantPicker, private.pickVariant);
                 $(document).on('click', selector.submitButton, private.validateFields);
