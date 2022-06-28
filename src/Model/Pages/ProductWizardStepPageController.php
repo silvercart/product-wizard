@@ -3,6 +3,7 @@
 namespace SilverCart\ProductWizard\Model\Pages;
 
 use PageController;
+use SilverCart\Dev\Tools;
 use SilverCart\Model\Product\Product;
 use SilverCart\ProductServices\Model\Product\Service;
 use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
@@ -40,6 +41,7 @@ class ProductWizardStepPageController extends PageController
         'pickVariant',
         'postOptionData',
         'postPlainOptionData',
+        'reset',
     ];
     
     /**
@@ -53,6 +55,21 @@ class ProductWizardStepPageController extends PageController
         if ($currentStep instanceof Step) {
             $this->redirect($currentStep->Link());
         }
+    }
+    
+    /**
+     * Action to skip the resulting options of the given step.
+     * The given step is determined by the URL parameter 'ID'.
+     * 
+     * @param HTTPRequest $request Request
+     * 
+     * @return HTTPResponse
+     */
+    public function reset(HTTPRequest $request) : ?HTTPResponse
+    {
+        Tools::Session()->clear(ProductWizardStepPage::SESSION_KEY);
+        Tools::saveSession();
+        return HTTPResponse::create($this->render());
     }
     
     /**
