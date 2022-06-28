@@ -22,19 +22,21 @@
     <span class="fa fa-2x fa-check text-blue border border-blue rounded-circle p-6 p-absolute r-6 t-6" data-option-id="{$StepOption.ID}"></span>
     <% if $Product %>
         <% with $Product %>
-        <a class="p-absolute r-0 b-0 mr-5px text-right" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">
-            <% if not $isInProductChain && $ChainedProductPriceLabel %>
-            {$ChainedProductPriceLabel} {$PriceNice}
-            <% else %>
-            {$PriceNice}
-            <% end_if %>
+        <span class="p-absolute r-0 b-0 mr-5px text-right">
+            <a class="p-relative t-5" href="javascript:;" data-toggle="modal" data-target="#modal-product-{$ID}">
+                <% if not $isInProductChain && $ChainedProductPriceLabel %>
+                {$ChainedProductPriceLabel} {$PriceNice}
+                <% else %>
+                {$PriceNice}
+                <% end_if %>
+            </a>
             <br/>
-            <% if $CurrentPage.showPricesGross %>
-                <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
-            <% else_if $CurrentPage.showPricesNet %>
-                <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
-            <% end_if %>
-        </a>
+                <% if $CurrentPage.showPricesGross %>
+            <small class="text-gray"><%t SilverCart.InclTax 'incl. {amount}% VAT' amount=$TaxRate %></small>
+                <% else_if $CurrentPage.showPricesNet %>
+            <small class="text-gray"><%t SilverCart.PlusTax 'plus {amount}% VAT' amount=$TaxRate %></small>
+                <% end_if %>
+        </span>
         <% end_with %>
     <% else_if $LongDescription && not $StepOption.DisableLabelForFree %>
         <a class="p-absolute r-0 b-0 mr-5px" href="javascript:;" data-toggle="modal" data-target="#modal-description-{$StepOption.ID}-{$Value}"><%t ProductWizard.free 'free' %></a>

@@ -165,7 +165,7 @@ form[name="ProductWizardStepForm"] .has-additional-options .radio-option-picker:
     display: none !important;
 }
 .radio-option-picker {
-    min-height: 80px;
+    min-height: 85px;
     transition: color 500ms;
 }
 .radio-option-picker .label {
