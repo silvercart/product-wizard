@@ -26,7 +26,9 @@
     <% if $Text %>
         <hr>
         <p class="mb-0 text-center">{$Text}</p>
+        <% if $ButtonTitle %>
         <a href="#" class="btn btn-secondary btn-block">{$ButtonTitle}</a>
+        <% end_if %>
     <% end_if %>
     <% loop $OptionList %>
         <% if $Up.hasCustomQuantity($Value) %>
