@@ -25,9 +25,11 @@
     <% end_if %>
     <% if $Text %>
         <hr>
-        <p class="mb-0 text-center">{$Text}</p>
         <% if $ButtonTitle %>
+        <p class="mb-0 text-center">{$Text}</p>
         <a href="#" class="btn btn-secondary btn-block">{$ButtonTitle}</a>
+        <% else %>
+        <p class="text-center">{$Text}</p>
         <% end_if %>
     <% end_if %>
     <% loop $OptionList %>
