@@ -6,7 +6,7 @@
             <div class="row" id="product-wizard-step-options">
             <% if $VisibleStepOptions.exists %>
                 <% loop $VisibleStepOptions %>
-                <div class="d-flex col-xxs-12 col-6">
+                <div class="d-flex col-xxs-12 col-6 <% if $OptionType == 'Radio' %>mb-20<% end_if %>">
                     {$forTemplate}
                 </div>
                 <% end_loop %>
