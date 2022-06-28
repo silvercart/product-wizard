@@ -164,7 +164,11 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
-            postOptionData: function(optionID, productID, quantity, callback) {
+            postOptionData: function(optionID, productID, quantity, callback)
+            {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
                 if (quantity < 0) {
                     quantity = 0;
                 }
@@ -193,7 +197,11 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
-            postPlainOptionData: function(radioOptionName, allowMultiple) {
+            postPlainOptionData: function(radioOptionName, allowMultiple)
+            {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
                 if (allowMultiple) {
                     var optionID           = $('input[name="' + radioOptionName + '"]').data('option-id'),
                         postData           = {};
@@ -224,7 +232,11 @@ silvercart.ProductWizard.CartSummary = (function () {
                         }
                 );
             },
-            deleteOptionData: function(optionID, productID) {
+            deleteOptionData: function(optionID, productID)
+            {
+                if ($(selector.container).length === 0) {
+                    return;
+                }
                 $(selector.container).addClass('loading');
                 $.post(
                         private.getBaseControllerURL() + 'deleteOptionData',
@@ -701,7 +713,13 @@ silvercart.ProductWizard.OptionsWithProgress = (function () {
             init: function()
             {
                 if ($(selector.container).length === 0) {
-                    silvercart.ProductWizard.CartSummary().init();
+                    property.cartSummary = silvercart.ProductWizard.CartSummary();
+                    property.cartSummary.init();
+                    if ($(selector.radioOption).length > 0) {
+                        $(document).on('change', selector.radioOption, private.pickRadioOption);
+                        $(document).on('change', selector.radioMultipleOption, private.pickRadioOption);
+                        $(document).on('click', selector.radioOptionPicker, private.pickRadioOptionByPicker);
+                    }
                     return;
                 }
                 private.equalizeWizardOptionHeadings();
