@@ -1268,7 +1268,9 @@ class StepOption extends DataObject
                 $behavior        = null;
                 $description     = null;
                 $longDescription = null;
-                if (array_key_exists($key, $products)) {
+                if (!$this->getCMSFieldsIsCalled
+                 && array_key_exists($key, $products)
+                ) {
                     $product  = $products[$key];
                     if ($product instanceof Product
                      && class_exists(ProductAttribute::class)
@@ -1716,6 +1718,80 @@ class StepOption extends DataObject
             }
         }
         return $positionIDs;
+    }
+    
+    /**
+     * Returns all products and quantities chosen for this option.
+     * <code>
+     * ArrayList::create()->push(
+     *     ArrayData::create([
+     *         'ProductID' => $product->ID,
+     *         'Product'   => $product,
+     *         'Quantity'  => $quantity,
+     *     ])
+     * );
+     * </code>
+     * 
+     * @return ArrayList
+     */
+    public function getChosenProducts() : ArrayList
+    {
+        $chosenProducts = ArrayList::create();
+        if ($this->isVisible()) {
+            $quantity = 0;
+            $relation = $this->getProductRelation();
+            if ($this->OptionType === self::OPTION_TYPE_NUMBER
+             && (int) $this->getValue() > 0
+            ) {
+                $products = $relation->getProducts();
+                $product  = array_shift($products);
+                $quantity = (int) $this->getValue();
+                $chosenProducts->push(ArrayData::create([
+                    'ProductID' => $product->ID,
+                    'Product'   => $product,
+                    'Quantity'  => $quantity,
+                ]));
+            } elseif ($this->OptionType === self::OPTION_TYPE_RADIO) {
+                $products = $relation->getProducts();
+                if (array_key_exists($this->getValue(), $products)) {
+                    $product  = $products[$this->getValue()];
+                    $quantity = $this->getRadioQuantity($this->getValue());
+                    $chosenProducts->push(ArrayData::create([
+                        'ProductID' => $product->ID,
+                        'Product'   => $product,
+                        'Quantity'  => $quantity,
+                    ]));
+                }
+            } elseif ($this->IsProductView()) {
+                $products = $this->Products();
+                foreach ($products as $product) {
+                    if ($this->getProductSelectValue($product->ID) === 1) {
+                        $chosenProducts->push(ArrayData::create([
+                            'ProductID' => $product->ID,
+                            'Product'   => $product,
+                            'Quantity'  => $this->getProductQuantityValue($product->ID),
+                        ]));
+                    }
+                    if ($product->hasMethod('hasVariants')
+                     && $product->hasVariants()
+                    ) {
+                        foreach ($product->getVariants() as $variant) {
+                            if ($variant->ID === $product->ID) {
+                                continue;
+                            }
+                            if ($this->getProductSelectValue($variant->ID) === 1) {
+                                $chosenProducts->push(ArrayData::create([
+                                    'ProductID' => $variant->ID,
+                                    'Product'   => $variant,
+                                    'Quantity'  => $this->getProductQuantityValue($variant->ID),
+                                ]));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $chosenProducts;
     }
     
     /**
