@@ -1755,12 +1755,14 @@ class StepOption extends DataObject
                 $products = $relation->getProducts();
                 if (array_key_exists($this->getValue(), $products)) {
                     $product  = $products[$this->getValue()];
-                    $quantity = $this->getRadioQuantity($this->getValue());
-                    $chosenProducts->push(ArrayData::create([
-                        'ProductID' => $product->ID,
-                        'Product'   => $product,
-                        'Quantity'  => $quantity,
-                    ]));
+                    if ($product instanceof Product) {
+                        $quantity = $this->getRadioQuantity($this->getValue());
+                        $chosenProducts->push(ArrayData::create([
+                            'ProductID' => $product->ID,
+                            'Product'   => $product,
+                            'Quantity'  => $quantity,
+                        ]));
+                    }
                 }
             } elseif ($this->IsProductView()) {
                 $products = $this->Products();
