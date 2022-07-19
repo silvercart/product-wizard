@@ -1155,7 +1155,9 @@ class StepOption extends DataObject
         ) {
             $products       = $this->getProductRelation()->getProducts();
             $relatedProduct = array_shift($products);
-            if ($relatedProduct->ID === $product->ID) {
+            if ($relatedProduct instanceof Product
+             && $relatedProduct->ID === $product->ID
+            ) {
                 $update = true;
                 $data   = 0;
             }
@@ -1163,7 +1165,9 @@ class StepOption extends DataObject
             $products = $this->getProductRelation()->getProducts();
             if (array_key_exists($data, $products)) {
                 $relatedProduct = $products[$data];
-                if ($relatedProduct->ID === $product->ID) {
+                if ($relatedProduct instanceof Product
+                 && $relatedProduct->ID === $product->ID
+                ) {
                     $update = true;
                     $data   = null;
                 }
