@@ -628,9 +628,9 @@ class StepOption extends DataObject
              && Controller::curr() instanceof ProductWizardStepPageController
             ) {
                 if (class_exists(ProductAttribute::class)) {
-                    $this->products = ProductAttribute::filterProductsGlobally($this->getManyManyComponents('Products'));
+                    $this->products = ProductAttribute::filterProductsGlobally($this->getManyManyComponents('Products')->filter('isActive', true));
                 } else {
-                    $this->products = $this->getManyManyComponents('Products');
+                    $this->products = $this->getManyManyComponents('Products')->filter('isActive', true);
                 }
                 $this->extend('updateProducts', $this->products);
             } else {
