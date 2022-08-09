@@ -1,4 +1,4 @@
-<% if $ProductsToDisplay.count == 1 %>
+<% if $ProductsToDisplay.count == 1 && $DisplayType == 'tile' %>
     <% loop $ProductsToDisplay %>
         {$setCurrentOptionID($Up.ID)}
         <% include SilverCart\ProductWizard\Model\Wizard\ProductBox %>
