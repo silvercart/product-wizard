@@ -24,11 +24,6 @@
                     <% end_if %>
                 <% end_loop %>
             <% end_if %>
-            <% if $PreviousStep %>
-                <div class="text-left mt-40">
-                    <a class="btn btn-outline-blue-dark" href="{$PreviousStep.Link}"><span class="fa fa-angle-double-left"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.BackTo 'Back to {step}' step=$PreviousStep.Title %></a>
-                </div>
-            <% end_if %>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4 col-xl-3">
