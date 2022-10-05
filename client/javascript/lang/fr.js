@@ -4,6 +4,8 @@ if (typeof (ss) === 'undefined' || typeof (ss.i18n) === 'undefined') {
     }
 } else {
     ss.i18n.addDictionary('fr', {
+        "SilverCart.ProductWizard.ERROR.PickOneProductOption": "Veuillez sélectionner au moins un produit.",
+        "SilverCart.ProductWizard.ERROR.PickOneProductOptionFrom": "Veuillez sélectionner au moins un produit :",
         "SilverCart.ProductWizard.ERROR.PickOptionHeading": "Une erreur s'est produite",
         "SilverCart.ProductWizard.ERROR.PickOptionContent": "Sélectionnez au moins une option avant de continuer.",
         "SilverCart.ProductWizard.ERROR.PickOptions": "Sélectionnez une option pour chaque offre.",

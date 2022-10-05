@@ -4,6 +4,8 @@ if (typeof (ss) === 'undefined' || typeof (ss.i18n) === 'undefined') {
     }
 } else {
     ss.i18n.addDictionary('nl', {
+        "SilverCart.ProductWizard.ERROR.PickOneProductOption": "Selecteer ten minste één product.",
+        "SilverCart.ProductWizard.ERROR.PickOneProductOptionFrom": "Selecteer ten minste één product:",
         "SilverCart.ProductWizard.ERROR.PickOptionHeading": "Er is een fout opgetreden",
         "SilverCart.ProductWizard.ERROR.PickOptionContent": "Kies minstens één optie om verder te gaan.",
         "SilverCart.ProductWizard.ERROR.PickOptions": "Selecteer één optie per aanbod.",
