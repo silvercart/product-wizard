@@ -44,6 +44,11 @@
         <% if not $ProductWizardStepPage.HideCartSummarySubmitButton %>
             <button class="btn btn-primary btn-block" type="submit">{$ButtonTitle} <span class="fa fa-angle-double-right"></span></button>
         <% end_if %>
+        <% if $CurrentUser.showPricesGross %>
+        <small class="text-muted text-center d-block mt-20"><i class="fas fa-info-circle"></i> <%t SilverCart.AllIncl 'All prices shown include VAT.' %></small>
+        <% else %>
+        <small class="text-muted text-center d-block mt-20"><i class="fas fa-info-circle"></i> <%t SilverCart.AllPlus 'All prices shown are exclusive of VAT.' %></small>
+        <% end_if %>
     </div>
     {$ProductWizardStepPage.AfterProductWizardCartSummaryContent}
 </div>
