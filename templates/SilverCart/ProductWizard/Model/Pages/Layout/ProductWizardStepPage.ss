@@ -6,12 +6,12 @@
         <% include SilverCart\ProductWizard\Model\Pages\StepNavigation %>
     </div>
 <% end_if %>
-<% if $InsertWidgetArea('Sidebar') %>
+<% if $InsertWidgetArea('Sidebar').Length %>
     <aside class="col-12 col-sm-3">
         {$InsertWidgetArea('Sidebar')}
     </aside>
 <% end_if %>
-    <div class="col-12 <% if $InsertWidgetArea('Sidebar') %>col-sm-9<% end_if %>">
+    <div class="col-12 <% if $InsertWidgetArea('Sidebar').Length %>col-sm-9<% end_if %>">
         {$CurrentStep}
         {$InsertWidgetArea('Content')}
     </div>
