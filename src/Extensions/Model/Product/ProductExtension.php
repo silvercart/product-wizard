@@ -2,6 +2,7 @@
 
 namespace SilverCart\ProductWizard\Extensions\Model\Product;
 
+use SilverCart\Model\Product\Product;
 use SilverCart\ProductWizard\Model\Wizard\StepOption;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
@@ -15,6 +16,8 @@ use SilverStripe\ORM\DataExtension;
  * @since 24.02.2019
  * @copyright 2019 pixeltricks GmbH
  * @license see license file in modules root directory
+ * 
+ * @property Product $owner Owner
  */
 class ProductExtension extends DataExtension
 {
@@ -29,8 +32,8 @@ class ProductExtension extends DataExtension
      *
      * @var array
      */
-    private static $belongs_many_many = [
-        'ProductWizardStepOption' => StepOption::class,
+    private static array $belongs_many_many = [
+        'ProductWizardStepOption' => StepOption::class . '.Products',
     ];
     
     /**
