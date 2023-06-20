@@ -759,12 +759,13 @@ class StepOption extends DataObject
     public function getProductPriceLabel(int $productID) : string
     {
         $label  = '';
-        $labels = unserialize($this->ProductPriceLabels);
+        $labels = unserialize((string) $this->ProductPriceLabels);
         if (is_array($labels)
-         && array_key_exists($productID, $labels)) {
+         && array_key_exists($productID, $labels)
+        ) {
             $label = $labels[$productID];
         }
-        return $label;
+        return (string) $label;
     }
     
     /**
