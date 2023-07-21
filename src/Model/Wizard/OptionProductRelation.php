@@ -239,11 +239,12 @@ class OptionProductRelation
     /**
      * Returns the quantity.
      * 
-     * @param int $optionIndex Optional option index
+     * @param int      $optionIndex Optional option index
+     * @param int|null $value       Optional option value
      * 
      * @return int
      */
-    public function getQuantity(int $optionIndex = null) : int
+    public function getQuantity(int $optionIndex = null, int|null $value = null) : int
     {
         if ($this->quantity === 0) {
             $this->quantity = $this->getMinimumQuantity();
@@ -266,14 +267,14 @@ class OptionProductRelation
                         $this->quantity = $maximumQuantity;
                     }
                 } else {
-                    $value = $option->getValue();
+                    $value = $value === null ? $option->getValue() : $value;
                     if (is_array($value)
                      && !empty($value)
                     ) {
                         $firstChoice = array_shift($value);
-                        $quantity    = (int) $firstChoice['Quantity'];
+                        $quantity    = (int) $firstChoice['Quantity'] + $this->getMinimumQuantity();
                     } else {
-                        $quantity = (int) $value;
+                        $quantity = (int) $value + $this->getMinimumQuantity();
                     }
                     if ($quantity > $this->quantity) {
                         $this->quantity = $quantity;

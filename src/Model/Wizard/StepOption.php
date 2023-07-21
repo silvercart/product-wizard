@@ -7,6 +7,7 @@ use SilverCart\Forms\FormFields\TextField;
 use SilverCart\Model\Order\ShoppingCart;
 use SilverCart\Model\Order\ShoppingCartPosition;
 use SilverCart\Model\Product\Product;
+use SilverCart\ORM\ExtensibleDataObject;
 use SilverCart\ProductAttributes\Model\Product\ProductAttribute;
 use SilverCart\ProductWizard\Extensions\Model\Order\ShoppingCartPositionExtension as ProductWizardShoppingCartPosition;
 use SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage;
@@ -19,11 +20,13 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldFilterHeader;
 use SilverStripe\Forms\GroupedDropdownField;
 use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
+use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\TreeDropdownField;
 use SilverStripe\ORM\ArrayList;
@@ -34,9 +37,13 @@ use SilverStripe\ORM\FieldType\DBInt;
 use SilverStripe\ORM\FieldType\DBMoney;
 use SilverStripe\ORM\FieldType\DBText;
 use SilverStripe\ORM\FieldType\DBVarchar;
+use SilverStripe\ORM\HasManyList;
+use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\SS_List;
+use SilverStripe\ORM\UnsavedRelationList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\SSViewer;
+use function _t;
 
 /**
  * A step option a customer can pick on a SilverCart ProductWizardStepPage.
@@ -80,11 +87,11 @@ use SilverStripe\View\SSViewer;
  * @method Step          Step()              Returns the related Step.
  * @method StepOptionSet StepOptionSet()     Returns the related StepOptionSet.
  * 
- * @method \SilverStripe\ORM\HasManyList DisplayConditions() Returns the related DisplayConditions.
+ * @method HasManyList DisplayConditions() Returns the related DisplayConditions.
  */
 class StepOption extends DataObject
 {
-    use \SilverCart\ORM\ExtensibleDataObject;
+    use ExtensibleDataObject;
     use DisplayConditional;
     
     const SESSION_KEY                  = 'SilverCart.ProductWizard.StepOption';
@@ -213,7 +220,7 @@ class StepOption extends DataObject
     /**
      * Products relation.
      * 
-     * @var \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\UnsavedRelationList|NULL
+     * @var ManyManyList|UnsavedRelationList|NULL
      */
     protected $products = null;
     /**
@@ -285,7 +292,7 @@ class StepOption extends DataObject
             $fields->dataFieldByName('ExtraClasses')->setDescription($this->owner->fieldLabel('ExtraClassesDesc'));
             if ($this->exists()) {
                 $displayConditionsGrid = $fields->dataFieldByName('DisplayConditions');
-                /* @var $displayConditionsGrid \SilverStripe\Forms\GridField\GridField */
+                /* @var $displayConditionsGrid GridField */
                 $displayConditionsGrid->getConfig()->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
                 $displayConditionsGrid->getConfig()->removeComponentsByType(GridFieldFilterHeader::class);
             } else {
@@ -412,7 +419,7 @@ class StepOption extends DataObject
             $optionList = $this->getOptionList();
             if ($optionList->exists()) {
                 $fields->findOrMakeTab('Root.Advanced', $this->fieldLabel('Advanced'));
-                $productsSource                  = Product::get()->map()->toArray();
+                $productsSource                  = Product::get()->map('ID', 'ProductNumberWithTitleAndID')->toArray();
                 $products                        = $this->getProductRelation()->getProductsMap();
                 $behaviorSource                  = $this->getProductRelation()->getBehaviorsMap();
                 $behaviors                       = $this->getProductRelation()->getBehaviors();
@@ -428,9 +435,10 @@ class StepOption extends DataObject
                 $fields->addFieldToTab('Root.Advanced', TextField::create('OptionProductRelation[MinimumQuantity]', $this->fieldLabel('ProductMinQuantity'), $minQuantityValue)->setDescription($this->fieldLabel('ProductMinQuantityDesc')));
                 $fields->addFieldToTab('Root.Advanced', GroupedDropdownField::create('OptionProductRelation[DynamicQuantityOption]', $this->fieldLabel('ProductDynQuantityStepOptionID'), $this->getGroupedContextOptions(), $dynQuantityOptionValue)->setEmptyString('')->setDescription($this->fieldLabel('ProductDynQuantityStepOptionIDDesc')));
                 foreach ($optionList as $option) {
+                    $optionNice    = (int) $option->Value + 1;
                     $productsValue = '';
                     $title         = _t(self::class . '.OptionProductRelationTitle', 'Product for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     $description = _t(self::class . '.OptionProductRelationDesc', 'Add this product to cart when selecting "{option}".', [
                         'option' => $option->Title,
@@ -440,7 +448,7 @@ class StepOption extends DataObject
                     }
                     $descValue       = '';
                     $descTitle       = _t(self::class . '.OptionDescriptionTitle', 'Description for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     $descDescription = _t(self::class . '.OptionDescriptionDesc', 'Will be displayed as a description for "{option}".', [
                         'option' => $option->Title,
@@ -450,7 +458,7 @@ class StepOption extends DataObject
                     }
                     $longDescValue       = '';
                     $longDescTitle       = _t(self::class . '.OptionLongDescriptionTitle', 'Long description for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     $longDescDescription = _t(self::class . '.OptionLongDescriptionDesc', 'Will be displayed as a long description in a modal for "{option}".', [
                         'option' => $option->Title,
@@ -460,46 +468,47 @@ class StepOption extends DataObject
                     }
                     $useCustomQuantityValue = false;
                     $useCustomQuantityTitle = _t(self::class . '.OptionUseCustomQuantityTitle', 'Use custom quantity for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $useCustomQuantities)) {
                         $useCustomQuantityValue = $useCustomQuantities[$option->Value];
                     }
                     $useCustomQuantityDropdownMaximumValue = '';
                     $useCustomQuantityDropdownMaximumTitle = _t(self::class . '.OptionUseCustomQuantityDropdownMaximumTitle', 'Dropdown maximum quantity for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $useCustomQuantityDropdownMaxima)) {
                         $useCustomQuantityDropdownMaximumValue = $useCustomQuantityDropdownMaxima[$option->Value];
                     }
                     $useCustomQuantityPluralValue = '';
                     $useCustomQuantityPluralTitle = _t(self::class . '.OptionUseCustomQuantityPluralTitle', 'Plural quantity unit for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $useCustomQuantityPlurals)) {
                         $useCustomQuantityPluralValue = $useCustomQuantityPlurals[$option->Value];
                     }
                     $useCustomQuantitySingularValue = '';
                     $useCustomQuantitySingularTitle = _t(self::class . '.OptionUseCustomQuantitySingularTitle', 'Singular quantity unit for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $useCustomQuantitySingulars)) {
                         $useCustomQuantitySingularValue = $useCustomQuantitySingulars[$option->Value];
                     }
                     $useCustomQuantityTextValue = '';
                     $useCustomQuantityTextTitle = _t(self::class . '.OptionUseCustomQuantityTextTitle', 'Info text quantity picker for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $useCustomQuantityTexts)) {
                         $useCustomQuantityTextValue = $useCustomQuantityTexts[$option->Value];
                     }
                     $behaviorValue  = '';
                     $behaviorTitle  = _t(self::class . '.OptionBehaviorTitle', 'Behavior for option {option}', [
-                        'option' => (int) $option->Value + 1,
+                        'option' => $optionNice,
                     ]);
                     if (array_key_exists($option->Value, $behaviors)) {
                         $behaviorValue = $behaviors[$option->Value];
                     }
+                    $fields->addFieldToTab('Root.Advanced', LiteralField::create("OptionProductRelation[Seperator][{$option->Value}]", "<h1 class='mt-5 mb-3 ml-5'>Option {$optionNice}: {$option->Title}</h1>"));
                     $fields->addFieldToTab('Root.Advanced', TextField::create("OptionProductRelation[Descriptions][{$option->Value}]", $descTitle, $descValue)->setDescription($descDescription));
                     $fields->addFieldToTab('Root.Advanced', HTMLEditorField::create("OptionProductRelation[LongDescriptions][{$option->Value}]", $longDescTitle, $longDescValue)->setDescription($longDescDescription)->setRows(3));
                     $fields->addFieldToTab('Root.Advanced', DropdownField::create("OptionProductRelation[Products][{$option->Value}]", $title, $productsSource, $productsValue)->setDescription($description)->setEmptyString(''));
@@ -619,7 +628,7 @@ class StepOption extends DataObject
     /**
      * Returns the related products.
      * 
-     * @return \SilverStripe\ORM\ManyManyList|\SilverStripe\ORM\UnsavedRelationList
+     * @return ManyManyList|UnsavedRelationList
      */
     public function Products() : SS_List
     {
@@ -866,17 +875,18 @@ class StepOption extends DataObject
      * Returns the product quantity for a radio option.
      * 
      * @param int $optionIndex Radio option index
+     * @param int $value       Optional option value
      * 
      * @return int
      */
-    public function getRadioQuantity(int $optionIndex) : int
+    public function getRadioQuantity(int $optionIndex, int $value = null) : int
     {
         $quantity = 0;
         if ($this->hasCustomQuantity($optionIndex)) {
             $quantity = $this->getRadioOptionQuantity($optionIndex);
         } else {
             $relation = $this->getProductRelation();
-            $quantity = $relation->getQuantity();
+            $quantity = $relation->getQuantity($optionIndex, $value);
         }
         return $quantity;
     }
@@ -1037,7 +1047,7 @@ class StepOption extends DataObject
     /**
      * Returns the related product.
      * 
-     * @return \SilverStripe\ORM\ManyManyList|ArrayList
+     * @return ManyManyList|ArrayList
      */
     public function getProductsToDisplay() : SS_List
     {
@@ -1643,7 +1653,7 @@ class StepOption extends DataObject
      * @param int $productID Related product ID
      * @param int $variantID Product variant ID
      * 
-     * @return \SilverCart\ProductWizard\Model\Wizard\StepOption
+     * @return StepOption
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 23.05.2019
@@ -1882,6 +1892,23 @@ class StepOption extends DataObject
             }
         }
         return $cartData;
+    }
+    
+    /**
+     * Returns the PriceTotal
+     * 
+     * @param int $optionIndex Option index
+     * 
+     * @return DBMoney
+     */
+    public function PriceTotal(int $optionIndex) : DBMoney
+    {
+        $relation   = $this->getProductRelation();
+        $products   = $relation->getProducts();
+        $product    = $products[$optionIndex];
+        $quantity   = $this->getRadioQuantity($optionIndex, $optionIndex);
+        $priceTotal = DBMoney::create()->setCurrency($product->getPrice()->getCurrency())->setAmount($product->getPrice()->getAmount() * $quantity);
+        return $priceTotal;
     }
     
     /**
