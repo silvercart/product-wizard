@@ -46,13 +46,16 @@
     <% end_loop %>
 </div>
 <div class="progress mb-20"><div class="progress-bar bg-success" role="progressbar" style="width: {$NavigationStepProgressPercentage}%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="{$NavigationSteps.count}"></div></div>
-        <% if $CurrentStep.InfoBoxTitle %>
 <div class="border-top border-bottom mb-20 py-10">
     <% if $PreviousStep %>
     <a href="{$PreviousStep.Link}"><span class="fa fa-angle-double-left"></span> <%t SilverCart\ProductWizard\Model\Pages\ProductWizardStepPage.BackTo 'Back to {step}' step=$PreviousStep.Title %></a>
     <% end_if %>
-    <span class="ml-20 fa fa-{$CurrentStep.FontAwesomeIcon} border border-black rounded-circle p-6"></span> {$fieldLabel('Step')} {$CurrentStep.NavigationStepNumber}: {$CurrentStep.InfoBoxTitle}
+    <% if $CurrentStep.FontAwesomeIcon %>
+    <span class="ml-20 fa fa-{$CurrentStep.FontAwesomeIcon} border border-black rounded-circle p-6"></span> 
+    <% else_if $PreviousStep %>
+    |
+    <% end_if %>
+    {$fieldLabel('Step')} {$CurrentStep.NavigationStepNumber}: <% if $CurrentStep.InfoBoxTitle %>{$CurrentStep.InfoBoxTitle}<% else %>{$CurrentStep.Title}<% end_if %>
 </div>
-        <% end_if %>
     <% end_if %>
 <% end_if %>
