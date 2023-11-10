@@ -113,6 +113,37 @@ class ProductWizardStepPageController extends PageController
      */
     public function step(HTTPRequest $request) : ?HTTPResponse
     {
+        if (array_key_exists('step', $_GET)
+         && is_array($_GET['step'])
+        ) {
+            foreach ($_GET['step'] as $stepSort => $stepData) {
+                if (!is_array($stepData)) {
+                    continue;
+                }
+                $completeStep = false;
+                $step         = $this->data()->Steps()->filter('Sort', $stepSort)->first();
+                if (!($step instanceof Step)
+                 || !$step->exists()
+                ) {
+                    continue;
+                }
+                $postVars = ['StepOptions' => []];
+                foreach ($stepData as $optionSort => $optionData) {
+                    $option = $step->StepOptions()->filter('Sort', $optionSort)->first();
+                    if (!($option instanceof StepOption)
+                     || !$option->exists()
+                    ) {
+                        continue;
+                    }
+                    $postVars['StepOptions'][$option->ID] = $optionData;
+                    $this->data()->setPostVarsFor($postVars, $step);
+                    $completeStep = true;
+                }
+                if ($completeStep) {
+                    $this->data()->addCompletedStep($step);
+                }
+            }
+        }
         $stepSort = $request->param('ID');
         if (!is_numeric($stepSort)) {
             return $this->redirectBack();
@@ -125,7 +156,7 @@ class ProductWizardStepPageController extends PageController
         }
         if (!$step->canAccess()) {
             if ($this->data()->getCurrentStep()->ID === $step->getPreviousStep()->ID
-             && $this->data()->canCompleteCurrentStep()
+            && $this->data()->canCompleteCurrentStep()
             ) {
                 $this->data()->addCompletedStep($this->data()->getCurrentStep());
             }
